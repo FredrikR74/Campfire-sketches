@@ -23,7 +23,7 @@ pages/
 ## Tech
 - Tailwind CSS (CDN), inga byggverktyg
 - Google Fonts: **Outfit** (brödtext), **Caveat** (display/handskriven)
-- Vanilla JS, inga ramverk
+- Minimera js, enbart ok för demosyfte. Sidan ska senare byggas med blazor wasm
 - Allt innehåll på svenska
 
 ## Designsystem (snabbreferens)
