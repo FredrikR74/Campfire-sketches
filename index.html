@@ -6,26 +6,48 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>Campfire Sketches</title>
     <style>
-        /* Custom Color Scheme as per Styleguide */
-        .bg-custom {
-            background-color: #FFCC00; /* Replace with your custom color */
+        /* Campfire style variables — follow pages/campfire-styleguide.html */
+        :root {
+            --campfire-bg: #FFCC00;
+            --campfire-text: #333333;
+            --campfire-link: #1D4ED8;
         }
-        .text-custom {
-            color: #333333; /* Replace with your custom text color */
-        }
+        body { background-color: var(--campfire-bg); color: var(--campfire-text); }
+        a { color: var(--campfire-link); }
     </style>
 </head>
-<body class="bg-custom text-custom">
-    <div class="container mx-auto mt-10">
-        <h1 class="text-4xl font-bold text-center">Welcome to Campfire Sketches</h1>
-        <p class="text-center mt-4">Choose a sketch to explore:</p>
-        <ul class="mt-8 space-y-4">
-            <li><a href="campfire-styleguide.html" class="block text-center text-blue-500 hover:underline">Campfire Styleguide</a></li>
-            <li><a href="campfire-framework.html" class="block text-center text-blue-500 hover:underline">Campfire Framework</a></li>
-            <li><a href="campfire-landing.html" class="block text-center text-blue-500 hover:underline">Campfire Landing</a></li>
-            <li><a href="campfire-checklistor.html" class="block text-center text-blue-500 hover:underline">Campfire Checklistor</a></li>
-            <li><a href="campfire-profil.html" class="block text-center text-blue-500 hover:underline">Campfire Profil</a></li>
-        </ul>
-    </div>
+<body class="min-h-screen flex items-center justify-center">
+    <main class="max-w-3xl mx-auto p-6">
+        <header class="mb-8 text-center">
+            <h1 class="text-4xl font-bold">Campfire Sketches</h1>
+            <p class="mt-2 text-sm text-gray-700">Översikt över skisser och komponenter enligt Campfire styleguide.</p>
+        </header>
+
+        <section aria-labelledby="sketches">
+            <h2 id="sketches" class="sr-only">Available sketches</h2>
+
+            <ul class="grid gap-4 sm:grid-cols-2">
+                <li>
+                    <a href="pages/campfire-styleguide.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Styleguide</a>
+                </li>
+                <li>
+                    <a href="pages/campfire-framework.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Framework</a>
+                </li>
+                <li>
+                    <a href="pages/campfire-landing.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Landing</a>
+                </li>
+                <li>
+                    <a href="pages/campfire-checklistor.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Checklistor</a>
+                </li>
+                <li>
+                    <a href="pages/campfire-profil.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Profil</a>
+                </li>
+            </ul>
+        </section>
+
+        <footer class="mt-8 text-center text-sm text-gray-600">
+            <p>Se <a href="pages/campfire-styleguide.html" class="underline">styleguiden</a> för färger och komponenter.</p>
+        </footer>
+    </main>
 </body>
 </html>
