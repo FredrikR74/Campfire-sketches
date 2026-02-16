@@ -18,8 +18,7 @@ campfire-base.css              # Delade CSS-variabler & utility-klasser
 campfire-framework.html        # Layout-template (använder components/)
 campfire-styleguide.html       # Designsystem & komponenter (visuell referens)
 components/
-  navbar.html                  # Mörk navbar (fixed, scroll-effekt)
-  navbar-white.html            # Vit navbar (sticky, profilsidan)
+  navbar.html                  # Navbar (fixed, scroll-effekt)
   footer.html                  # Gemensam footer
   load-components.js           # JS-loader för navbar + footer
 pages/
@@ -62,16 +61,14 @@ pages/
 - Hover på kort: `hover:shadow-lg hover:-translate-y-0.5 transition-all`
 
 ### Navbar
-- Mörk variant: fixed, transparent overlay på hero, vit vid scroll (landing, checklistor)
-- Vit variant: sticky, vit bakgrund (profil)
+- Fixed, transparent overlay på hero, vit vid scroll
 - Hero padding: `pt-24 sm:pt-28`
 - Meny: Nyheter, Träffar, Inspiration, Rutter, Forum
 - Navbar och footer laddas via `components/load-components.js` – redigera i `components/`
 
 ### Delade filer
 - `campfire-base.css` – CSS-variabler och utility-klasser (länkas i alla HTML-filer)
-- `components/navbar.html` – mörk navbar (fixed, scroll-effekt)
-- `components/navbar-white.html` – vit navbar (sticky, profilsidan)
+- `components/navbar.html` – navbar (fixed, scroll-effekt)
 - `components/footer.html` – gemensam footer
 - `components/load-components.js` – laddar navbar + footer via fetch
 
