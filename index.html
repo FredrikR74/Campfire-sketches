@@ -1,53 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>Campfire Sketches</title>
-    <style>
-        /* Campfire style variables — follow pages/campfire-styleguide.html */
-        :root {
-            --campfire-bg: #FFCC00;
-            --campfire-text: #333333;
-            --campfire-link: #1D4ED8;
-        }
-        body { background-color: var(--campfire-bg); color: var(--campfire-text); }
-        a { color: var(--campfire-link); }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Campfire Sketches</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reuse core style variables & helper classes from campfire-styleguide */
+    :root {
+      --slate-deep: #1e3a3a;
+      --forest: #4a7a6b;
+      --sage-green: #618a7c;
+      --sand-light: #e8dcc4;
+      --terracotta: #c17c5c;
+      --warm-gray: #5a5a5a;
+      --bg-mist: #f8f8f6;
+    }
+
+    body { font-family: 'Outfit', sans-serif; background: var(--bg-mist); color: #333; }
+    .handwritten { font-family: 'Caveat', cursive; }
+    .deep-gradient { background: linear-gradient(135deg, var(--slate-deep) 0%, var(--forest) 100%); }
+    .card-shadow { box-shadow: 0 8px 30px rgba(30,58,58,0.08); }
+    .card { background: white; border-radius: 1rem; }
+  </style>
 </head>
-<body class="min-h-screen flex items-center justify-center">
-    <main class="max-w-3xl mx-auto p-6">
-        <header class="mb-8 text-center">
-            <h1 class="text-4xl font-bold">Campfire Sketches</h1>
-            <p class="mt-2 text-sm text-gray-700">Översikt över skisser och komponenter enligt Campfire styleguide.</p>
-        </header>
+<body>
+  <!-- Header / Hero using styleguide gradient and handwritten logo -->
+  <header class="deep-gradient text-white px-6 py-10">
+    <div class="max-w-5xl mx-auto flex items-center gap-4">
+      <div class="w-10 h-12 rounded bg-[var(--terracotta)] opacity-80"></div>
+      <div>
+        <div class="handwritten text-4xl text-[var(--sand-light)]">Campfire</div>
+        <p class="text-white/70 text-sm font-medium tracking-wide">COMMUNITY & INSPIRATION – SKETCHES</p>
+      </div>
+    </div>
+  </header>
 
-        <section aria-labelledby="sketches">
-            <h2 id="sketches" class="sr-only">Available sketches</h2>
+  <main class="max-w-5xl mx-auto px-6 py-10">
+    <section class="mb-8">
+      <h1 class="text-3xl font-bold text-[var(--slate-deep)] mb-2">Campfire Sketches</h1>
+      <p class="text-gray-600">Översikt över skisser och komponenter. Sidor och komponenter följer Campfire styleguide.</p>
+    </section>
 
-            <ul class="grid gap-4 sm:grid-cols-2">
-                <li>
-                    <a href="pages/campfire-styleguide.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Styleguide</a>
-                </li>
-                <li>
-                    <a href="pages/campfire-framework.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Framework</a>
-                </li>
-                <li>
-                    <a href="pages/campfire-landing.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Landing</a>
-                </li>
-                <li>
-                    <a href="pages/campfire-checklistor.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Checklistor</a>
-                </li>
-                <li>
-                    <a href="pages/campfire-profil.html" class="block p-4 bg-white rounded shadow text-center hover:underline">Campfire Profil</a>
-                </li>
-            </ul>
-        </section>
+    <!-- Grid of cards using styleguide card styles and Tailwind utilities -->
+    <section aria-labelledby="sketches">
+      <h2 id="sketches" class="sr-only">Tillgängliga skisser</h2>
 
-        <footer class="mt-8 text-center text-sm text-gray-600">
-            <p>Se <a href="pages/campfire-styleguide.html" class="underline">styleguiden</a> för färger och komponenter.</p>
-        </footer>
-    </main>
+      <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <li>
+          <a href="pages/campfire-styleguide.html" class="block h-full p-5 rounded-3xl card-shadow card hover:shadow-lg hover:-translate-y-0.5 transition transform">
+            <div class="text-lg font-semibold text-[var(--slate-deep)] mb-1">Styleguide</div>
+            <p class="text-sm text-gray-600">Färger, typografi och komponentregler.</p>
+            <div class="mt-4">
+              <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full text-[var(--forest)] bg-[#e4efe8]">Öppna</span>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href="pages/campfire-framework.html" class="block h-full p-5 rounded-3xl card-shadow card hover:shadow-lg hover:-translate-y-0.5 transition transform">
+            <div class="text-lg font-semibold text-[var(--slate-deep)] mb-1">Framework</div>
+            <p class="text-sm text-gray-600">Navigation, hero och layoutmönster.</p>
+            <div class="mt-4">
+              <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full text-white bg-[var(--forest)]">Öppna</span>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href="pages/campfire-landing.html" class="block h-full p-5 rounded-3xl card-shadow card hover:shadow-lg hover:-translate-y-0.5 transition transform">
+            <div class="text-lg font-semibold text-[var(--slate-deep)] mb-1">Landing</div>
+            <p class="text-sm text-gray-600">Exempel på landningssida med hero.</p>
+            <div class="mt-4">
+              <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full text-white bg-[var(--terracotta)]">Öppna</span>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href="pages/campfire-checklistor.html" class="block h-full p-5 rounded-3xl card-shadow card hover:shadow-lg hover:-translate-y-0.5 transition transform">
+            <div class="text-lg font-semibold text-[var(--slate-deep)] mb-1">Checklistor</div>
+            <p class="text-sm text-gray-600">Formulär och checklistekomponenter.</p>
+            <div class="mt-4">
+              <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full text-[var(--terracotta)] bg-[var(--sand-light)]">Öppna</span>
+            </div>
+          </a>
+        </li>
+
+        <li>
+          <a href="pages/campfire-profil.html" class="block h-full p-5 rounded-3xl card-shadow card hover:shadow-lg hover:-translate-y-0.5 transition transform">
+            <div class="text-lg font-semibold text-[var(--slate-deep)] mb-1">Profil</div>
+            <p class="text-sm text-gray-600">Profil- och avatar-komponenter.</p>
+            <div class="mt-4">
+              <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full text-[var(--forest)] bg-[#e4efe8]">Öppna</span>
+            </div>
+          </a>
+        </li>
+
+      </ul>
+    </section>
+
+    <footer class="mt-10 text-sm text-gray-600">
+      <p>Följ <a href="campfire-styleguide.html" class="text-[var(--forest)] font-semibold hover:underline">styleguiden</a> för exakta färger och komponentregler.</p>
+    </footer>
+  </main>
 </body>
 </html>
