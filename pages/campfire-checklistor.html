@@ -1,0 +1,960 @@
+﻿<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Checklistor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-deep: #1e3a3a;
+            --forest: #4a7a6b;
+            --sage-green: #618a7c;
+            --sand-light: #e8dcc4;
+            --terracotta: #c17c5c;
+            --warm-gray: #5a5a5a;
+            --bg-mist: #f8f8f6;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-mist);
+            color: #333;
+        }
+
+        .handwritten { font-family: 'Caveat', cursive; }
+
+        .deep-gradient { background: linear-gradient(135deg, var(--slate-deep) 0%, var(--forest) 100%); }
+        .sage-gradient { background: linear-gradient(135deg, var(--sage-green) 0%, var(--forest) 100%); }
+        .terracotta-gradient { background: linear-gradient(135deg, var(--terracotta) 0%, #d4926f 100%); }
+
+        .card-shadow { box-shadow: 0 8px 30px rgba(30, 58, 58, 0.08); }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Mobile menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .mobile-menu.open { max-height: 300px; }
+
+        /* Navbar */
+        .navbar {
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .navbar.scrolled {
+            background: rgba(255,255,255,0.97);
+            box-shadow: 0 2px 20px rgba(30,58,58,0.08);
+        }
+        .navbar.scrolled .nav-link { color: #555 !important; }
+        .navbar.scrolled .nav-link:hover { color: var(--forest) !important; }
+        .navbar.scrolled .nav-logo-text { color: var(--forest) !important; }
+        .navbar.scrolled .nav-hamburger { color: #555 !important; }
+        .navbar.scrolled .nav-hamburger:hover { color: var(--forest) !important; }
+
+        html { scroll-behavior: smooth; }
+
+        /* Forest pattern */
+        .forest-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23618a7c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Progress bar */
+        .progress-track {
+            background: #e8e5de;
+            border-radius: 999px;
+            height: 8px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--sage-green), var(--forest));
+            transition: width 0.4s ease;
+        }
+
+        /* Checkbox custom */
+        .cf-check {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--forest);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        /* Checked item text */
+        .item-checked {
+            text-decoration: line-through;
+            color: #aaa;
+        }
+
+        /* Section collapse */
+        .section-items {
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        /* Drag handle */
+        .drag-handle {
+            cursor: grab;
+            color: #ccc;
+            transition: color 0.2s;
+        }
+        .drag-handle:hover { color: var(--forest); }
+
+        /* View transitions */
+        .view { display: none; }
+        .view.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Template card hover */
+        .template-card {
+            transition: all 0.2s ease;
+        }
+        .template-card:hover {
+            box-shadow: 0 12px 40px rgba(30, 58, 58, 0.12);
+            transform: translateY(-2px);
+        }
+
+        /* Subtle input focus ring */
+        .cf-input:focus {
+            border-color: var(--forest);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- =============================================
+     NAVIGATION (from framework)
+     ============================================= -->
+<nav class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent" id="navbar">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="flex items-center justify-between h-16">
+            <a href="#" class="flex items-center gap-2 group">
+                <svg width="22" height="28" viewBox="0 0 48 64" fill="none">
+                    <defs>
+                        <linearGradient id="nav-fl" x1="0" y1="1" x2="0" y2="0">
+                            <stop offset="0%" stop-color="#c17c5c"/>
+                            <stop offset="50%" stop-color="#d4926f"/>
+                            <stop offset="100%" stop-color="#e8dcc4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#nav-fl)" opacity="0.9"/>
+                    <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
+                    <line x1="4" y1="60" x2="28" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
+                    <line x1="44" y1="60" x2="20" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
+                </svg>
+                <span class="nav-logo-text handwritten text-[28px] text-[var(--sand-light)] transition-colors">Campfire</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-7">
+                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Nyheter</a>
+                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Träffar</a>
+                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Inspiration</a>
+                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Rutter</a>
+                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm font-bold border-b-2 border-white/40">Checklistor</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-3">
+                <button class="nav-link text-white/80 hover:text-white font-medium text-sm transition-colors">Logga in</button>
+                <button class="bg-white text-[var(--slate-deep)] px-5 py-2 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all text-sm shadow-lg">Kom igång</button>
+            </div>
+            <button class="md:hidden nav-hamburger text-white p-2 transition-colors" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        <div id="mobileMenu" class="mobile-menu md:hidden">
+            <div class="pb-4 pt-2 px-4 space-y-2 bg-[var(--slate-deep)] rounded-2xl mt-2 shadow-lg">
+                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Nyheter</a>
+                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Träffar</a>
+                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Inspiration</a>
+                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Rutter</a>
+                <a href="#" class="block text-white font-semibold text-sm py-2">Checklistor</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- =============================================
+     MAIN CONTENT
+     ============================================= -->
+<div>
+
+    <!-- ===== HERO ===== -->
+    <div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%)">
+        <div class="max-w-6xl mx-auto px-5">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <svg class="w-8 h-8 text-[var(--sand-light)]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                        </svg>
+                        <h1 class="text-3xl sm:text-4xl font-bold">Checklistor</h1>
+                    </div>
+                    <p class="text-white/70 text-sm sm:text-base max-w-md">Håll koll på allt inför resan, vinterförvaringen eller nästa äventyr. Utgå från en mall eller skapa din egen.</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="showView('library')" class="view-tab bg-white text-[var(--slate-deep)] px-5 py-2.5 rounded-full font-semibold text-sm shadow-lg hover:bg-[var(--sand-light)] transition-all" data-view="library">
+                        Mallbibliotek
+                    </button>
+                    <button onclick="showView('my')" class="view-tab border-2 border-white text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-white/10 transition-all" data-view="my">
+                        Mina listor
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===================================================
+         VIEW 1: MALLBIBLIOTEK (Template Library)
+         =================================================== -->
+    <div id="view-library" class="view active">
+        <div class="max-w-6xl mx-auto px-5 py-8">
+
+            <!-- Filter bar -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 card-shadow mb-6 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                <div class="flex flex-wrap gap-2">
+                    <button class="badge bg-[#e4efe8] text-[var(--forest)]">Alla</button>
+                    <button class="badge bg-gray-100 text-gray-500 hover:bg-[#e4efe8] hover:text-[var(--forest)] transition-colors cursor-pointer">Resa</button>
+                    <button class="badge bg-gray-100 text-gray-500 hover:bg-[#e4efe8] hover:text-[var(--forest)] transition-colors cursor-pointer">Förvaring</button>
+                    <button class="badge bg-gray-100 text-gray-500 hover:bg-[#e4efe8] hover:text-[var(--forest)] transition-colors cursor-pointer">Teknik</button>
+                    <button class="badge bg-gray-100 text-gray-500 hover:bg-[#e4efe8] hover:text-[var(--forest)] transition-colors cursor-pointer">Nybörjare</button>
+                </div>
+                <div class="relative w-full sm:w-64">
+                    <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                    <input type="text" placeholder="Sök mallar..." class="w-full pl-9 pr-4 py-2.5 border-2 border-gray-200 rounded-xl cf-input text-sm">
+                </div>
+            </div>
+
+            <!-- Template list -->
+            <div class="space-y-3">
+
+                <!-- Glamping-Robban -->
+                <div class="bg-white rounded-2xl card-shadow">
+                    <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-20 h-20 rounded-2xl sage-gradient flex items-center justify-center text-white">
+                                    <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                </div>
+                            </div>
+                            <div class="flex-grow space-y-1.5">
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <h3 class="text-lg font-bold text-gray-800">Glamping-Robbans Europachecklista</h3>
+                                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Utvald</span>
+                                </div>
+                                <p class="text-gray-600 text-sm">47 punkter · 6 sektioner · Den ultimata genomgången innan du rullar ut på kontinenten.</p>
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Resa</span>
+                                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">234 användare</span>
+                                    <div class="flex items-center gap-1.5 ml-1">
+                                        <div class="w-5 h-5 rounded-full sage-gradient flex items-center justify-center text-white text-[8px] font-bold">GR</div>
+                                        <span class="text-xs text-gray-400">Glamping-Robban</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 flex items-center">
+                                <button onclick="showView('active')" class="w-full sm:w-auto px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Använd mall</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vinterförvaring -->
+                <div class="bg-white rounded-2xl card-shadow">
+                    <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-20 h-20 rounded-2xl terracotta-gradient flex items-center justify-center text-white">
+                                    <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                </div>
+                            </div>
+                            <div class="flex-grow space-y-1.5">
+                                <h3 class="text-lg font-bold text-gray-800">Checklista inför vinterförvaring</h3>
+                                <p class="text-gray-600 text-sm">32 punkter · Allt du behöver göra för att ställa av husbilen säkert över vintern.</p>
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Förvaring</span>
+                                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">189 användare</span>
+                                    <div class="flex items-center gap-1.5 ml-1">
+                                        <div class="w-5 h-5 rounded-full deep-gradient flex items-center justify-center text-white text-[8px] font-bold">CF</div>
+                                        <span class="text-xs text-gray-400">Campfire-redaktionen</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 flex items-center">
+                                <button onclick="showView('active')" class="w-full sm:w-auto px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Använd mall</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daglig avgångskontroll -->
+                <div class="bg-white rounded-2xl card-shadow">
+                    <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-20 h-20 rounded-2xl sage-gradient flex items-center justify-center text-white">
+                                    <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                </div>
+                            </div>
+                            <div class="flex-grow space-y-1.5">
+                                <h3 class="text-lg font-bold text-gray-800">Daglig avgångskontroll</h3>
+                                <p class="text-gray-600 text-sm">18 punkter · Snabb genomgång varje morgon innan du lämnar ställplatsen.</p>
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Resa</span>
+                                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">312 användare</span>
+                                    <div class="flex items-center gap-1.5 ml-1">
+                                        <div class="w-5 h-5 rounded-full deep-gradient flex items-center justify-center text-white text-[8px] font-bold">CF</div>
+                                        <span class="text-xs text-gray-400">Campfire-redaktionen</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 flex items-center">
+                                <button onclick="showView('active')" class="w-full sm:w-auto px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Använd mall</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Första husbilen -->
+                <div class="bg-white rounded-2xl card-shadow">
+                    <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-20 h-20 rounded-2xl deep-gradient flex items-center justify-center text-white">
+                                    <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                </div>
+                            </div>
+                            <div class="flex-grow space-y-1.5">
+                                <h3 class="text-lg font-bold text-gray-800">Första husbilen – vad behöver du?</h3>
+                                <p class="text-gray-600 text-sm">24 punkter · Komplett startlista för dig som precis köpt sin första husbil.</p>
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">Nybörjare</span>
+                                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">95 användare</span>
+                                    <div class="flex items-center gap-1.5 ml-1">
+                                        <div class="w-5 h-5 rounded-full sage-gradient flex items-center justify-center text-white text-[8px] font-bold">AK</div>
+                                        <span class="text-xs text-gray-400">Anna K.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 flex items-center">
+                                <button onclick="showView('active')" class="w-full sm:w-auto px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Använd mall</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Elsystem & solceller -->
+                <div class="bg-white rounded-2xl card-shadow">
+                    <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-shrink-0">
+                                <div class="w-20 h-20 rounded-2xl sage-gradient flex items-center justify-center text-white">
+                                    <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                </div>
+                            </div>
+                            <div class="flex-grow space-y-1.5">
+                                <h3 class="text-lg font-bold text-gray-800">Elsystem &amp; solceller – underhåll</h3>
+                                <p class="text-gray-600 text-sm">15 punkter · Periodisk kontroll av batterier, laddare och solpaneler.</p>
+                                <div class="flex flex-wrap gap-1.5 pt-1">
+                                    <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Teknik</span>
+                                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">67 användare</span>
+                                    <div class="flex items-center gap-1.5 ml-1">
+                                        <div class="w-5 h-5 rounded-full terracotta-gradient flex items-center justify-center text-white text-[8px] font-bold">PL</div>
+                                        <span class="text-xs text-gray-400">Peter L.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-shrink-0 flex items-center">
+                                <button onclick="showView('active')" class="w-full sm:w-auto px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Använd mall</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Create actions -->
+            <div class="grid sm:grid-cols-2 gap-4 mt-6">
+                <button onclick="showView('create')" class="border-2 border-dashed border-gray-300 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg transition-all text-center">
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[#e4efe8] flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-[var(--forest)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-sm font-bold text-gray-800">Skapa tom checklista</div>
+                            <div class="text-xs text-gray-500">Börja från noll och bygg din egen</div>
+                        </div>
+                    </div>
+                </button>
+                <button onclick="showView('create')" class="border-2 border-dashed border-gray-300 rounded-2xl p-5 hover:border-[var(--terracotta)] hover:shadow-lg transition-all text-center">
+                    <div class="flex items-center justify-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-[var(--sand-light)] flex items-center justify-center flex-shrink-0">
+                            <svg class="w-5 h-5 text-[var(--terracotta)]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-sm font-bold text-gray-800">Dela din checklista</div>
+                            <div class="text-xs text-gray-500">Publicera en mall som andra kan använda</div>
+                        </div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===================================================
+         VIEW 2: MIN AKTIVA CHECKLISTA (Active Checklist)
+         =================================================== -->
+    <div id="view-active" class="view">
+        <div class="max-w-4xl mx-auto px-5 py-8">
+
+            <!-- Back + meta -->
+            <div class="flex items-center gap-3 mb-5">
+                <button onclick="showView('my')" class="px-3 py-1.5 text-[var(--forest)] hover:bg-[#e4efe8] rounded-lg transition-all text-sm font-medium flex items-center gap-1">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    Mina listor
+                </button>
+                <span class="text-gray-300">|</span>
+                <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Resa</span>
+                <span class="text-xs text-gray-400">Baserad på Glamping-Robbans mall</span>
+            </div>
+
+            <!-- Header card -->
+            <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-5">
+                <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-5">
+                    <div>
+                        <h2 class="text-2xl sm:text-3xl font-bold text-[var(--slate-deep)] mb-1">Europaresan 2026</h2>
+                        <p class="text-gray-500 text-sm">Senast redigerad: idag 14:32</p>
+                    </div>
+                    <div class="flex gap-2 flex-shrink-0">
+                        <button class="px-4 py-2 text-[var(--forest)] hover:bg-[#e4efe8] rounded-lg transition-all text-sm font-medium flex items-center gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                            Dela
+                        </button>
+                        <button class="px-4 py-2 text-gray-500 hover:bg-gray-100 rounded-lg transition-all text-sm font-medium flex items-center gap-1.5" title="Nollställ alla bockar">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            Nollställ
+                        </button>
+                        <button class="px-3 py-2 text-gray-400 hover:bg-gray-100 rounded-lg transition-all">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Progress -->
+                <div class="flex items-center gap-4">
+                    <div class="flex-grow">
+                        <div class="progress-track">
+                            <div class="progress-fill" style="width: 38%"></div>
+                        </div>
+                    </div>
+                    <div class="text-sm font-semibold text-[var(--forest)] flex-shrink-0">18 / 47</div>
+                </div>
+            </div>
+
+            <!-- Sections -->
+            <div class="space-y-4">
+
+                <!-- Section 1 — Dokument & försäkring -->
+                <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+                    <button class="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleSection('sec1')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full sage-gradient flex items-center justify-center text-white text-xs font-bold">1</div>
+                            <h3 class="text-base font-bold text-gray-800">Dokument & försäkring</h3>
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">6 / 8</span>
+                        </div>
+                        <svg id="sec1-arrow" class="w-5 h-5 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div id="sec1" class="section-items border-t border-gray-100" style="max-height: 1000px;">
+                        <ul class="divide-y divide-gray-50">
+                            <li class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
+                                <input type="checkbox" checked class="cf-check" onchange="this.nextElementSibling.classList.toggle('item-checked')">
+                                <span class="text-sm text-gray-700 flex-grow item-checked">Pass – giltigt minst 6 mån</span>
+                                <span class="drag-handle opacity-0 group-hover:opacity-100">⠿</span>
+                            </li>
+                            <li class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
+                                <input type="checkbox" checked class="cf-check" onchange="this.nextElementSibling.classList.toggle('item-checked')">
+                                <span class="text-sm text-gray-700 flex-grow item-checked">Körkort (internationellt om behövs)</span>
+                                <span class="drag-handle opacity-0 group-hover:opacity-100">⠿</span>
+                            </li>
+                            <li class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
+                                <input type="checkbox" checked class="cf-check" onchange="this.nextElementSibling.classList.toggle('item-checked')">
+                                <span class="text-sm text-gray-700 flex-grow item-checked">Fordonsförsäkring – kontrollera utlandsskydd</span>
+                                <span class="drag-handle opacity-0 group-hover:opacity-100">⠿</span>
+                            </li>
+                            <li class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
+                                <input type="checkbox" checked class="cf-check" onchange="this.nextElementSibling.classList.toggle('item-checked')">
+                                <span class="text-sm text-gray-700 flex-grow item-checked">Grönt kort</span>
+                                <span class="drag-handle opacity-0 group-hover:opacity-100">⠿</span>
+                            </li>
+                            <li class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
+                                <input type="checkbox" checked class="cf-check" onchange="this.nextElementSibling.classList.toggle('item-checked')">
+                                <span class="text-sm text-gray-700 flex-grow item-checked">Reseförsäkring (sjukvård + hemtransport)</span>
+                                <span class="drag-handle opacity-0 group-hover:opacity-100">⠿</span>
+                            </li>
+                            <li class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
+                                <input type="checkbox" checked class="cf-check" onchange="this.nextElementSibling.classList.toggle('item-checked')">
+                                <span class="text-sm text-gray-700 flex-grow item-checked">EU-sjukvårdskort</span>
+                                <span class="drag-handle opacity-0 group-hover:opacity-100">⠿</span>
+                            </li>
+                            <li class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
+                                <input type="checkbox" class="cf-check" onchange="this.nextElementSibling.classList.toggle('item-checked')">
+                                <span class="text-sm text-gray-700 flex-grow">Vinjetter / miljözoner (kontrollera länder)</span>
+                                <span class="drag-handle opacity-0 group-hover:opacity-100">⠿</span>
+                            </li>
+                            <li class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition-colors group">
+                                <input type="checkbox" class="cf-check" onchange="this.nextElementSibling.classList.toggle('item-checked')">
+                                <span class="text-sm text-gray-700 flex-grow">Registreringsbevis</span>
+                                <span class="drag-handle opacity-0 group-hover:opacity-100">⠿</span>
+                            </li>
+                        </ul>
+                        <!-- Add item -->
+                        <div class="px-5 py-3 border-t border-gray-100">
+                            <button class="flex items-center gap-2 text-sm text-[var(--forest)] font-medium hover:text-[var(--slate-deep)] transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                                Lägg till punkt
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2 — Teknik & el -->
+                <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+                    <button class="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleSection('sec2')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full sage-gradient flex items-center justify-center text-white text-xs font-bold">2</div>
+                            <h3 class="text-base font-bold text-gray-800">Teknik & el</h3>
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">5 / 12</span>
+                        </div>
+                        <svg id="sec2-arrow" class="w-5 h-5 text-gray-400 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div id="sec2" class="section-items border-t border-gray-100" style="max-height: 0;">
+                        <!-- Collapsed for demo -->
+                    </div>
+                </div>
+
+                <!-- Section 3 — Kök & proviant -->
+                <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+                    <button class="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleSection('sec3')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full sage-gradient flex items-center justify-center text-white text-xs font-bold">3</div>
+                            <h3 class="text-base font-bold text-gray-800">Kök & proviant</h3>
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">3 / 9</span>
+                        </div>
+                        <svg id="sec3-arrow" class="w-5 h-5 text-gray-400 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div id="sec3" class="section-items border-t border-gray-100" style="max-height: 0;"></div>
+                </div>
+
+                <!-- Section 4 — Säkerhet -->
+                <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+                    <button class="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleSection('sec4')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full sage-gradient flex items-center justify-center text-white text-xs font-bold">4</div>
+                            <h3 class="text-base font-bold text-gray-800">Säkerhet</h3>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">2 / 7</span>
+                        </div>
+                        <svg id="sec4-arrow" class="w-5 h-5 text-gray-400 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div id="sec4" class="section-items border-t border-gray-100" style="max-height: 0;"></div>
+                </div>
+
+                <!-- Section 5 — Komfort & nöje -->
+                <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+                    <button class="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleSection('sec5')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full terracotta-gradient flex items-center justify-center text-white text-xs font-bold">5</div>
+                            <h3 class="text-base font-bold text-gray-800">Komfort & nöje</h3>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">1 / 6</span>
+                        </div>
+                        <svg id="sec5-arrow" class="w-5 h-5 text-gray-400 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div id="sec5" class="section-items border-t border-gray-100" style="max-height: 0;"></div>
+                </div>
+
+                <!-- Section 6 — Sista check -->
+                <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+                    <button class="w-full px-5 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors" onclick="toggleSection('sec6')">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full deep-gradient flex items-center justify-center text-white text-xs font-bold">6</div>
+                            <h3 class="text-base font-bold text-gray-800">Sista check</h3>
+                            <span class="badge bg-gray-100 text-gray-500">1 / 5</span>
+                        </div>
+                        <svg id="sec6-arrow" class="w-5 h-5 text-gray-400 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div id="sec6" class="section-items border-t border-gray-100" style="max-height: 0;"></div>
+                </div>
+
+            </div>
+
+            <!-- Add section button -->
+            <div class="mt-5">
+                <button class="w-full border-2 border-dashed border-gray-300 text-gray-500 py-4 rounded-2xl font-semibold text-sm hover:border-[var(--forest)] hover:text-[var(--forest)] transition-all flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                    Lägg till sektion
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- ===================================================
+         VIEW 3: MINA LISTOR (My Lists)
+         =================================================== -->
+    <div id="view-my" class="view">
+        <div class="max-w-4xl mx-auto px-5 py-8">
+
+            <!-- Header -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
+                <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Mina checklistor</h2>
+                <div class="flex gap-3">
+                    <button onclick="showView('library')" class="border-2 border-gray-300 text-gray-700 px-5 py-2 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">Bläddra mallar</button>
+                    <button onclick="showView('create')" class="bg-[var(--forest)] text-white px-5 py-2 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">+ Ny lista</button>
+                </div>
+            </div>
+
+            <!-- Active lists -->
+            <div class="space-y-3 mb-8">
+
+                <!-- List row 1 — active -->
+                <div class="bg-white rounded-2xl card-shadow border-2 border-gray-100 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer" onclick="showView('active')">
+                    <div class="p-5">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-grow space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-lg font-bold text-gray-800">Europaresan 2026</h3>
+                                    <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Aktiv</span>
+                                </div>
+                                <p class="text-gray-500 text-sm">Baserad på: Glamping-Robbans Europachecklista · 6 sektioner</p>
+                                <div class="flex items-center gap-4">
+                                    <div class="flex-grow max-w-xs">
+                                        <div class="progress-track">
+                                            <div class="progress-fill" style="width: 38%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-semibold text-[var(--forest)]">18 / 47</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-gray-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- List row 2 -->
+                <div class="bg-white rounded-2xl card-shadow border-2 border-gray-100 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all cursor-pointer">
+                    <div class="p-5">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-grow space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-lg font-bold text-gray-800">Daglig avgångskontroll</h3>
+                                    <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Aktiv</span>
+                                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Återkommande</span>
+                                </div>
+                                <p class="text-gray-500 text-sm">Baserad på: Daglig avgångskontroll · 3 sektioner</p>
+                                <div class="flex items-center gap-4">
+                                    <div class="flex-grow max-w-xs">
+                                        <div class="progress-track">
+                                            <div class="progress-fill" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <span class="text-sm font-semibold text-[var(--forest)]">18 / 18 ✓</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center text-gray-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Archived -->
+                <div class="bg-white rounded-2xl card-shadow border-2 border-gray-100 opacity-60 hover:opacity-100 transition-all cursor-pointer">
+                    <div class="p-5">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="flex-grow space-y-2">
+                                <div class="flex items-center gap-2">
+                                    <h3 class="text-lg font-bold text-gray-800">Vinterförvaring 2025</h3>
+                                    <span class="badge bg-gray-100 text-gray-500">Arkiverad</span>
+                                </div>
+                                <p class="text-gray-500 text-sm">32 / 32 punkter klara · Arkiverad 2025-11-15</p>
+                            </div>
+                            <div class="flex items-center text-gray-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ===================================================
+         VIEW 4: SKAPA/REDIGERA (Create/Edit Template)
+         =================================================== -->
+    <div id="view-create" class="view">
+        <div class="max-w-4xl mx-auto px-5 py-8">
+
+            <!-- Back -->
+            <button onclick="showView('library')" class="px-3 py-1.5 text-[var(--forest)] hover:bg-[#e4efe8] rounded-lg transition-all text-sm font-medium flex items-center gap-1 mb-5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Tillbaka
+            </button>
+
+            <!-- Form card -->
+            <div class="bg-white rounded-3xl card-shadow p-6 sm:p-8 mb-5">
+                <h2 class="text-2xl font-bold text-[var(--slate-deep)] mb-6">Skapa ny checklista</h2>
+
+                <div class="space-y-5">
+                    <!-- Title -->
+                    <div class="space-y-1.5">
+                        <label class="block text-sm font-semibold text-gray-700">Titel</label>
+                        <input type="text" placeholder="T.ex. Min resechecklista" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl cf-input transition-colors text-base">
+                    </div>
+
+                    <!-- Category + Visibility -->
+                    <div class="grid sm:grid-cols-2 gap-5">
+                        <div class="space-y-1.5">
+                            <label class="block text-sm font-semibold text-gray-700">Kategori</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl cf-input transition-colors">
+                                <option>Resa</option>
+                                <option>Förvaring</option>
+                                <option>Teknik</option>
+                                <option>Nybörjare</option>
+                                <option>Övrigt</option>
+                            </select>
+                        </div>
+                        <div class="space-y-1.5">
+                            <label class="block text-sm font-semibold text-gray-700">Synlighet</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl cf-input transition-colors">
+                                <option>Privat (bara jag)</option>
+                                <option>Delad (med länk)</option>
+                                <option>Publik mall (alla kan använda)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="space-y-1.5">
+                        <label class="block text-sm font-semibold text-gray-700">Beskrivning <span class="text-gray-400 font-normal">(valfritt)</span></label>
+                        <textarea rows="2" placeholder="Beskriv kort vad checklistan är till för..." class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl cf-input transition-colors"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sections editor -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-bold text-gray-800 border-b-2 border-gray-100 pb-2">Sektioner & punkter</h3>
+
+                <!-- Section 1 -->
+                <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+                    <div class="px-5 py-4 bg-gray-50 flex items-center gap-3">
+                        <span class="drag-handle text-lg">⠿</span>
+                        <input type="text" value="Dokument & försäkring" class="flex-grow bg-transparent font-bold text-gray-800 cf-input focus:outline-none text-base border-b-2 border-transparent focus:border-[var(--forest)] transition-colors">
+                        <button class="px-3 py-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all text-xs font-medium">Ta bort</button>
+                    </div>
+                    <div class="p-5 space-y-2">
+                        <!-- Item rows -->
+                        <div class="flex items-center gap-2 group">
+                            <span class="drag-handle text-sm opacity-0 group-hover:opacity-100">⠿</span>
+                            <input type="text" value="Pass – giltigt minst 6 mån" class="flex-grow px-3 py-2 border-2 border-gray-200 rounded-xl cf-input transition-colors text-sm">
+                            <button class="px-2 py-1 text-red-400 hover:text-red-600 text-lg leading-none opacity-0 group-hover:opacity-100 transition-opacity">&times;</button>
+                        </div>
+                        <div class="flex items-center gap-2 group">
+                            <span class="drag-handle text-sm opacity-0 group-hover:opacity-100">⠿</span>
+                            <input type="text" value="Körkort (internationellt om behövs)" class="flex-grow px-3 py-2 border-2 border-gray-200 rounded-xl cf-input transition-colors text-sm">
+                            <button class="px-2 py-1 text-red-400 hover:text-red-600 text-lg leading-none opacity-0 group-hover:opacity-100 transition-opacity">&times;</button>
+                        </div>
+                        <div class="flex items-center gap-2 group">
+                            <span class="drag-handle text-sm opacity-0 group-hover:opacity-100">⠿</span>
+                            <input type="text" value="Fordonsförsäkring – kontrollera utlandsskydd" class="flex-grow px-3 py-2 border-2 border-gray-200 rounded-xl cf-input transition-colors text-sm">
+                            <button class="px-2 py-1 text-red-400 hover:text-red-600 text-lg leading-none opacity-0 group-hover:opacity-100 transition-opacity">&times;</button>
+                        </div>
+                        <!-- Add item -->
+                        <button class="flex items-center gap-2 text-sm text-[var(--forest)] font-medium hover:text-[var(--slate-deep)] transition-colors pt-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                            Lägg till punkt
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Section 2 -->
+                <div class="bg-white rounded-2xl card-shadow overflow-hidden">
+                    <div class="px-5 py-4 bg-gray-50 flex items-center gap-3">
+                        <span class="drag-handle text-lg">⠿</span>
+                        <input type="text" value="Teknik & el" class="flex-grow bg-transparent font-bold text-gray-800 cf-input focus:outline-none text-base border-b-2 border-transparent focus:border-[var(--forest)] transition-colors">
+                        <button class="px-3 py-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all text-xs font-medium">Ta bort</button>
+                    </div>
+                    <div class="p-5 space-y-2">
+                        <div class="flex items-center gap-2 group">
+                            <span class="drag-handle text-sm opacity-0 group-hover:opacity-100">⠿</span>
+                            <input type="text" value="Ladda batterier" class="flex-grow px-3 py-2 border-2 border-gray-200 rounded-xl cf-input transition-colors text-sm">
+                            <button class="px-2 py-1 text-red-400 hover:text-red-600 text-lg leading-none opacity-0 group-hover:opacity-100 transition-opacity">&times;</button>
+                        </div>
+                        <div class="flex items-center gap-2 group">
+                            <span class="drag-handle text-sm opacity-0 group-hover:opacity-100">⠿</span>
+                            <input type="text" value="Kontrollera landströmsanslutning" class="flex-grow px-3 py-2 border-2 border-gray-200 rounded-xl cf-input transition-colors text-sm">
+                            <button class="px-2 py-1 text-red-400 hover:text-red-600 text-lg leading-none opacity-0 group-hover:opacity-100 transition-opacity">&times;</button>
+                        </div>
+                        <button class="flex items-center gap-2 text-sm text-[var(--forest)] font-medium hover:text-[var(--slate-deep)] transition-colors pt-1">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                            Lägg till punkt
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Add section -->
+                <button class="w-full border-2 border-dashed border-gray-300 text-gray-500 py-4 rounded-2xl font-semibold text-sm hover:border-[var(--forest)] hover:text-[var(--forest)] transition-all flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                    Lägg till sektion
+                </button>
+            </div>
+
+            <!-- Save bar -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-end">
+                <button onclick="showView('library')" class="border-2 border-gray-300 text-gray-700 px-6 py-2.5 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">Avbryt</button>
+                <button onclick="showView('my')" class="bg-[var(--forest)] text-white px-8 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">Spara checklista</button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<!-- =============================================
+     FOOTER (from framework)
+     ============================================= -->
+<footer class="deep-gradient text-white">
+    <div class="max-w-6xl mx-auto px-6 py-12">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
+            <div>
+                <div class="flex items-center gap-2 mb-3">
+                    <svg width="20" height="24" viewBox="0 0 48 64" fill="none">
+                        <defs><linearGradient id="ft-fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#c17c5c"/><stop offset="50%" stop-color="#d4926f"/><stop offset="100%" stop-color="#e8dcc4"/></linearGradient></defs>
+                        <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#ft-fl)" opacity="0.9"/>
+                        <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
+                    </svg>
+                    <div class="handwritten text-3xl text-[var(--sand-light)]">Campfire</div>
+                </div>
+                <p class="text-gray-300 text-xs leading-relaxed">Community & Inspiration för alla som älskar husbilslivet.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Upptäck</h4>
+                <ul class="space-y-2 text-gray-300 text-xs">
+                    <li><a href="#" class="hover:text-white transition-colors">Nyheter</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Träffar</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Rutter</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Checklistor</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Community</h4>
+                <ul class="space-y-2 text-gray-300 text-xs">
+                    <li><a href="#" class="hover:text-white transition-colors">Forum</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Profiler</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Om oss</a></li>
+                    <li><a href="#" class="hover:text-white transition-colors">Kontakt</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-sm mb-3">Följ oss</h4>
+                <div class="flex gap-2 mb-4">
+                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 text-sm transition-colors">f</a>
+                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 text-sm transition-colors">i</a>
+                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 text-sm transition-colors">y</a>
+                </div>
+                <p class="text-gray-400 text-xs">Nyhetsbrev</p>
+                <div class="flex mt-2">
+                    <input type="email" placeholder="Din e-post" class="bg-white/10 border border-white/20 rounded-l-full px-4 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-white/40 flex-grow min-w-0">
+                    <button class="bg-[var(--terracotta)] text-white px-4 py-2 rounded-r-full text-xs font-semibold hover:opacity-90 transition-all">Prenumerera</button>
+                </div>
+            </div>
+        </div>
+        <div class="border-t border-white/15 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-400">
+            <p>© 2026 Campfire. Med kärlek för husbilslivet.</p>
+            <div class="flex gap-5">
+                <a href="#" class="hover:text-white transition-colors">Integritetspolicy</a>
+                <a href="#" class="hover:text-white transition-colors">Villkor</a>
+                <a href="#" class="hover:text-white transition-colors">Cookies</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- =============================================
+     SCRIPTS
+     ============================================= -->
+<script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 80);
+    });
+
+    // View switching
+    function showView(name) {
+        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        const target = document.getElementById('view-' + name);
+        if (target) target.classList.add('active');
+
+        // Update hero tabs
+        const activeClass = 'view-tab bg-white text-[var(--slate-deep)] px-5 py-2.5 rounded-full font-semibold text-sm shadow-lg hover:bg-[var(--sand-light)] transition-all';
+        const inactiveClass = 'view-tab border-2 border-white text-white px-5 py-2.5 rounded-full font-semibold text-sm hover:bg-white/10 transition-all';
+
+        document.querySelectorAll('.view-tab').forEach(tab => {
+            const isActive = tab.dataset.view === name || 
+                (name === 'active' && tab.dataset.view === 'my') ||
+                (name === 'create' && tab.dataset.view === 'library');
+            tab.className = isActive ? activeClass : inactiveClass;
+        });
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Section collapse/expand
+    function toggleSection(id) {
+        const el = document.getElementById(id);
+        const arrow = document.getElementById(id + '-arrow');
+        if (!el) return;
+        if (el.style.maxHeight === '0px') {
+            el.style.maxHeight = '1000px';
+            if (arrow) arrow.style.transform = 'rotate(0deg)';
+        } else {
+            el.style.maxHeight = '0px';
+            if (arrow) arrow.style.transform = 'rotate(-180deg)';
+        }
+    }
+</script>
+
+</body>
+</html>
