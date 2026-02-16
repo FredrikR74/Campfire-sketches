@@ -1,6 +1,6 @@
 // Campfire – Laddar delade navbar och footer-komponenter.
 // Lägg till i varje sida före </body>:
-//   <div id="navbar-slot" data-variant="dark"></div>   (eller "white")
+//   <div id="navbar-slot"></div>
 //   <div id="footer-slot"></div>
 //   <script src="components/load-components.js"></script>
 //   (eller src="../components/load-components.js" från pages/)
@@ -15,24 +15,20 @@
     var footerSlot = document.getElementById('footer-slot');
 
     if (navSlot) {
-        var variant = navSlot.getAttribute('data-variant') || 'dark';
-        var navFile = variant === 'white' ? 'navbar-white.html' : 'navbar.html';
-        fetch(base + navFile)
+        fetch(base + 'navbar.html')
             .then(function (r) { return r.text(); })
             .then(function (html) {
                 navSlot.innerHTML = html;
-                // Aktivera scroll-effekt för mörk navbar
-                if (variant === 'dark') {
-                    var nb = document.getElementById('navbar');
-                    if (nb) {
-                        window.addEventListener('scroll', function () {
-                            if (window.scrollY > 80) {
-                                nb.classList.add('scrolled');
-                            } else {
-                                nb.classList.remove('scrolled');
-                            }
-                        });
-                    }
+                // Aktivera scroll-effekt för navbar
+                var nb = document.getElementById('navbar');
+                if (nb) {
+                    window.addEventListener('scroll', function () {
+                        if (window.scrollY > 80) {
+                            nb.classList.add('scrolled');
+                        } else {
+                            nb.classList.remove('scrolled');
+                        }
+                    });
                 }
             });
     }
