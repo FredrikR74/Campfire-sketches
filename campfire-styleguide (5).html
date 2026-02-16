@@ -1,0 +1,687 @@
+﻿<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Styleguide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --slate-deep: #1e3a3a;
+            --forest: #4a7a6b;
+            --sage-green: #618a7c;
+            --sand-light: #e8dcc4;
+            --terracotta: #c17c5c;
+            --warm-gray: #5a5a5a;
+            --bg-mist: #f8f8f6;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-mist);
+            color: #333;
+        }
+
+        .handwritten { font-family: 'Caveat', cursive; }
+
+        .deep-gradient { background: linear-gradient(135deg, var(--slate-deep) 0%, var(--forest) 100%); }
+        .sage-gradient { background: linear-gradient(135deg, var(--sage-green) 0%, var(--forest) 100%); }
+        .terracotta-gradient { background: linear-gradient(135deg, var(--terracotta) 0%, #d4926f 100%); }
+
+        .card-shadow { box-shadow: 0 8px 30px rgba(30, 58, 58, 0.08); }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .forest-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23618a7c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .sg-section { margin-bottom: 3rem; }
+        .sg-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--warm-gray);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0ddd6;
+        }
+        .sg-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #999;
+            margin-bottom: 0.25rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="deep-gradient text-white px-6 py-10 mb-8">
+    <div class="max-w-5xl mx-auto flex items-center gap-4">
+        <svg width="48" height="56" viewBox="0 0 48 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs><linearGradient id="hd-fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#c17c5c"/><stop offset="50%" stop-color="#d4926f"/><stop offset="100%" stop-color="#e8dcc4"/></linearGradient></defs>
+            <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#hd-fl)" opacity="0.9"/>
+            <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
+            <line x1="4" y1="60" x2="28" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
+            <line x1="44" y1="60" x2="20" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.3"/>
+        </svg>
+        <div>
+            <div class="handwritten text-5xl text-[var(--sand-light)] mb-1">Campfire</div>
+            <p class="text-white/70 text-sm font-medium tracking-wide">COMMUNITY & INSPIRATION – DESIGN STYLEGUIDE</p>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-5xl mx-auto px-6 pb-20">
+
+    <!-- ============================================ -->
+    <!-- NAVIGATION & FOOTER → campfire-framework.html -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Navigation & Footer</div>
+        <div class="bg-white rounded-2xl p-6 card-shadow">
+            <p class="text-sm text-gray-600 mb-2">Navigation och footer är definierade i <a href="campfire-framework.html" class="text-[var(--forest)] font-semibold hover:underline">campfire-framework.html</a> och delas av alla sidor.</p>
+            <p class="text-xs text-gray-400">Inkluderar: fast navbar med scroll-effekt, mobil hamburgermeny, footer med nyhetsbrev och sociala länkar.</p>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- NAVBAR + HERO INTEGRATION -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Navbar &amp; Hero – integration</div>
+        <div class="bg-white rounded-2xl p-6 card-shadow space-y-4">
+            <p class="text-sm text-gray-600">Navbaren ska alltid smälta ihop med sidans hero/toppsektion. Så här gör du:</p>
+
+            <div class="space-y-3">
+                <div>
+                    <div class="text-sm font-semibold text-gray-800 mb-1">1. Navbar – alltid transparent</div>
+                    <p class="text-sm text-gray-600">Använd <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">bg-transparent</code> på <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">&lt;nav&gt;</code>. Ingen egen bakgrund – navbaren flyter över hero-sektionen.</p>
+                </div>
+                <div>
+                    <div class="text-sm font-semibold text-gray-800 mb-1">2. Hero – börja från toppen</div>
+                    <p class="text-sm text-gray-600">Ingen <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">pt-16</code> wrapper utanför hero. Istället: lägg <code class="bg-gray-100 px-1.5 py-0.5 rounded text-xs font-mono">pt-24 sm:pt-28</code> på själva hero-elementet så innehållet hamnar under navbaren.</p>
+                </div>
+                <div>
+                    <div class="text-sm font-semibold text-gray-800 mb-1">3. Hero-gradient – matcha navbaren</div>
+                    <p class="text-sm text-gray-600">Använd samma gradient-tons-värden som navbarens scrollade-state utgår från:</p>
+                </div>
+            </div>
+
+            <!-- Visual example -->
+            <div class="rounded-2xl overflow-hidden border-2 border-gray-100">
+                <!-- Simulated navbar -->
+                <div class="px-5 py-3 flex items-center justify-between" style="background: transparent;">
+                    <div class="flex items-center gap-2">
+                        <div class="w-5 h-6 rounded bg-[var(--terracotta)] opacity-60"></div>
+                        <span class="handwritten text-lg text-[var(--sand-light)]">Campfire</span>
+                    </div>
+                    <div class="flex gap-4">
+                        <span class="text-xs text-white/60">Länk</span>
+                        <span class="text-xs text-white/60">Länk</span>
+                        <span class="text-xs text-white/60">Länk</span>
+                    </div>
+                </div>
+                <!-- Simulated hero -->
+                <div class="px-5 py-8 text-white" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);">
+                    <div class="text-lg font-bold mb-1">Sidtitel</div>
+                    <div class="text-sm text-white/60">Navbar och hero delar samma bakgrund – ingen synlig kant.</div>
+                </div>
+            </div>
+
+            <!-- Code reference -->
+            <div class="bg-gray-50 rounded-xl p-4 space-y-2">
+                <div class="sg-label">Hero-gradient (standard)</div>
+                <code class="text-xs text-gray-600 block leading-relaxed font-mono">background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);</code>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-4 space-y-2">
+                <div class="sg-label">Stor hero (landing, med bakgrundsbild)</div>
+                <code class="text-xs text-gray-600 block leading-relaxed font-mono">background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), url('bild.jpg') center/cover no-repeat;<br>background-color: var(--slate-deep); /* fallback */</code>
+            </div>
+
+            <div class="bg-gray-50 rounded-xl p-4 space-y-2">
+                <div class="sg-label">Kompakt hero (undersidor)</div>
+                <code class="text-xs text-gray-600 block leading-relaxed font-mono">&lt;div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: ..."&gt;</code>
+            </div>
+
+            <p class="text-xs text-gray-400">OBS: Sidor utan hero (t.ex. rena formulärsidor) använder <code class="bg-gray-100 px-1 py-0.5 rounded text-xs font-mono">pt-16</code> wrapper och navbaren får då sin egen gradient-bakgrund från framework.</p>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FÄRGSCHEMA -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Färgschema</div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3">
+            <div>
+                <div class="h-16 rounded-xl mb-2" style="background: #1e3a3a;"></div>
+                <div class="text-xs font-bold">Slate Deep</div>
+                <div class="text-xs text-gray-400">#1e3a3a</div>
+            </div>
+            <div>
+                <div class="h-16 rounded-xl mb-2" style="background: #4a7a6b;"></div>
+                <div class="text-xs font-bold">Forest</div>
+                <div class="text-xs text-gray-400">#4a7a6b</div>
+            </div>
+            <div>
+                <div class="h-16 rounded-xl mb-2" style="background: #618a7c;"></div>
+                <div class="text-xs font-bold">Sage Green</div>
+                <div class="text-xs text-gray-400">#618a7c</div>
+            </div>
+            <div>
+                <div class="h-16 rounded-xl mb-2" style="background: #e8dcc4;"></div>
+                <div class="text-xs font-bold">Sand Light</div>
+                <div class="text-xs text-gray-400">#e8dcc4</div>
+            </div>
+            <div>
+                <div class="h-16 rounded-xl mb-2" style="background: #c17c5c;"></div>
+                <div class="text-xs font-bold">Terracotta</div>
+                <div class="text-xs text-gray-400">#c17c5c</div>
+            </div>
+            <div>
+                <div class="h-16 rounded-xl mb-2" style="background: #5a5a5a;"></div>
+                <div class="text-xs font-bold">Warm Gray</div>
+                <div class="text-xs text-gray-400">#5a5a5a</div>
+            </div>
+            <div>
+                <div class="h-16 rounded-xl mb-2 border border-gray-200" style="background: #f8f8f6;"></div>
+                <div class="text-xs font-bold">Mist (bg)</div>
+                <div class="text-xs text-gray-400">#f8f8f6</div>
+            </div>
+        </div>
+
+        <!-- Gradienter -->
+        <div class="mt-6">
+            <div class="sg-label">Gradienter</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div>
+                    <div class="h-12 rounded-xl deep-gradient mb-1"></div>
+                    <div class="text-xs text-gray-500">Deep – slate-deep → forest</div>
+                </div>
+                <div>
+                    <div class="h-12 rounded-xl sage-gradient mb-1"></div>
+                    <div class="text-xs text-gray-500">Sage – sage-green → forest</div>
+                </div>
+                <div>
+                    <div class="h-12 rounded-xl terracotta-gradient mb-1"></div>
+                    <div class="text-xs text-gray-500">Terracotta – terracotta → #d4926f</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- LOGOTYP -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Logotyp</div>
+        <div class="space-y-4">
+            <!-- Light background -->
+            <div class="bg-white rounded-2xl p-8 card-shadow">
+                <div class="sg-label mb-4">På ljus bakgrund</div>
+                <svg viewBox="0 0 320 80" width="280" height="70" class="mb-2">
+                    <defs>
+                        <linearGradient id="fg-flame" x1="0" y1="1" x2="0" y2="0">
+                            <stop offset="0%" stop-color="#c17c5c"/>
+                            <stop offset="50%" stop-color="#d4926f"/>
+                            <stop offset="100%" stop-color="#e8dcc4"/>
+                        </linearGradient>
+                    </defs>
+                    <g transform="translate(16, 8)">
+                        <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#fg-flame)" opacity="0.9"/>
+                        <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
+                        <line x1="4" y1="60" x2="28" y2="52" stroke="#1e3a3a" stroke-width="3.5" stroke-linecap="round"/>
+                        <line x1="44" y1="60" x2="20" y2="52" stroke="#4a7a6b" stroke-width="3.5" stroke-linecap="round"/>
+                        <circle cx="16" cy="8" r="1.2" fill="#d4926f" opacity="0.6"/>
+                        <circle cx="34" cy="5" r="1" fill="#c17c5c" opacity="0.5"/>
+                        <circle cx="12" cy="14" r="0.8" fill="#e8dcc4" opacity="0.4"/>
+                    </g>
+                    <text x="72" y="48" font-family="'Caveat', 'Segoe Script', cursive" font-weight="700" font-size="44" fill="#4a7a6b" letter-spacing="0.5">Campfire</text>
+                    <text x="74" y="68" font-family="'Outfit', sans-serif" font-weight="500" font-size="11" fill="#618a7c" letter-spacing="3">COMMUNITY &amp; INSPIRATION</text>
+                </svg>
+            </div>
+            <!-- Dark background -->
+            <div class="deep-gradient rounded-2xl p-8">
+                <div class="sg-label text-white/50 mb-4">På mörk bakgrund</div>
+                <svg viewBox="0 0 320 80" width="280" height="70">
+                    <defs>
+                        <linearGradient id="dk-flame" x1="0" y1="1" x2="0" y2="0">
+                            <stop offset="0%" stop-color="#c17c5c"/>
+                            <stop offset="50%" stop-color="#d4926f"/>
+                            <stop offset="100%" stop-color="#e8dcc4"/>
+                        </linearGradient>
+                    </defs>
+                    <g transform="translate(16, 8)">
+                        <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#dk-flame)" opacity="0.9"/>
+                        <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
+                        <line x1="4" y1="60" x2="28" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
+                        <line x1="44" y1="60" x2="20" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.3"/>
+                        <circle cx="16" cy="8" r="1.2" fill="#d4926f" opacity="0.6"/>
+                        <circle cx="34" cy="5" r="1" fill="#c17c5c" opacity="0.5"/>
+                        <circle cx="12" cy="14" r="0.8" fill="#e8dcc4" opacity="0.4"/>
+                    </g>
+                    <text x="72" y="48" font-family="'Caveat', 'Segoe Script', cursive" font-weight="700" font-size="44" fill="#e8dcc4" letter-spacing="0.5">Campfire</text>
+                    <text x="74" y="68" font-family="'Outfit', sans-serif" font-weight="500" font-size="11" fill="rgba(255,255,255,0.5)" letter-spacing="3">COMMUNITY &amp; INSPIRATION</text>
+                </svg>
+            </div>
+            <!-- Compact / nav variant -->
+            <div class="bg-white rounded-2xl p-5 card-shadow">
+                <div class="sg-label mb-3">Kompakt (navigation)</div>
+                <svg viewBox="0 0 180 36" width="160" height="32">
+                    <defs>
+                        <linearGradient id="sm-flame" x1="0" y1="1" x2="0" y2="0">
+                            <stop offset="0%" stop-color="#c17c5c"/>
+                            <stop offset="50%" stop-color="#d4926f"/>
+                            <stop offset="100%" stop-color="#e8dcc4"/>
+                        </linearGradient>
+                    </defs>
+                    <g transform="translate(2, 2) scale(0.5)">
+                        <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#sm-flame)" opacity="0.9"/>
+                        <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
+                        <line x1="4" y1="60" x2="28" y2="52" stroke="#1e3a3a" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="44" y1="60" x2="20" y2="52" stroke="#4a7a6b" stroke-width="4" stroke-linecap="round"/>
+                    </g>
+                    <text x="36" y="25" font-family="'Caveat', 'Segoe Script', cursive" font-weight="700" font-size="26" fill="#4a7a6b" letter-spacing="0.3">Campfire</text>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TYPOGRAFI -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Typografi</div>
+        <div class="grid sm:grid-cols-2 gap-6">
+            <div class="bg-white rounded-2xl p-5 card-shadow space-y-4">
+                <div class="sg-label">Display / Logo – Caveat 700</div>
+                <div class="handwritten text-5xl text-[var(--forest)]">Campfire</div>
+                <div class="text-xs font-medium tracking-[0.2em] text-[var(--sage-green)] uppercase">Community & Inspiration</div>
+            </div>
+            <div class="bg-white rounded-2xl p-5 card-shadow space-y-3">
+                <div class="sg-label">Body – Outfit</div>
+                <div class="text-3xl font-bold text-[var(--slate-deep)]">Heading Bold 800</div>
+                <div class="text-xl font-bold text-gray-800">Subheading Bold 700</div>
+                <div class="text-base font-semibold text-gray-700">Label Semibold 600</div>
+                <div class="text-base text-gray-600 leading-relaxed">Body regular 400 – Upptäck, dela och utforska nya äventyr på vägarna.</div>
+                <div class="text-sm text-gray-500">Small / Meta 400</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- KNAPPAR -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Knappar</div>
+        <div class="bg-white rounded-2xl p-6 card-shadow">
+            <div class="flex flex-wrap gap-3 items-center">
+                <button class="bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">Primary (Forest)</button>
+                <button class="bg-[var(--sage-green)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Secondary (Sage)</button>
+                <button class="bg-[var(--terracotta)] text-white px-6 py-2.5 rounded-full font-semibold hover:opacity-90 transition-all text-sm">Accent (Terracotta)</button>
+                <button class="sage-gradient text-white px-6 py-2.5 rounded-full font-semibold hover:opacity-90 transition-all shadow-lg text-sm">Gradient (Sage)</button>
+                <button class="border-2 border-gray-300 text-gray-700 px-6 py-2.5 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">Outline</button>
+                <button class="bg-gray-100 text-gray-700 px-6 py-2.5 rounded-full font-semibold hover:bg-gray-200 transition-all text-sm">Ghost</button>
+                <button class="px-4 py-2 text-[var(--forest)] hover:bg-[#e4efe8] rounded-lg transition-all text-sm font-medium">Text Link</button>
+                <button class="px-4 py-2 text-red-500 hover:bg-red-50 rounded-lg transition-all text-sm font-medium">Destructive</button>
+            </div>
+            <div class="mt-4 pt-4 border-t border-gray-100">
+                <div class="sg-label mb-2">På mörk bakgrund</div>
+                <div class="deep-gradient rounded-xl p-4 flex flex-wrap gap-3 items-center">
+                    <button class="bg-white text-[var(--slate-deep)] px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all shadow-lg text-sm">Vit Primary</button>
+                    <button class="border-2 border-white text-white px-6 py-2.5 rounded-full font-semibold hover:bg-white/10 transition-all text-sm">Vit Outline</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- BADGES -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Badges</div>
+        <div class="bg-white rounded-2xl p-6 card-shadow flex flex-wrap gap-3 items-center">
+            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Nyhet</span>
+            <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Event</span>
+            <span class="badge bg-[#e4efe8] text-[var(--forest)]">Tips</span>
+            <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Publicerad</span>
+            <span class="badge bg-yellow-100 text-yellow-700">Utkast</span>
+            <span class="badge bg-[#e4efe8] text-[var(--forest)]">45 deltagare</span>
+            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Grillkväll</span>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TAGGAR (removable) -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Taggar (borttagbara)</div>
+        <div class="bg-white rounded-2xl p-6 card-shadow flex flex-wrap gap-2 items-center">
+            <span class="px-4 py-2 bg-[#e4efe8] text-[var(--forest)] rounded-full font-semibold text-sm flex items-center gap-2">
+                Bohuslän <button class="hover:text-red-500 text-base leading-none">&times;</button>
+            </span>
+            <span class="px-4 py-2 bg-[#e8f4e8] text-[var(--sage-green)] rounded-full font-semibold text-sm flex items-center gap-2">
+                Dalarna <button class="hover:text-red-500 text-base leading-none">&times;</button>
+            </span>
+            <span class="px-4 py-2 bg-[var(--sand-light)] text-[var(--terracotta)] rounded-full font-semibold text-sm flex items-center gap-2">
+                Gotland <button class="hover:text-red-500 text-base leading-none">&times;</button>
+            </span>
+            <button class="px-4 py-2 border-2 border-dashed border-gray-300 text-gray-500 rounded-full font-semibold text-sm hover:border-[var(--forest)] hover:text-[var(--forest)] transition-all">
+                + Lägg till
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FORMULÄR -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Formulärkomponenter</div>
+        <div class="bg-white rounded-2xl p-6 card-shadow space-y-5">
+            <div class="grid sm:grid-cols-2 gap-5">
+                <!-- Text input -->
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Textfält</label>
+                    <input type="text" value="Exempelvärde" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                </div>
+                <!-- Select -->
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Select</label>
+                    <select class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                        <option>Alternativ 1</option>
+                        <option>Alternativ 2</option>
+                    </select>
+                </div>
+            </div>
+            <!-- Textarea -->
+            <div class="space-y-1.5">
+                <label class="block text-sm font-semibold text-gray-700">Textarea</label>
+                <textarea rows="2" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">Exempeltext i en textarea.</textarea>
+            </div>
+            <!-- Date -->
+            <div class="grid sm:grid-cols-2 gap-5">
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Datumfält</label>
+                    <input type="date" value="2025-08-15" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Upload-yta</label>
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-4 text-center hover:border-[var(--forest)] transition-colors cursor-pointer">
+                        <p class="text-gray-500 text-sm font-semibold">Klicka för att ladda upp</p>
+                        <p class="text-xs text-gray-400 mt-0.5">PNG, JPG upp till 10MB</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Checkbox pills -->
+            <div class="space-y-1.5">
+                <label class="block text-sm font-semibold text-gray-700">Checkbox-taggar</label>
+                <div class="flex flex-wrap gap-2">
+                    <label class="flex items-center gap-2 px-4 py-2 bg-[#e8f4e8] text-[var(--sage-green)] rounded-full cursor-pointer border-2 border-[#d0e8d0] text-sm">
+                        <input type="checkbox" checked class="w-4 h-4 accent-[var(--sage-green)]">
+                        <span class="font-semibold">Guidning</span>
+                    </label>
+                    <label class="flex items-center gap-2 px-4 py-2 bg-[var(--sand-light)] text-[var(--terracotta)] rounded-full cursor-pointer border-2 border-[#d8ccb4] text-sm">
+                        <input type="checkbox" checked class="w-4 h-4 accent-[var(--terracotta)]">
+                        <span class="font-semibold">Grillkväll</span>
+                    </label>
+                    <label class="flex items-center gap-2 px-4 py-2 bg-[#e4efe8] text-[var(--forest)] rounded-full cursor-pointer border-2 border-[#d0e0e2] text-sm">
+                        <input type="checkbox" class="w-4 h-4 accent-[var(--forest)]">
+                        <span class="font-semibold">Workshop</span>
+                    </label>
+                </div>
+            </div>
+            <!-- Mini checkbox pills (route) -->
+            <div class="space-y-1.5">
+                <label class="block text-sm font-semibold text-gray-700">Mini checkbox-taggar (faciliteter)</label>
+                <div class="flex flex-wrap gap-2">
+                    <label class="flex items-center gap-2 px-3 py-1 bg-[#e4efe8] rounded-full text-sm cursor-pointer">
+                        <input type="checkbox" class="w-3 h-3 accent-[var(--forest)]"><span>Parkering</span>
+                    </label>
+                    <label class="flex items-center gap-2 px-3 py-1 bg-[#e4efe8] rounded-full text-sm cursor-pointer">
+                        <input type="checkbox" class="w-3 h-3 accent-[var(--forest)]"><span>Toalett</span>
+                    </label>
+                    <label class="flex items-center gap-2 px-3 py-1 bg-[#e4efe8] rounded-full text-sm cursor-pointer">
+                        <input type="checkbox" class="w-3 h-3 accent-[var(--forest)]"><span>El</span>
+                    </label>
+                </div>
+            </div>
+            <!-- Toggle / notification row -->
+            <div class="space-y-1.5">
+                <label class="block text-sm font-semibold text-gray-700">Notifieringsrad (toggle)</label>
+                <label class="flex items-center justify-between p-4 border-2 border-gray-200 rounded-xl hover:border-[var(--forest)] transition-colors cursor-pointer">
+                    <div>
+                        <div class="font-semibold text-gray-800 text-sm">Nya träffar i mitt område</div>
+                        <div class="text-xs text-gray-500">Få meddelanden om kommande träffar nära dig</div>
+                    </div>
+                    <input type="checkbox" checked class="w-6 h-6 accent-[var(--forest)]">
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- NYHETSKORT -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Nyhetskort</div>
+        <div class="sm:max-w-xs">
+            <div class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div class="h-40 deep-gradient flex items-center justify-center text-white/30 text-sm">Bild 800×400</div>
+                <div class="p-5 space-y-2.5">
+                    <div class="flex gap-2 items-center">
+                        <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Nyhet</span>
+                        <span class="text-xs text-gray-500">2 timmar sedan</span>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-800">Nya stellplatser i Bohuslän</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">Upptäck 15 nya stellplatser längs den vackra Bohuskusten.</p>
+                    <a href="#" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm">Läs mer <span class="ml-1">→</span></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TRÄFFRAD -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Träffrad (listrad)</div>
+        <div class="bg-white rounded-2xl card-shadow">
+            <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-20 h-20 rounded-2xl deep-gradient flex flex-col items-center justify-center text-white">
+                            <div class="text-2xl font-bold">15</div>
+                            <div class="text-xs uppercase tracking-wide">Aug</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-1.5">
+                        <h3 class="text-lg font-bold text-gray-800">Kustträffen Göteborg</h3>
+                        <p class="text-gray-600 text-sm">Slottsskogen, Göteborg · 15-17 augusti 2025</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">45 deltagare</span>
+                            <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Guidning</span>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Grillkväll</span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center sm:items-center">
+                        <button class="w-full sm:w-auto px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Anmäl dig</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- DATUMBLOCK -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Datumblock</div>
+        <div class="flex gap-3">
+            <div class="w-20 h-20 rounded-2xl deep-gradient flex flex-col items-center justify-center text-white">
+                <div class="text-2xl font-bold">15</div>
+                <div class="text-xs uppercase tracking-wide">Aug</div>
+            </div>
+            <div class="w-20 h-20 rounded-2xl sage-gradient flex flex-col items-center justify-center text-white">
+                <div class="text-2xl font-bold">22</div>
+                <div class="text-xs uppercase tracking-wide">Sep</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- TABELL -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Tabell (admin)</div>
+        <div class="bg-white rounded-2xl p-5 card-shadow overflow-x-auto">
+            <table class="w-full text-sm">
+                <thead>
+                    <tr class="border-b-2 border-gray-200">
+                        <th class="text-left py-3 px-3 font-semibold text-gray-700">Rubrik</th>
+                        <th class="text-left py-3 px-3 font-semibold text-gray-700">Kategori</th>
+                        <th class="text-left py-3 px-3 font-semibold text-gray-700">Status</th>
+                        <th class="text-right py-3 px-3 font-semibold text-gray-700">Åtgärder</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr class="hover:bg-gray-50 transition-colors">
+                        <td class="py-3 px-3">
+                            <div class="font-semibold text-gray-800">Nya stellplatser i Bohuslän</div>
+                            <div class="text-xs text-gray-500">15 nya platser längs kusten...</div>
+                        </td>
+                        <td class="py-3 px-3"><span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Nyhet</span></td>
+                        <td class="py-3 px-3"><span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Publicerad</span></td>
+                        <td class="py-3 px-3">
+                            <div class="flex gap-1 justify-end">
+                                <button class="px-3 py-1.5 text-[var(--forest)] hover:bg-[#e4efe8] rounded-lg transition-all text-xs font-medium">Redigera</button>
+                                <button class="px-3 py-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all text-xs font-medium">Ta bort</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- AVATAR / PROFIL -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Avatar & Ruttstopp</div>
+        <div class="flex flex-wrap gap-6 items-end">
+            <div class="text-center">
+                <div class="w-20 h-20 rounded-full deep-gradient flex items-center justify-center text-white text-2xl font-bold mx-auto">JA</div>
+                <div class="text-xs text-gray-500 mt-1.5">Profilavatar</div>
+            </div>
+            <div class="text-center">
+                <div class="w-10 h-10 rounded-full bg-[var(--sage-green)] text-white flex items-center justify-center font-bold mx-auto">1</div>
+                <div class="text-xs text-gray-500 mt-1.5">Rutt-stopp</div>
+            </div>
+            <div class="text-center">
+                <div class="w-12 h-12 rounded-full sage-gradient flex items-center justify-center text-white mx-auto">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path>
+                    </svg>
+                </div>
+                <div class="text-xs text-gray-500 mt-1.5">Ikon-cirkel</div>
+            </div>
+            <div class="text-center">
+                <div class="w-10 h-10 rounded-full deep-gradient flex items-center justify-center text-white mx-auto">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </div>
+                <div class="text-xs text-gray-500 mt-1.5">Facebook</div>
+            </div>
+            <div class="text-center">
+                <div class="w-10 h-10 rounded-full deep-gradient flex items-center justify-center text-white mx-auto">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                </div>
+                <div class="text-xs text-gray-500 mt-1.5">Instagram</div>
+            </div>
+            <div class="text-center">
+                <div class="w-10 h-10 rounded-full deep-gradient flex items-center justify-center text-white mx-auto">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </div>
+                <div class="text-xs text-gray-500 mt-1.5">YouTube</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- SEKTIONS-HEADERS -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Sektions-headers</div>
+        <div class="space-y-4">
+            <div class="bg-white rounded-2xl p-5 card-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Kommande träffar</h2>
+                <button class="bg-[var(--forest)] text-white px-5 py-1.5 rounded-full font-semibold text-sm self-start sm:self-auto shrink-0">+ Skapa träff</button>
+            </div>
+            <div class="bg-white rounded-2xl p-5 card-shadow flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Senaste nyheterna</h2>
+                <a href="#" class="text-[var(--forest)] font-semibold text-sm hover:underline shrink-0">Se alla →</a>
+            </div>
+            <div class="bg-white rounded-2xl p-5 card-shadow">
+                <h3 class="text-lg font-bold text-gray-800 border-b-2 border-gray-100 pb-2">Formulärsektion</h3>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- CARD-SHELL -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Kort & ytor</div>
+        <div class="grid sm:grid-cols-3 gap-4">
+            <div class="bg-white rounded-3xl p-6 card-shadow">
+                <div class="sg-label">Standard kort</div>
+                <p class="text-sm text-gray-500 mt-1">rounded-3xl, card-shadow</p>
+            </div>
+            <div class="bg-white rounded-3xl p-6 card-shadow forest-pattern">
+                <div class="sg-label">Med forest-pattern</div>
+                <p class="text-sm text-gray-500 mt-1">Subtilt korsmönster i sage</p>
+            </div>
+            <div class="deep-gradient rounded-3xl p-6 text-white">
+                <div class="sg-label text-white/60">Mörkt kort</div>
+                <p class="text-sm text-white/70 mt-1">deep-gradient bakgrund</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- DESIGNPRINCIPER -->
+    <!-- ============================================ -->
+    <div class="sg-section">
+        <div class="sg-title">Designprinciper</div>
+        <div class="bg-white rounded-2xl p-6 card-shadow text-sm text-gray-600 space-y-2">
+            <p><strong class="text-gray-800">Typsnitt:</strong> Outfit (body), Caveat (display/logo)</p>
+            <p><strong class="text-gray-800">Radier:</strong> rounded-xl (inputs), rounded-2xl (kort inre), rounded-3xl (kort yttre), rounded-full (knappar & badges)</p>
+            <p><strong class="text-gray-800">Skugga:</strong> box-shadow: 0 8px 30px rgba(30,58,58,0.08)</p>
+            <p><strong class="text-gray-800">Borders:</strong> 2px solid, border-gray-200 (default), forest (focus/hover)</p>
+            <p><strong class="text-gray-800">Spacing:</strong> gap-6 (sektioner), gap-4 (element), gap-2 (badges/taggar)</p>
+            <p><strong class="text-gray-800">Maxbredd:</strong> max-w-6xl (sidor), max-w-4xl (formulär)</p>
+            <p><strong class="text-gray-800">Hover på kort:</strong> hover:shadow-lg hover:-translate-y-0.5 transition-all</p>
+            <p><strong class="text-gray-800">Primär accent:</strong> var(--forest) #4a7a6b – knappar, fokus, hover, logotyp, länkar</p>
+            <p><strong class="text-gray-800">Sekundär:</strong> var(--sage-green) #618a7c – mjukare badges, sekundärknappar, subtila accenter</p>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
