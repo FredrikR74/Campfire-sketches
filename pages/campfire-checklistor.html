@@ -8,72 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
     <style>
-        :root {
-            --slate-deep: #1e3a3a;
-            --forest: #4a7a6b;
-            --sage-green: #618a7c;
-            --sand-light: #e8dcc4;
-            --terracotta: #c17c5c;
-            --warm-gray: #5a5a5a;
-            --bg-mist: #f8f8f6;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-mist);
-            color: #333;
-        }
-
-        .handwritten { font-family: 'Caveat', cursive; }
-
-        .deep-gradient { background: linear-gradient(135deg, var(--slate-deep) 0%, var(--forest) 100%); }
-        .sage-gradient { background: linear-gradient(135deg, var(--sage-green) 0%, var(--forest) 100%); }
-        .terracotta-gradient { background: linear-gradient(135deg, var(--terracotta) 0%, #d4926f 100%); }
-
-        .card-shadow { box-shadow: 0 8px 30px rgba(30, 58, 58, 0.08); }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Mobile menu */
-        .mobile-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        .mobile-menu.open { max-height: 300px; }
-
-        /* Navbar */
-        .navbar {
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
-        .navbar.scrolled {
-            background: rgba(255,255,255,0.97);
-            box-shadow: 0 2px 20px rgba(30,58,58,0.08);
-        }
-        .navbar.scrolled .nav-link { color: #555 !important; }
-        .navbar.scrolled .nav-link:hover { color: var(--forest) !important; }
-        .navbar.scrolled .nav-logo-text { color: var(--forest) !important; }
-        .navbar.scrolled .nav-hamburger { color: #555 !important; }
-        .navbar.scrolled .nav-hamburger:hover { color: var(--forest) !important; }
-
-        html { scroll-behavior: smooth; }
-
-        /* Forest pattern */
-        .forest-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23618a7c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-
         /* Progress bar */
         .progress-track {
             background: #e8e5de;
@@ -146,56 +82,7 @@
 </head>
 <body>
 
-<!-- =============================================
-     NAVIGATION (from framework)
-     ============================================= -->
-<nav class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent" id="navbar">
-    <div class="max-w-6xl mx-auto px-5">
-        <div class="flex items-center justify-between h-16">
-            <a href="#" class="flex items-center gap-2 group">
-                <svg width="22" height="28" viewBox="0 0 48 64" fill="none">
-                    <defs>
-                        <linearGradient id="nav-fl" x1="0" y1="1" x2="0" y2="0">
-                            <stop offset="0%" stop-color="#c17c5c"/>
-                            <stop offset="50%" stop-color="#d4926f"/>
-                            <stop offset="100%" stop-color="#e8dcc4"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#nav-fl)" opacity="0.9"/>
-                    <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
-                    <line x1="4" y1="60" x2="28" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
-                    <line x1="44" y1="60" x2="20" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
-                </svg>
-                <span class="nav-logo-text handwritten text-[28px] text-[var(--sand-light)] transition-colors">Campfire</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-7">
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Nyheter</a>
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Träffar</a>
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Inspiration</a>
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Rutter</a>
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm font-bold border-b-2 border-white/40">Checklistor</a>
-            </div>
-            <div class="hidden md:flex items-center space-x-3">
-                <button class="nav-link text-white/80 hover:text-white font-medium text-sm transition-colors">Logga in</button>
-                <button class="bg-white text-[var(--slate-deep)] px-5 py-2 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all text-sm shadow-lg">Kom igång</button>
-            </div>
-            <button class="md:hidden nav-hamburger text-white p-2 transition-colors" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-        <div id="mobileMenu" class="mobile-menu md:hidden">
-            <div class="pb-4 pt-2 px-4 space-y-2 bg-[var(--slate-deep)] rounded-2xl mt-2 shadow-lg">
-                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Nyheter</a>
-                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Träffar</a>
-                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Inspiration</a>
-                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Rutter</a>
-                <a href="#" class="block text-white font-semibold text-sm py-2">Checklistor</a>
-            </div>
-        </div>
-    </div>
-</nav>
+<div id="navbar-slot" data-variant="dark"></div>
 
 <!-- =============================================
      MAIN CONTENT
@@ -850,77 +737,10 @@
 </div>
 
 
-<!-- =============================================
-     FOOTER (from framework)
-     ============================================= -->
-<footer class="deep-gradient text-white">
-    <div class="max-w-6xl mx-auto px-6 py-12">
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
-            <div>
-                <div class="flex items-center gap-2 mb-3">
-                    <svg width="20" height="24" viewBox="0 0 48 64" fill="none">
-                        <defs><linearGradient id="ft-fl" x1="0" y1="1" x2="0" y2="0"><stop offset="0%" stop-color="#c17c5c"/><stop offset="50%" stop-color="#d4926f"/><stop offset="100%" stop-color="#e8dcc4"/></linearGradient></defs>
-                        <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#ft-fl)" opacity="0.9"/>
-                        <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
-                    </svg>
-                    <div class="handwritten text-3xl text-[var(--sand-light)]">Campfire</div>
-                </div>
-                <p class="text-gray-300 text-xs leading-relaxed">Community & Inspiration för alla som älskar husbilslivet.</p>
-            </div>
-            <div>
-                <h4 class="font-bold text-sm mb-3">Upptäck</h4>
-                <ul class="space-y-2 text-gray-300 text-xs">
-                    <li><a href="#" class="hover:text-white transition-colors">Nyheter</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Träffar</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Rutter</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Checklistor</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold text-sm mb-3">Community</h4>
-                <ul class="space-y-2 text-gray-300 text-xs">
-                    <li><a href="#" class="hover:text-white transition-colors">Forum</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Profiler</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Om oss</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Kontakt</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="font-bold text-sm mb-3">Följ oss</h4>
-                <div class="flex gap-2 mb-4">
-                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 text-sm transition-colors">f</a>
-                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 text-sm transition-colors">i</a>
-                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 text-sm transition-colors">y</a>
-                </div>
-                <p class="text-gray-400 text-xs">Nyhetsbrev</p>
-                <div class="flex mt-2">
-                    <input type="email" placeholder="Din e-post" class="bg-white/10 border border-white/20 rounded-l-full px-4 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-white/40 flex-grow min-w-0">
-                    <button class="bg-[var(--terracotta)] text-white px-4 py-2 rounded-r-full text-xs font-semibold hover:opacity-90 transition-all">Prenumerera</button>
-                </div>
-            </div>
-        </div>
-        <div class="border-t border-white/15 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-400">
-            <p>© 2026 Campfire. Med kärlek för husbilslivet.</p>
-            <div class="flex gap-5">
-                <a href="#" class="hover:text-white transition-colors">Integritetspolicy</a>
-                <a href="#" class="hover:text-white transition-colors">Villkor</a>
-                <a href="#" class="hover:text-white transition-colors">Cookies</a>
-            </div>
-        </div>
-    </div>
-</footer>
+<div id="footer-slot"></div>
 
-
-<!-- =============================================
-     SCRIPTS
-     ============================================= -->
+<script src="../components/load-components.js"></script>
 <script>
-    // Navbar scroll
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 80);
-    });
-
     // View switching
     function showView(name) {
         document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));

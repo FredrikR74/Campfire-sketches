@@ -8,47 +8,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
     <style>
-        :root {
-            --slate-deep: #1e3a3a;
-            --forest: #4a7a6b;
-            --sage-green: #618a7c;
-            --sand-light: #e8dcc4;
-            --terracotta: #c17c5c;
-            --warm-gray: #5a5a5a;
-            --bg-mist: #f8f8f6;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Outfit', sans-serif;
-            background: var(--bg-mist);
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        .handwritten { font-family: 'Caveat', cursive; }
-
-        .deep-gradient { background: linear-gradient(135deg, var(--slate-deep) 0%, var(--forest) 100%); }
-        .sage-gradient { background: linear-gradient(135deg, var(--sage-green) 0%, var(--forest) 100%); }
-        .terracotta-gradient { background: linear-gradient(135deg, var(--terracotta) 0%, #d4926f 100%); }
-
-        .card-shadow { box-shadow: 0 8px 30px rgba(30, 58, 58, 0.08); }
-
-        .badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .forest-pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23618a7c' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
+        body { overflow-x: hidden; }
 
         /* Hero */
         .hero-section {
@@ -148,99 +110,11 @@
             right: 0;
         }
 
-        /* Mobile menu */
-        .mobile-menu {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        .mobile-menu.open {
-            max-height: 300px;
-        }
-
-        /* Navbar scroll effect */
-        .navbar {
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
-        .navbar.scrolled {
-            background: rgba(255,255,255,0.97);
-            box-shadow: 0 2px 20px rgba(30,58,58,0.08);
-        }
-        .navbar.scrolled .nav-link { color: #555; }
-        .navbar.scrolled .nav-link:hover { color: var(--forest); }
-        .navbar.scrolled .nav-logo-text { color: var(--forest); }
-        .navbar.scrolled .nav-hamburger { color: #555; }
-        .navbar.scrolled .nav-hamburger:hover { color: var(--forest); }
-
-        /* Smooth scrolling */
-        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
 
-<!-- =============================================
-     NAVIGATION
-     ============================================= -->
-<nav class="navbar fixed top-0 left-0 right-0 z-50 bg-transparent" id="navbar">
-    <div class="max-w-6xl mx-auto px-5">
-        <div class="flex items-center justify-between h-16">
-            <!-- Logo -->
-            <a href="#" class="flex items-center gap-2 group">
-                <svg width="22" height="28" viewBox="0 0 48 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                        <linearGradient id="nav-fl" x1="0" y1="1" x2="0" y2="0">
-                            <stop offset="0%" stop-color="#c17c5c"/>
-                            <stop offset="50%" stop-color="#d4926f"/>
-                            <stop offset="100%" stop-color="#e8dcc4"/>
-                        </linearGradient>
-                    </defs>
-                    <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#nav-fl)" opacity="0.9"/>
-                    <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
-                    <line x1="4" y1="60" x2="28" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.5"/>
-                    <line x1="44" y1="60" x2="20" y2="52" stroke="#e8dcc4" stroke-width="3.5" stroke-linecap="round" opacity="0.4"/>
-                </svg>
-                <span class="nav-logo-text handwritten text-[28px] text-[var(--sand-light)] transition-colors">Campfire</span>
-            </a>
-
-            <!-- Desktop menu -->
-            <div class="hidden md:flex items-center space-x-7">
-                <a href="#news" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Nyheter</a>
-                <a href="#meets" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Träffar</a>
-                <a href="#inspiration" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Inspiration</a>
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Rutter</a>
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Forum</a>
-            </div>
-
-            <!-- Desktop right -->
-            <div class="hidden md:flex items-center space-x-3">
-                <button class="nav-link text-white/80 hover:text-white font-medium text-sm transition-colors">Logga in</button>
-                <button class="bg-white text-[var(--slate-deep)] px-5 py-2 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all text-sm shadow-lg">Kom igång</button>
-            </div>
-
-            <!-- Mobile hamburger -->
-            <button class="md:hidden nav-hamburger text-white p-2 transition-colors" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Mobile menu -->
-        <div id="mobileMenu" class="mobile-menu md:hidden">
-            <div class="pb-4 pt-2 px-4 space-y-2 bg-[var(--slate-deep)] rounded-2xl mt-2 shadow-lg">
-                <a href="#news" class="block text-white/80 hover:text-white font-medium text-sm py-2">Nyheter</a>
-                <a href="#meets" class="block text-white/80 hover:text-white font-medium text-sm py-2">Träffar</a>
-                <a href="#inspiration" class="block text-white/80 hover:text-white font-medium text-sm py-2">Inspiration</a>
-                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Rutter</a>
-                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Forum</a>
-                <div class="pt-2 border-t border-white/15 flex gap-3">
-                    <button class="text-white font-medium text-sm">Logga in</button>
-                    <button class="bg-white text-[var(--slate-deep)] px-5 py-2 rounded-full font-semibold text-sm">Kom igång</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
+<div id="navbar-slot" data-variant="dark"></div>
 
 
 <!-- =============================================
@@ -648,97 +522,10 @@
 </section>
 
 
-<!-- =============================================
-     FOOTER
-     ============================================= -->
-<footer class="deep-gradient text-white">
-    <div class="max-w-6xl mx-auto px-6 py-12">
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
-            <!-- Brand -->
-            <div>
-                <div class="flex items-center gap-2 mb-3">
-                    <svg width="20" height="24" viewBox="0 0 48 64" fill="none">
-                        <defs>
-                            <linearGradient id="ft-fl" x1="0" y1="1" x2="0" y2="0">
-                                <stop offset="0%" stop-color="#c17c5c"/>
-                                <stop offset="50%" stop-color="#d4926f"/>
-                                <stop offset="100%" stop-color="#e8dcc4"/>
-                            </linearGradient>
-                        </defs>
-                        <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="url(#ft-fl)" opacity="0.9"/>
-                        <path d="M24 56 C24 56, 14 44, 14 34 C14 26, 18 22, 24 18 C22 26, 26 30, 30 26 C32 24, 34 20, 34 20 C36 26, 36 30, 34 36 C32 44, 24 56, 24 56Z" fill="#e8dcc4" opacity="0.7"/>
-                    </svg>
-                    <div class="handwritten text-3xl text-[var(--sand-light)]">Campfire</div>
-                </div>
-                <p class="text-gray-300 text-xs leading-relaxed">Community & Inspiration för alla som älskar husbilslivet.</p>
-            </div>
-            <!-- Upptäck -->
-            <div>
-                <h4 class="font-bold text-sm mb-3">Upptäck</h4>
-                <ul class="space-y-2 text-gray-300 text-xs">
-                    <li><a href="#" class="hover:text-white transition-colors">Nyheter</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Träffar</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Rutter</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Ställplatser</a></li>
-                </ul>
-            </div>
-            <!-- Community -->
-            <div>
-                <h4 class="font-bold text-sm mb-3">Community</h4>
-                <ul class="space-y-2 text-gray-300 text-xs">
-                    <li><a href="#" class="hover:text-white transition-colors">Forum</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Profiler</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Om oss</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Kontakt</a></li>
-                </ul>
-            </div>
-            <!-- Följ oss -->
-            <div>
-                <h4 class="font-bold text-sm mb-3">Följ oss</h4>
-                <div class="flex gap-2 mb-4">
-                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 transition-colors">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 transition-colors">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-                    </a>
-                    <a href="#" class="w-9 h-9 bg-white/15 rounded-full flex items-center justify-center hover:bg-white/25 transition-colors">
-                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    </a>
-                </div>
-                <p class="text-gray-400 text-xs">Nyhetsbrev</p>
-                <div class="flex mt-2">
-                    <input type="email" placeholder="Din e-post" class="bg-white/10 border border-white/20 rounded-l-full px-4 py-2 text-xs text-white placeholder-white/40 focus:outline-none focus:border-white/40 flex-grow min-w-0">
-                    <button class="bg-[var(--terracotta)] text-white px-4 py-2 rounded-r-full text-xs font-semibold hover:opacity-90 transition-all">Prenumerera</button>
-                </div>
-            </div>
-        </div>
-        <div class="border-t border-white/15 pt-6 flex flex-col sm:flex-row justify-between items-center gap-3 text-xs text-gray-400">
-            <p>© 2026 Campfire. Med kärlek för husbilslivet.</p>
-            <div class="flex gap-5">
-                <a href="#" class="hover:text-white transition-colors">Integritetspolicy</a>
-                <a href="#" class="hover:text-white transition-colors">Villkor</a>
-                <a href="#" class="hover:text-white transition-colors">Cookies</a>
-            </div>
-        </div>
-    </div>
-</footer>
+<div id="footer-slot"></div>
 
-
-<!-- =============================================
-     SCRIPTS
-     ============================================= -->
+<script src="../components/load-components.js"></script>
 <script>
-    // Navbar scroll effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 80) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-
     // Scroll-triggered fade-up animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
