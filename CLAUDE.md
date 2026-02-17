@@ -4,6 +4,7 @@
 Skisser/mockups för en husbilscommunity-plattform. **Ingen utveckling sker här** - enbart HTML-skisser för design och layout. Projektet ska på sikt bli en Blazor WASM/MAUI hybrid-app med Tailwind CSS och Supabase.
 
 ## Regler
+- **Läs INTE projektfiler i onödan** — CLAUDE.md + `boilerplate-nya-sidor.md` innehåller all info. Läs bara enskilda filer om du behöver se ett specifikt mönster som saknas här
 - **Använd komponentreferensen nedan** istället för att läsa `campfire-styleguide.html`
 - **Fråga innan** nya komponenter skapas - lägg i styleguide om godkänt
 - **Planera tillsammans** innan ändringar görs (minimera tokens)
@@ -17,6 +18,7 @@ index.html                     # Hub med länkar till alla skisser
 campfire-base.css              # Delade CSS-variabler & utility-klasser
 campfire-framework.html        # Layout-template (använder components/)
 campfire-styleguide.html       # Designsystem & komponenter (visuell referens)
+boilerplate-nya-sidor.md       # Guide för att skapa nya sidor (steg-för-steg)
 components/
   navbar.html                  # Navbar (fixed, scroll-effekt)
   footer.html                  # Gemensam footer
@@ -25,6 +27,7 @@ pages/
   campfire-landing.html        # Landningssida
   campfire-checklistor.html    # Checklistor & formulär
   campfire-profil.html         # Profilsida med redigeringsläge
+  campfire-nyheter-inspiration.html  # Artikelsida (nyheter/inspiration)
 ```
 
 ## Tech

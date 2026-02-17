@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Nyheter & Inspiration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        /* Artikeltext */
+        .article-prose p {
+            color: #4a4a4a;
+            font-size: 1.0625rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        .article-prose h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--slate-deep);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .article-prose h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--slate-deep);
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        .article-prose ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.5rem;
+        }
+        .article-prose ul li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #4a4a4a;
+            font-size: 1.0625rem;
+            line-height: 1.7;
+        }
+        .article-prose ul li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--sage-green);
+        }
+
+        /* Citat */
+        .pull-quote {
+            position: relative;
+            padding: 2rem 2rem 2rem 2.5rem;
+            border-left: 4px solid var(--terracotta);
+            background: linear-gradient(135deg, #fdf8f4 0%, #fef9f5 100%);
+            border-radius: 0 1.5rem 1.5rem 0;
+        }
+        .pull-quote::before {
+            content: '\201C';
+            position: absolute;
+            top: 0.5rem;
+            left: 0.75rem;
+            font-family: 'Caveat', cursive;
+            font-size: 3rem;
+            color: var(--terracotta);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        /* Info-rutor */
+        .callout-tip {
+            border: 2px solid #d0e8d0;
+            background: #f0f8f0;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+        }
+        .callout-warning {
+            border: 2px solid var(--sand-light);
+            background: #fdf8f2;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        /* Bildtext */
+        .image-caption {
+            font-size: 0.8125rem;
+            color: var(--warm-gray);
+            text-align: center;
+            margin-top: 0.75rem;
+            font-style: italic;
+        }
+
+        /* Artikel-hero */
+        .article-hero-image {
+            position: relative;
+            min-height: 400px;
+            overflow: hidden;
+        }
+        .article-hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30,58,58,0.95) 0%, rgba(30,58,58,0.6) 40%, rgba(30,58,58,0.3) 70%, rgba(30,58,58,0.1) 100%);
+        }
+
+        /* Dela-knappar */
+        .share-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e4efe8;
+            color: var(--forest);
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+        }
+        .share-btn:hover {
+            background: var(--forest);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div id="navbar-slot" data-variant="dark"></div>
+
+<!-- =============================================
+     STORYBLOK BLOK: article_hero
+     Fields: title, excerpt, category, hero_image, author, published_date
+     ============================================= -->
+<header class="article-hero-image">
+    <div class="absolute inset-0 deep-gradient"></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+        <svg class="w-24 h-24 text-white/10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+    </div>
+    <div class="article-hero-overlay"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto px-5 pt-32 sm:pt-40 pb-12 sm:pb-16">
+        <!-- Breadcrumb -->
+        <nav class="flex items-center gap-2 text-white/50 text-sm mb-6">
+            <a href="../index.html" class="hover:text-white transition-colors">Hem</a>
+            <span>/</span>
+            <a href="#" class="hover:text-white transition-colors">Nyheter</a>
+            <span>/</span>
+            <span class="text-white/70">Artikeltitel</span>
+        </nav>
+
+        <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)] mb-4 inline-block">Nyhet</span>
+
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-4">
+            Nya ställplatser i Bohuslän – 15 dolda pärlor längs kusten
+        </h1>
+
+        <p class="text-white/75 text-lg sm:text-xl leading-relaxed max-w-2xl mb-8">
+            Vi har kartlagt de bästa nya ställplatserna längs Bohuskusten – från avskilda klippvikar till familjevänliga hamnar med alla bekvämligheter.
+        </p>
+
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 rounded-full deep-gradient flex items-center justify-center text-white text-lg font-bold border-2 border-white/30">SL</div>
+            <div>
+                <div class="text-white font-semibold text-sm">Sara Lindqvist</div>
+                <div class="text-white/50 text-xs">Publicerad 14 februari 2026 · 8 min läsning</div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- /STORYBLOK BLOK: article_hero -->
+
+
+<!-- =============================================
+     ARTIKELINNEHÅLL + SIDOPANEL
+     ============================================= -->
+<div class="max-w-6xl mx-auto px-5 py-12">
+    <div class="grid lg:grid-cols-3 gap-8 lg:gap-12">
+
+        <!-- Huvudinnehåll -->
+        <article class="lg:col-span-2 article-prose">
+
+            <!-- STORYBLOK BLOK: rich_text -->
+            <div class="mb-8">
+                <p>Det är få platser i Sverige som kan mäta sig med Bohusläns kust när det gäller naturupplevelser från husbilen. Med sina granitklippor, fiskelägen och lugna vikar erbjuder kusten allt en husbilist kan drömma om.</p>
+                <p>Under våren 2026 har vi besökt och kartlagt 15 nya ställplatser som öppnat – eller förbättrats avsevärt – längs sträckan Göteborg till Strömstad. Här är vår kompletta guide.</p>
+            </div>
+            <!-- /STORYBLOK BLOK: rich_text -->
+
+            <!-- STORYBLOK BLOK: heading (level: h2) -->
+            <h2>Norra Bohuslän – Vilda klippor och frihet</h2>
+            <!-- /STORYBLOK BLOK: heading -->
+
+            <!-- STORYBLOK BLOK: rich_text -->
+            <div class="mb-8">
+                <p>Norra Bohuslän bjuder på de mest dramatiska landskapen. Här hittar du ställplatser där du vaknar med utsikt över öppet hav och karga klippformationer som formats under tusentals år.</p>
+            </div>
+            <!-- /STORYBLOK BLOK: rich_text -->
+
+            <!-- STORYBLOK BLOK: article_image
+                 Fields: image, caption, alt_text -->
+            <figure class="my-8 sm:-mx-4">
+                <div class="rounded-2xl overflow-hidden card-shadow">
+                    <div class="h-64 sm:h-80 deep-gradient flex items-center justify-center">
+                        <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <figcaption class="image-caption">Vy över Fjällbacka hamn i kvällsljus. Foto: Sara Lindqvist</figcaption>
+            </figure>
+            <!-- /STORYBLOK BLOK: article_image -->
+
+            <!-- STORYBLOK BLOK: rich_text -->
+            <div class="mb-8">
+                <p>Flera av de nya platserna i norr har tillkommit tack vare kommunala satsningar på hållbar turism. Det innebär att du ofta hittar bra faciliteter utan att det känns överexploaterat.</p>
+            </div>
+            <!-- /STORYBLOK BLOK: rich_text -->
+
+            <!-- STORYBLOK BLOK: pull_quote
+                 Fields: quote, attribution -->
+            <blockquote class="pull-quote my-8">
+                <p class="text-lg sm:text-xl font-semibold text-[var(--slate-deep)] leading-relaxed italic">
+                    Bohuslän är den enda platsen där jag verkligen kan stänga av – bara klipporna, havet och husbilen.
+                </p>
+                <cite class="block mt-3 text-sm text-[var(--warm-gray)] font-medium not-italic">
+                    – Erik Johansson, husbilsresenär sedan 2019
+                </cite>
+            </blockquote>
+            <!-- /STORYBLOK BLOK: pull_quote -->
+
+            <!-- STORYBLOK BLOK: heading (level: h3) -->
+            <h3>Vad vi bedömde</h3>
+            <!-- /STORYBLOK BLOK: heading -->
+
+            <!-- STORYBLOK BLOK: rich_text (lista) -->
+            <div class="mb-8">
+                <ul>
+                    <li>Tillgänglighet med större husbilar (7+ meter)</li>
+                    <li>Avstånd till vatten och naturupplevelser</li>
+                    <li>Faciliteter: el, vatten, tömning, WiFi</li>
+                    <li>Pris i förhållande till kvalitet</li>
+                    <li>Lugn och avskildhet</li>
+                </ul>
+            </div>
+            <!-- /STORYBLOK BLOK: rich_text -->
+
+            <!-- STORYBLOK BLOK: callout (type: tip)
+                 Fields: type, title, content -->
+            <div class="callout-tip my-8">
+                <div class="flex items-start gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[#d0e8d0] flex items-center justify-center mt-0.5">
+                        <svg class="w-5 h-5 text-[var(--forest)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-[var(--forest)] text-sm mb-1">Bra att veta</h4>
+                        <p class="text-sm text-gray-700 leading-relaxed">
+                            Flera av ställplatserna kräver förbokning under högsäsong (juni–augusti).
+                            Kontrollera alltid tillgänglighet via respektive kommuns hemsida innan du ger dig av.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- /STORYBLOK BLOK: callout -->
+
+            <!-- STORYBLOK BLOK: heading (level: h2) -->
+            <h2>Centrala kusten – Charm och bekvämlighet</h2>
+            <!-- /STORYBLOK BLOK: heading -->
+
+            <!-- STORYBLOK BLOK: rich_text -->
+            <div class="mb-8">
+                <p>Längre söderut hittar du ställplatser som kombinerar det bästa av två världar – närhet till pittoreska kustsamhällen och modern infrastruktur. Perfekt för familjer och de som vill ha lite mer service.</p>
+            </div>
+            <!-- /STORYBLOK BLOK: rich_text -->
+
+            <!-- STORYBLOK BLOK: image_pair
+                 Fields: image_left, image_right, caption -->
+            <div class="my-8 grid sm:grid-cols-2 gap-4">
+                <div class="rounded-2xl overflow-hidden card-shadow">
+                    <div class="h-48 sage-gradient flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="rounded-2xl overflow-hidden card-shadow">
+                    <div class="h-48 terracotta-gradient flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            <p class="image-caption -mt-4 mb-8">Vänster: Solnedgång vid Smögen. Höger: Morgondopp vid Fjällbacka.</p>
+            <!-- /STORYBLOK BLOK: image_pair -->
+
+            <!-- STORYBLOK BLOK: rich_text -->
+            <div class="mb-8">
+                <p>Oavsett om du föredrar den vilda naturen i norr eller bekvämligheten längre söderut – Bohuslän har något för alla. Vi rekommenderar att planera din resa i god tid, särskilt under sommarmånaderna.</p>
+            </div>
+            <!-- /STORYBLOK BLOK: rich_text -->
+
+            <!-- STORYBLOK BLOK: callout (type: warning) -->
+            <div class="callout-warning my-8">
+                <div class="flex items-start gap-3">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-[var(--sand-light)] flex items-center justify-center mt-0.5">
+                        <svg class="w-5 h-5 text-[var(--terracotta)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-[var(--terracotta)] text-sm mb-1">Tänk på</h4>
+                        <p class="text-sm text-gray-700 leading-relaxed">
+                            Vissa vikar har begränsad svängradie. Kontrollera maximalt fordonsmått innan du kör ner.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- /STORYBLOK BLOK: callout -->
+
+            <!-- Dela-rad + taggar -->
+            <div class="border-t-2 border-gray-100 pt-6 mt-12">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-2">
+                        <span class="text-sm font-semibold text-gray-500">Dela:</span>
+                        <button class="share-btn" title="Facebook">f</button>
+                        <button class="share-btn" title="Instagram">i</button>
+                        <button class="share-btn" title="Kopiera länk">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                        </button>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge bg-[#e4efe8] text-[var(--forest)]">Bohuslän</span>
+                        <span class="badge bg-[#e4efe8] text-[var(--forest)]">Ställplatser</span>
+                        <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Guide</span>
+                    </div>
+                </div>
+            </div>
+
+        </article>
+
+        <!-- Sidopanel -->
+        <aside class="lg:col-span-1">
+            <div class="lg:sticky lg:top-24 space-y-6">
+
+                <!-- Innehållsförteckning -->
+                <div class="bg-white rounded-3xl p-6 card-shadow">
+                    <h3 class="text-sm font-bold text-[var(--slate-deep)] mb-4 uppercase tracking-wide">Innehåll</h3>
+                    <nav class="space-y-2">
+                        <a href="#" class="block text-sm text-[var(--forest)] font-semibold hover:underline">Norra Bohuslän</a>
+                        <a href="#" class="block text-sm text-gray-500 hover:text-[var(--forest)] transition-colors">Centrala kusten</a>
+                        <a href="#" class="block text-sm text-gray-500 hover:text-[var(--forest)] transition-colors">Södra Bohuslän</a>
+                        <a href="#" class="block text-sm text-gray-500 hover:text-[var(--forest)] transition-colors">Praktiska tips</a>
+                    </nav>
+                </div>
+
+                <!-- Mini-författarkort -->
+                <div class="bg-white rounded-3xl p-6 card-shadow text-center">
+                    <div class="w-16 h-16 rounded-full deep-gradient flex items-center justify-center text-white text-xl font-bold mx-auto mb-3">SL</div>
+                    <div class="font-bold text-sm text-gray-800">Sara Lindqvist</div>
+                    <div class="text-xs text-gray-400 mt-0.5">Reseinspiratör & husbilist</div>
+                    <button class="mt-3 px-4 py-2 text-[var(--forest)] hover:bg-[#e4efe8] rounded-lg transition-all text-sm font-medium">Visa profil</button>
+                </div>
+
+                <!-- Nyhetsbrev-CTA -->
+                <div class="sage-gradient rounded-3xl p-6 text-white">
+                    <h3 class="font-bold text-sm mb-2">Få fler tips i mailen</h3>
+                    <p class="text-white/70 text-xs mb-3">Veckovis inspiration för husbilslivet.</p>
+                    <input type="email" placeholder="Din e-post" class="w-full bg-white/15 border border-white/25 rounded-xl px-4 py-2.5 text-sm text-white placeholder-white/50 focus:outline-none focus:border-white/50 mb-2">
+                    <button class="w-full bg-white text-[var(--slate-deep)] py-2.5 rounded-full font-semibold text-sm hover:bg-[var(--sand-light)] transition-all">Prenumerera</button>
+                </div>
+
+            </div>
+        </aside>
+
+    </div>
+</div>
+
+
+<!-- =============================================
+     STORYBLOK BLOK: author_card
+     Fields: author (relation -> author content type)
+     ============================================= -->
+<section class="max-w-4xl mx-auto px-5 pb-12">
+    <div class="bg-white rounded-3xl p-8 card-shadow">
+        <div class="flex flex-col sm:flex-row gap-6">
+            <div class="flex-shrink-0">
+                <div class="w-24 h-24 rounded-full deep-gradient flex items-center justify-center text-white text-3xl font-bold">SL</div>
+            </div>
+            <div class="flex-grow">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
+                    <div>
+                        <h3 class="text-xl font-bold text-[var(--slate-deep)]">Sara Lindqvist</h3>
+                        <p class="text-sm text-[var(--sage-green)] font-semibold">Reseinspiratör & husbilist</p>
+                    </div>
+                    <button class="bg-[var(--forest)] text-white px-5 py-2 rounded-full font-semibold text-sm hover:bg-[var(--slate-deep)] transition-all self-start sm:self-auto">Följ</button>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed mb-3">
+                    Sara har rest med husbil i över 10 år och delar regelbundet tips och rutter
+                    från svenska kuster och europeiska äventyr. Medlem i Campfire sedan 2023.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">42 artiklar</span>
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">Västkusten</span>
+                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Top-skribent</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /STORYBLOK BLOK: author_card -->
+
+
+<!-- =============================================
+     STORYBLOK BLOK: related_articles
+     Fields: title, articles (multi-relation)
+     ============================================= -->
+<section class="max-w-6xl mx-auto px-5 py-16">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-8">
+        <h2 class="text-2xl sm:text-3xl font-bold text-[var(--slate-deep)]">Fler artiklar</h2>
+        <a href="#" class="text-[var(--forest)] font-semibold text-sm hover:underline shrink-0">Se alla nyheter →</a>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Kort 1 -->
+        <article class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-lg hover:-translate-y-0.5 transition-all">
+            <div class="h-44 relative overflow-hidden">
+                <div class="absolute inset-0 sage-gradient"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <div class="absolute top-4 left-4">
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">Tips</span>
+                </div>
+            </div>
+            <div class="p-5 space-y-2.5">
+                <span class="text-xs text-gray-500">Igår</span>
+                <h3 class="text-lg font-bold text-gray-800">Guide: Vinterförvaring av husbilen</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Allt du behöver veta för att förbereda din husbil inför vinterhalvåret.</p>
+                <a href="#" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs mer <span class="ml-1">→</span></a>
+            </div>
+        </article>
+
+        <!-- Kort 2 -->
+        <article class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-lg hover:-translate-y-0.5 transition-all">
+            <div class="h-44 relative overflow-hidden">
+                <div class="absolute inset-0 terracotta-gradient"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                </div>
+                <div class="absolute top-4 left-4">
+                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Inspiration</span>
+                </div>
+            </div>
+            <div class="p-5 space-y-2.5">
+                <span class="text-xs text-gray-500">3 dagar sedan</span>
+                <h3 class="text-lg font-bold text-gray-800">Gotland runt på 7 dagar</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">En veckas rutt runt hela Gotland med de bästa stoppen.</p>
+                <a href="#" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs mer <span class="ml-1">→</span></a>
+            </div>
+        </article>
+
+        <!-- Kort 3 -->
+        <article class="bg-white rounded-3xl overflow-hidden card-shadow hover:shadow-lg hover:-translate-y-0.5 transition-all">
+            <div class="h-44 relative overflow-hidden">
+                <div class="absolute inset-0 deep-gradient"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                    </svg>
+                </div>
+                <div class="absolute top-4 left-4">
+                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Nyhet</span>
+                </div>
+            </div>
+            <div class="p-5 space-y-2.5">
+                <span class="text-xs text-gray-500">1 vecka sedan</span>
+                <h3 class="text-lg font-bold text-gray-800">Solceller för husbilen – komplett guide</h3>
+                <p class="text-gray-600 text-sm leading-relaxed">Allt om solpaneler, batterier och laddning för den självförsörjande husbilisten.</p>
+                <a href="#" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs mer <span class="ml-1">→</span></a>
+            </div>
+        </article>
+
+    </div>
+</section>
+<!-- /STORYBLOK BLOK: related_articles -->
+
+
+<!-- =============================================
+     STORYBLOK BLOK: cta_banner
+     Fields: title, description, primary_button_text, secondary_button_text
+     ============================================= -->
+<section class="py-16">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="deep-gradient rounded-3xl overflow-hidden relative">
+            <div class="forest-pattern absolute inset-0 opacity-30"></div>
+            <div class="absolute right-8 top-8 opacity-10 hidden lg:block">
+                <svg width="120" height="160" viewBox="0 0 48 64" fill="none">
+                    <path d="M24 56 C24 56, 6 40, 6 28 C6 16, 14 6, 24 2 C20 14, 28 20, 32 16 C36 12, 34 4, 34 4 C40 10, 42 18, 42 28 C42 40, 24 56, 24 56Z" fill="#e8dcc4"/>
+                </svg>
+            </div>
+            <div class="relative text-center py-16 px-6 sm:px-12">
+                <h2 class="handwritten text-4xl sm:text-5xl text-[var(--sand-light)] mb-4">Kom med runt lägerelden</h2>
+                <p class="text-white/70 text-lg max-w-xl mx-auto mb-8">
+                    Skapa din profil, dela dina favoritställplatser och träffa husbilsentusiaster från hela Sverige.
+                </p>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button class="bg-white text-[var(--slate-deep)] px-8 py-3 rounded-full font-bold hover:bg-[var(--sand-light)] transition-all shadow-lg text-sm">Skapa konto – gratis</button>
+                    <button class="border-2 border-white/30 text-white px-8 py-3 rounded-full font-semibold hover:bg-white/10 transition-all text-sm">Läs mer om Campfire</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /STORYBLOK BLOK: cta_banner -->
+
+
+<div id="footer-slot"></div>
+<script src="../components/load-components.js"></script>
+</body>
+</html>
