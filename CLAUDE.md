@@ -75,6 +75,15 @@ pages/
 - `components/footer.html` – gemensam footer
 - `components/load-components.js` – laddar navbar + footer via fetch
 
+### Delade utility-klasser (campfire-base.css)
+| Klass | Beskrivning |
+|-------|-------------|
+| `.page` / `.page.active` | Toggle-mönster för sidvyer (display:none/block + fadeIn-animation) |
+| `.fade-up` / `.fade-up.visible` | Scroll-animering (opacity 0→1, translateY 30px→0) |
+| `.stagger-1` … `.stagger-4` | Fördröjning 0.1s–0.4s för staggerade animationer |
+| `.card-hover` | Kort/rad hover-effekt (translateY -2px + shadow) |
+| `.cf-input:focus` | Input focus-stil (border-color: forest, outline: none) |
+
 ---
 
 ## Komponentreferens (copy-paste)
