@@ -52,32 +52,6 @@
             transition: color 0.2s;
         }
         .drag-handle:hover { color: var(--forest); }
-
-        /* View transitions */
-        .view { display: none; }
-        .view.active {
-            display: block;
-            animation: fadeIn 0.25s ease;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Template card hover */
-        .template-card {
-            transition: all 0.2s ease;
-        }
-        .template-card:hover {
-            box-shadow: 0 12px 40px rgba(30, 58, 58, 0.12);
-            transform: translateY(-2px);
-        }
-
-        /* Subtle input focus ring */
-        .cf-input:focus {
-            border-color: var(--forest);
-            outline: none;
-        }
     </style>
 </head>
 <body>
@@ -118,7 +92,7 @@
     <!-- ===================================================
          VIEW 1: MALLBIBLIOTEK (Template Library)
          =================================================== -->
-    <div id="view-library" class="view active">
+    <div id="view-library" class="page active">
         <div class="max-w-6xl mx-auto px-5 py-8">
 
             <!-- Filter bar -->
@@ -316,7 +290,7 @@
     <!-- ===================================================
          VIEW 2: MIN AKTIVA CHECKLISTA (Active Checklist)
          =================================================== -->
-    <div id="view-active" class="view">
+    <div id="view-active" class="page">
         <div class="max-w-4xl mx-auto px-5 py-8">
 
             <!-- Back + meta -->
@@ -513,7 +487,7 @@
     <!-- ===================================================
          VIEW 3: MINA LISTOR (My Lists)
          =================================================== -->
-    <div id="view-my" class="view">
+    <div id="view-my" class="page">
         <div class="max-w-4xl mx-auto px-5 py-8">
 
             <!-- Header -->
@@ -607,7 +581,7 @@
     <!-- ===================================================
          VIEW 4: SKAPA/REDIGERA (Create/Edit Template)
          =================================================== -->
-    <div id="view-create" class="view">
+    <div id="view-create" class="page">
         <div class="max-w-4xl mx-auto px-5 py-8">
 
             <!-- Back -->
@@ -743,7 +717,7 @@
 <script>
     // View switching
     function showView(name) {
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+        document.querySelectorAll('.page').forEach(v => v.classList.remove('active'));
         const target = document.getElementById('view-' + name);
         if (target) target.classList.add('active');
 
