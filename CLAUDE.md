@@ -71,6 +71,16 @@ pages/
 - Meny: Nyheter, Träffar, Inspiration, Rutter, Forum
 - Navbar och footer laddas via `components/load-components.js` – redigera i `components/`
 
+### Header under navbar (funktionssidor)
+- Gäller **funktionssidor** (t.ex. checklistor, loggbok, profilöversikt) – **inte** redaktionella sidor (landing, artiklar, inspiration) och **inte** undersidor som `redigera profil`/`redigera loggbok`
+- Använd kompakt hero direkt under navbar med:
+  - Wrapper: `text-white pt-24 sm:pt-28 pb-12 sm:pb-16`
+  - Bakgrund: dubbla gradients enligt standard underside-hero
+  - Innehåll: `max-w-6xl mx-auto px-5`
+  - Struktur: `flex flex-col sm:flex-row sm:items-end justify-between gap-4`
+  - Vänsterblock: ikon + sidtitel (`text-3xl sm:text-4xl font-bold`) + kort ingress (`text-white/70 text-sm sm:text-base max-w-md`)
+  - Högerblock (valfritt): snabba primära actions/tabs i hero (som i checklistor)
+
 ### Delade filer
 - `campfire-base.css` – CSS-variabler och utility-klasser (länkas i alla HTML-filer)
 - `components/navbar.html` – navbar (fixed, scroll-effekt)
@@ -251,12 +261,20 @@ background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85
 background-color: var(--slate-deep); /* fallback */
 ```
 
-### Kompakt hero (undersidor)
+### Kompakt hero (undersidor / funktionssidor)
 ```html
 <div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);">
-    <div class="max-w-6xl mx-auto px-5 text-center">
-        <h1 class="text-3xl sm:text-4xl font-extrabold mb-3">Sidtitel</h1>
-        <p class="text-white/70 text-sm max-w-lg mx-auto">Beskrivning</p>
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <!-- Valfri ikon -->
+                    <h1 class="text-3xl sm:text-4xl font-bold">Sidtitel</h1>
+                </div>
+                <p class="text-white/70 text-sm sm:text-base max-w-md">Beskrivning</p>
+            </div>
+            <!-- Valfritt högerblock med actions/tabs -->
+        </div>
     </div>
 </div>
 ```
