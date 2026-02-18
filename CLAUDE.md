@@ -26,6 +26,7 @@ components/
 pages/
   campfire-landing.html        # Landningssida
   campfire-checklistor.html    # Checklistor & formulär
+  campfire-loggbok.html        # Loggbok: listvy med sök, filter och paginering
   campfire-editera-loggbok.html        # Loggbok: skapa/ändra stopp med karta, väder och kostnader
   campfire-profil.html         # Profilsida med redigeringsläge
   campfire-nyheter-inspiration.html  # Artikelsida (nyheter/inspiration)

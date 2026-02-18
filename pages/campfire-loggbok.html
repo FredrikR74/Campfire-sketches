@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Loggbok</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        .log-card {
+            border: 2px solid #eef2f2;
+            border-radius: 1.25rem;
+            transition: all 0.25s ease;
+        }
+
+        .log-card:hover {
+            border-color: var(--forest);
+            box-shadow: 0 12px 30px rgba(30, 58, 58, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .log-media {
+            height: 8rem;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(30, 58, 58, 0.92) 0%, rgba(74, 122, 107, 0.85) 55%, rgba(97, 138, 124, 0.78) 100%);
+        }
+
+        .is-hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg-mist)] text-gray-800">
+
+<div id="navbar-slot" data-variant="dark"></div>
+
+<div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);">
+    <div class="max-w-6xl mx-auto px-5 text-center">
+        <h1 class="text-3xl sm:text-4xl font-extrabold mb-3">Personlig loggbok</h1>
+        <p class="text-white/70 text-sm max-w-2xl mx-auto">Bläddra bland tidigare stopp, läs anteckningar och filtrera fram exakt de resor du letar efter.</p>
+    </div>
+</div>
+
+<main class="max-w-6xl mx-auto px-5 py-10 sm:py-12 space-y-7">
+    <section class="bg-white rounded-3xl p-5 sm:p-6 card-shadow">
+        <form id="filter-form" class="grid lg:grid-cols-12 gap-4 items-end">
+            <div class="lg:col-span-5 space-y-1.5">
+                <label for="search-input" class="block text-sm font-semibold text-gray-700">Sök i loggar</label>
+                <input id="search-input" type="text" placeholder="Ex. Lofoten, service, stormkök" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+            </div>
+
+            <div class="lg:col-span-3 space-y-1.5">
+                <label for="filter-category" class="block text-sm font-semibold text-gray-700">Kategori</label>
+                <select id="filter-category" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                    <option value="all">Alla kategorier</option>
+                    <option value="Naturcamp">Naturcamp</option>
+                    <option value="Ställplats">Ställplats</option>
+                    <option value="Service">Service</option>
+                    <option value="Matstopp">Matstopp</option>
+                    <option value="Friluftsliv">Friluftsliv</option>
+                </select>
+            </div>
+
+            <div class="lg:col-span-2 space-y-1.5">
+                <label for="filter-season" class="block text-sm font-semibold text-gray-700">Säsong</label>
+                <select id="filter-season" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                    <option value="all">Alla</option>
+                    <option value="Vinter">Vinter</option>
+                    <option value="Vår">Vår</option>
+                    <option value="Sommar">Sommar</option>
+                    <option value="Höst">Höst</option>
+                </select>
+            </div>
+
+            <div class="lg:col-span-2 flex flex-col sm:flex-row gap-2 lg:justify-end">
+                <button type="submit" class="w-full sm:w-auto whitespace-nowrap bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">Sök loggar</button>
+                <button type="button" id="reset-filters" class="w-full sm:w-auto whitespace-nowrap border-2 border-gray-300 text-gray-700 px-4 py-2.5 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">Rensa</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="space-y-4" aria-live="polite">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Loggar</h2>
+            <p id="result-count" class="text-sm text-gray-500 font-medium">Visar 0 loggar</p>
+        </div>
+
+        <div id="empty-state" class="bg-white rounded-3xl p-8 card-shadow text-center is-hidden">
+            <p class="text-lg font-semibold text-[var(--slate-deep)]">Inga loggar matchade din sökning.</p>
+            <p class="text-sm text-gray-500 mt-2">Prova att rensa filter eller sök på ett annat ord.</p>
+        </div>
+
+        <div id="log-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+
+        <div class="bg-white rounded-3xl p-4 sm:p-5 card-shadow flex flex-col sm:flex-row items-center justify-between gap-3">
+            <button id="prev-page" type="button" class="border-2 border-gray-300 text-gray-700 px-5 py-2 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm disabled:opacity-40 disabled:cursor-not-allowed">← Föregående</button>
+            <p id="page-status" class="text-sm font-semibold text-gray-600">Sida 1 av 1</p>
+            <button id="next-page" type="button" class="bg-[var(--sage-green)] text-white px-5 py-2 rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm disabled:opacity-40 disabled:cursor-not-allowed">Nästa →</button>
+        </div>
+    </section>
+</main>
+
+<div id="footer-slot"></div>
+
+<script src="../components/load-components.js"></script>
+<script>
+    const logs = [
+        { date: '14 juni 2025', place: 'Henningsvær, Lofoten', category: 'Naturcamp', season: 'Sommar', distance: '214 km', weather: '12° · Solglimtar', excerpt: 'Vaknade till havsutsikt och byggde frukost på stormkök. Hittade en liten vandringsled bakom campen.', tags: ['Utsikt', 'Vandring'] },
+        { date: '02 maj 2025', place: 'Røros, Norge', category: 'Matstopp', season: 'Vår', distance: '96 km', weather: '5° · Duggregn', excerpt: 'Fikastopp i gamla stan och påfyllning av lokala råvaror inför helgen.', tags: ['Bageri', 'Lokalt'] },
+        { date: '18 april 2025', place: 'Åre, Sverige', category: 'Friluftsliv', season: 'Vår', distance: '142 km', weather: '3° · Vind', excerpt: 'Planerade morgondagens topptur och testade ny pannlampa runt lederna.', tags: ['Topptur', 'Planering'] },
+        { date: '29 mars 2025', place: 'Tylösand, Sverige', category: 'Ställplats', season: 'Vår', distance: '180 km', weather: '7° · Klart', excerpt: 'Lugn kväll nära stranden. Bra elstolpar och enkel incheckning i appen.', tags: ['Elplats', 'Hav'] },
+        { date: '11 februari 2025', place: 'Mora, Sverige', category: 'Service', season: 'Vinter', distance: '88 km', weather: '-4° · Snö', excerpt: 'Tömning, färskvatten och snabb kontroll av värmesystem innan nattkylan.', tags: ['Vatten', 'Underhåll'] },
+        { date: '23 januari 2025', place: 'Trysil, Norge', category: 'Friluftsliv', season: 'Vinter', distance: '133 km', weather: '-9° · Snöfall', excerpt: 'Skidspår direkt från campingen. Antecknade bästa parkeringen för husbil.', tags: ['Skidor', 'Tips'] },
+        { date: '07 november 2024', place: 'Visby, Gotland', category: 'Matstopp', season: 'Höst', distance: '56 km', weather: '9° · Mulet', excerpt: 'Provade lokal fiskrestaurang och hittade mysig parkering nära ringmuren.', tags: ['Restaurang', 'Stad'] },
+        { date: '19 oktober 2024', place: 'Kivik, Österlen', category: 'Naturcamp', season: 'Höst', distance: '74 km', weather: '11° · Sol', excerpt: 'Äppelfestival i byn och kvällspromenad längs havet innan vi slog läger.', tags: ['Festival', 'Promenad'] },
+        { date: '30 augusti 2024', place: 'Fjällbacka, Bohuslän', category: 'Ställplats', season: 'Sommar', distance: '121 km', weather: '17° · Lätt vind', excerpt: 'Nära bryggan med gångavstånd till butik. Perfekt för en lugn mellanlandning.', tags: ['Brygga', 'Butik'] },
+        { date: '12 juli 2024', place: 'Sälen, Sverige', category: 'Service', season: 'Sommar', distance: '67 km', weather: '16° · Regnskur', excerpt: 'Bromskontroll på verkstad och påfyllning av gasol innan nästa etapp.', tags: ['Verkstad', 'Gasol'] }
+    ];
+
+    const state = {
+        query: '',
+        category: 'all',
+        season: 'all',
+        page: 1,
+        pageSize: 6
+    };
+
+    const logList = document.getElementById('log-list');
+    const resultCount = document.getElementById('result-count');
+    const pageStatus = document.getElementById('page-status');
+    const emptyState = document.getElementById('empty-state');
+    const prevPageButton = document.getElementById('prev-page');
+    const nextPageButton = document.getElementById('next-page');
+
+    const searchInput = document.getElementById('search-input');
+    const categorySelect = document.getElementById('filter-category');
+    const seasonSelect = document.getElementById('filter-season');
+    const filterForm = document.getElementById('filter-form');
+    const resetFiltersButton = document.getElementById('reset-filters');
+
+    const getFilteredLogs = () => {
+        const query = state.query.trim().toLowerCase();
+
+        return logs.filter(log => {
+            const matchesQuery = !query || [
+                log.place,
+                log.excerpt,
+                log.category,
+                log.season,
+                log.tags.join(' ')
+            ].join(' ').toLowerCase().includes(query);
+
+            const matchesCategory = state.category === 'all' || log.category === state.category;
+            const matchesSeason = state.season === 'all' || log.season === state.season;
+
+            return matchesQuery && matchesCategory && matchesSeason;
+        });
+    };
+
+    const renderLogs = () => {
+        const filteredLogs = getFilteredLogs();
+        const totalPages = Math.max(1, Math.ceil(filteredLogs.length / state.pageSize));
+
+        if (state.page > totalPages) {
+            state.page = totalPages;
+        }
+
+        const start = (state.page - 1) * state.pageSize;
+        const visibleLogs = filteredLogs.slice(start, start + state.pageSize);
+
+        resultCount.textContent = `Visar ${filteredLogs.length} loggar`;
+        pageStatus.textContent = `Sida ${state.page} av ${totalPages}`;
+
+        prevPageButton.disabled = state.page === 1;
+        nextPageButton.disabled = state.page === totalPages;
+
+        emptyState.classList.toggle('is-hidden', filteredLogs.length > 0);
+        logList.innerHTML = '';
+
+        visibleLogs.forEach(log => {
+            const article = document.createElement('article');
+            article.className = 'log-card bg-white p-4 sm:p-5 space-y-3';
+            article.innerHTML = `
+                <div class="log-media flex items-end p-3 text-white">
+                    <span class="badge bg-white/20 text-white">${log.category}</span>
+                </div>
+                <div class="space-y-2">
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">${log.date}</p>
+                    <h3 class="text-lg font-bold text-[var(--slate-deep)]">${log.place}</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">${log.excerpt}</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">${log.weather}</span>
+                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">${log.distance}</span>
+                    <span class="badge bg-[#f3f4f6] text-gray-600">${log.season}</span>
+                </div>
+            `;
+
+            logList.appendChild(article);
+        });
+    };
+
+    filterForm.addEventListener('submit', event => {
+        event.preventDefault();
+        state.query = searchInput.value;
+        state.category = categorySelect.value;
+        state.season = seasonSelect.value;
+        state.page = 1;
+        renderLogs();
+    });
+
+    resetFiltersButton.addEventListener('click', () => {
+        filterForm.reset();
+        state.query = '';
+        state.category = 'all';
+        state.season = 'all';
+        state.page = 1;
+        renderLogs();
+    });
+
+    prevPageButton.addEventListener('click', () => {
+        if (state.page > 1) {
+            state.page -= 1;
+            renderLogs();
+        }
+    });
+
+    nextPageButton.addEventListener('click', () => {
+        const totalPages = Math.max(1, Math.ceil(getFilteredLogs().length / state.pageSize));
+        if (state.page < totalPages) {
+            state.page += 1;
+            renderLogs();
+        }
+    });
+
+    renderLogs();
+</script>
+</body>
+</html>
