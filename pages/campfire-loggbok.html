@@ -35,6 +35,18 @@
             width: 1.5rem;
             height: 1.5rem;
         }
+
+        .rating-stars {
+            color: #cbd5e1;
+        }
+
+        .rating-star {
+            transition: color 0.2s ease;
+        }
+
+        .rating-star.is-active {
+            color: var(--forest);
+        }
     </style>
 </head>
 <body class="bg-[var(--bg-mist)] text-gray-800">
@@ -178,24 +190,24 @@
                 <div class="grid sm:grid-cols-3 gap-4">
                     <div class="space-y-2">
                         <span class="text-sm font-semibold text-gray-700 block">Betyg</span>
-                        <div class="flex items-center gap-1.5 text-[var(--terracotta)]" role="radiogroup" aria-label="Betyg med stjärnor">
-                            <label class="cursor-pointer" title="1 stjärna" aria-label="1 stjärna">
+                        <div id="rating-stars" class="rating-stars flex items-center gap-1.5" role="radiogroup" aria-label="Betyg med stjärnor">
+                            <label class="rating-star cursor-pointer" data-value="1" title="1 stjärna" aria-label="1 stjärna">
                                 <input type="radio" name="rating" value="1" class="sr-only">
                                 <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
                             </label>
-                            <label class="cursor-pointer" title="2 stjärnor" aria-label="2 stjärnor">
+                            <label class="rating-star cursor-pointer" data-value="2" title="2 stjärnor" aria-label="2 stjärnor">
                                 <input type="radio" name="rating" value="2" class="sr-only">
                                 <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
                             </label>
-                            <label class="cursor-pointer" title="3 stjärnor" aria-label="3 stjärnor">
+                            <label class="rating-star cursor-pointer" data-value="3" title="3 stjärnor" aria-label="3 stjärnor">
                                 <input type="radio" name="rating" value="3" class="sr-only" checked>
                                 <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
                             </label>
-                            <label class="cursor-pointer" title="4 stjärnor" aria-label="4 stjärnor">
+                            <label class="rating-star cursor-pointer" data-value="4" title="4 stjärnor" aria-label="4 stjärnor">
                                 <input type="radio" name="rating" value="4" class="sr-only">
                                 <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
                             </label>
-                            <label class="cursor-pointer" title="5 stjärnor" aria-label="5 stjärnor">
+                            <label class="rating-star cursor-pointer" data-value="5" title="5 stjärnor" aria-label="5 stjärnor">
                                 <input type="radio" name="rating" value="5" class="sr-only">
                                 <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
                             </label>
@@ -277,6 +289,26 @@
             searchPlace();
         }
     });
+
+
+    const ratingStars = document.querySelectorAll('.rating-star');
+    const ratingInputs = document.querySelectorAll('input[name="rating"]');
+
+    function updateRatingStars(value) {
+        ratingStars.forEach((star) => {
+            const starValue = Number(star.dataset.value);
+            star.classList.toggle('is-active', starValue <= value);
+        });
+    }
+
+    ratingInputs.forEach((input) => {
+        input.addEventListener('change', () => {
+            updateRatingStars(Number(input.value));
+        });
+    });
+
+    const selectedRating = document.querySelector('input[name="rating"]:checked');
+    updateRatingStars(selectedRating ? Number(selectedRating.value) : 0);
 </script>
 <script src="../components/load-components.js"></script>
 </body>
