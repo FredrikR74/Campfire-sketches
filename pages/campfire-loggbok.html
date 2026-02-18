@@ -10,22 +10,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../campfire-base.css">
     <style>
-        .log-card {
-            border: 2px solid #eef2f2;
-            border-radius: 1.25rem;
-            transition: all 0.25s ease;
+        .log-entry-image {
+            position: relative;
+            height: 11rem;
+            overflow: hidden;
         }
 
-        .log-card:hover {
-            border-color: var(--forest);
-            box-shadow: 0 12px 30px rgba(30, 58, 58, 0.1);
-            transform: translateY(-2px);
+        .log-entry-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .log-media {
-            height: 8rem;
-            border-radius: 1rem;
-            background: linear-gradient(135deg, rgba(30, 58, 58, 0.92) 0%, rgba(74, 122, 107, 0.85) 55%, rgba(97, 138, 124, 0.78) 100%);
+        .log-entry-image::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(30, 58, 58, 0.12) 15%, rgba(30, 58, 58, 0.72) 100%);
+        }
+
+        .log-entry-image .badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1;
         }
     </style>
 </head>
@@ -80,96 +88,102 @@
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <article class="log-card bg-white p-4 sm:p-5 space-y-3">
-                <div class="log-media flex items-end p-3 text-white">
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="log-entry-image">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Mora">
                     <span class="badge bg-white/20 text-white">Naturcamp</span>
                 </div>
-                <div class="space-y-2">
+                <div class="p-5 space-y-2.5">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">11 februari 2025</p>
                     <h3 class="text-lg font-bold text-[var(--slate-deep)]">Mora, Sverige</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">Tömning, färskvatten och kontroll av värmesystem inför kall natt.</p>
                 </div>
-                <div class="flex flex-wrap gap-1.5">
+                <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">-4° · Snö</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">88 km</span>
                     <span class="badge bg-[#f3f4f6] text-gray-600">Sverige</span>
                 </div>
             </article>
 
-            <article class="log-card bg-white p-4 sm:p-5 space-y-3">
-                <div class="log-media flex items-end p-3 text-white">
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="log-entry-image">
+                    <img src="https://images.unsplash.com/photo-1508264165352-258a6f82e4d5?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Trysil">
                     <span class="badge bg-white/20 text-white">Friluftsliv</span>
                 </div>
-                <div class="space-y-2">
+                <div class="p-5 space-y-2.5">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">23 januari 2025</p>
                     <h3 class="text-lg font-bold text-[var(--slate-deep)]">Trysil, Norge</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">Skidspår direkt från campingen och bra parkering för husbil vid liften.</p>
                 </div>
-                <div class="flex flex-wrap gap-1.5">
+                <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">-9° · Snöfall</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">133 km</span>
                     <span class="badge bg-[#f3f4f6] text-gray-600">Norge</span>
                 </div>
             </article>
 
-            <article class="log-card bg-white p-4 sm:p-5 space-y-3">
-                <div class="log-media flex items-end p-3 text-white">
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="log-entry-image">
+                    <img src="https://images.unsplash.com/photo-1514894786527-997dd4f2f3a0?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Visby">
                     <span class="badge bg-white/20 text-white">Matstopp</span>
                 </div>
-                <div class="space-y-2">
+                <div class="p-5 space-y-2.5">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">07 november 2024</p>
                     <h3 class="text-lg font-bold text-[var(--slate-deep)]">Visby, Sverige</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">Lokal fiskrestaurang och lugn nattparkering nära ringmuren.</p>
                 </div>
-                <div class="flex flex-wrap gap-1.5">
+                <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">9° · Mulet</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">56 km</span>
                     <span class="badge bg-[#f3f4f6] text-gray-600">Sverige</span>
                 </div>
             </article>
 
-            <article class="log-card bg-white p-4 sm:p-5 space-y-3">
-                <div class="log-media flex items-end p-3 text-white">
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="log-entry-image">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Kivik">
                     <span class="badge bg-white/20 text-white">Naturcamp</span>
                 </div>
-                <div class="space-y-2">
+                <div class="p-5 space-y-2.5">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">19 oktober 2024</p>
                     <h3 class="text-lg font-bold text-[var(--slate-deep)]">Kivik, Sverige</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">Äppelfestival i byn och kvällspromenad längs havet innan läger.</p>
                 </div>
-                <div class="flex flex-wrap gap-1.5">
+                <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">11° · Sol</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">74 km</span>
                     <span class="badge bg-[#f3f4f6] text-gray-600">Sverige</span>
                 </div>
             </article>
 
-            <article class="log-card bg-white p-4 sm:p-5 space-y-3">
-                <div class="log-media flex items-end p-3 text-white">
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="log-entry-image">
+                    <img src="https://images.unsplash.com/photo-1441829266145-6d4bfbd38eb4?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Fjällbacka">
                     <span class="badge bg-white/20 text-white">Ställplats</span>
                 </div>
-                <div class="space-y-2">
+                <div class="p-5 space-y-2.5">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">30 augusti 2024</p>
                     <h3 class="text-lg font-bold text-[var(--slate-deep)]">Fjällbacka, Sverige</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">Nära bryggan med gångavstånd till butik. Perfekt mellanlandning.</p>
                 </div>
-                <div class="flex flex-wrap gap-1.5">
+                <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">17° · Lätt vind</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">121 km</span>
                     <span class="badge bg-[#f3f4f6] text-gray-600">Sverige</span>
                 </div>
             </article>
 
-            <article class="log-card bg-white p-4 sm:p-5 space-y-3">
-                <div class="log-media flex items-end p-3 text-white">
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="log-entry-image">
+                    <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Hirtshals">
                     <span class="badge bg-white/20 text-white">Service</span>
                 </div>
-                <div class="space-y-2">
+                <div class="p-5 space-y-2.5">
                     <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">12 juli 2024</p>
                     <h3 class="text-lg font-bold text-[var(--slate-deep)]">Hirtshals, Danmark</h3>
                     <p class="text-sm text-gray-600 leading-relaxed">Bromskontroll, påfyllning av gasol och vila inför nästa etapp.</p>
                 </div>
-                <div class="flex flex-wrap gap-1.5">
+                <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">16° · Regnskur</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">67 km</span>
                     <span class="badge bg-[#f3f4f6] text-gray-600">Danmark</span>
