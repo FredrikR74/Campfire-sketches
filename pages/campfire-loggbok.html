@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Loggbok</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        #location-map {
+            height: 320px;
+            border-radius: 1rem;
+            border: 2px solid #e5e7eb;
+            z-index: 1;
+        }
+
+        .weather-pill input:checked + label {
+            border-color: var(--forest);
+            background: #e4efe8;
+            color: var(--slate-deep);
+            transform: translateY(-1px);
+        }
+
+        .chip-check input:checked + label {
+            background: var(--forest);
+            border-color: var(--forest);
+            color: white;
+        }
+
+        .weather-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg-mist)] text-gray-800">
+
+<div id="navbar-slot" data-variant="dark"></div>
+
+<div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);">
+    <div class="max-w-6xl mx-auto px-5 text-center">
+        <h1 class="text-3xl sm:text-4xl font-extrabold mb-3">Loggbok för husbilslivet</h1>
+        <p class="text-white/70 text-sm max-w-2xl mx-auto">Skissa ett komplett stopp med plats, väder, faciliteter, kostnad och upplevelse – redo för att bli en framtida appvy.</p>
+    </div>
+</div>
+
+<main class="max-w-6xl mx-auto px-5 py-10 lg:py-14">
+    <div class="max-w-4xl mx-auto">
+        <section class="bg-white rounded-3xl p-6 sm:p-8 card-shadow space-y-8">
+            <div>
+                <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Skapa/ändra logg</h2>
+            </div>
+
+            <form class="space-y-8">
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <label class="space-y-2 block">
+                        <span class="text-sm font-semibold text-gray-700">Datum från</span>
+                        <input type="date" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5">
+                    </label>
+                    <label class="space-y-2 block">
+                        <span class="text-sm font-semibold text-gray-700">Datum till</span>
+                        <input type="date" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5">
+                    </label>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <label class="sm:col-span-2 space-y-2 block">
+                            <span class="text-sm font-semibold text-gray-700">Platsnamn</span>
+                            <input id="location-search" type="text" placeholder="T.ex. Skulebergets ställplats" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5">
+                        </label>
+                        <div class="self-end">
+                            <button id="search-location-btn" type="button" class="w-full bg-[var(--sage-green)] text-white px-5 py-2.5 rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Sök plats</button>
+                        </div>
+                    </div>
+                    <div id="location-map" aria-label="Karta för exakt platsmarkering"></div>
+                    <p class="text-xs text-gray-500">Tips: skriv en plats och klicka sedan mer exakt i kartan.</p>
+                </div>
+
+                <div class="space-y-3">
+                    <p class="text-sm font-semibold text-gray-700">Typ av plats</p>
+                    <div class="chip-check flex flex-wrap gap-2">
+                        <input id="place-camping" type="radio" name="place-type" class="sr-only" checked>
+                        <label for="place-camping" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Camping</label>
+
+                        <input id="place-stallplats" type="radio" name="place-type" class="sr-only">
+                        <label for="place-stallplats" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Ställplats</label>
+
+                        <input id="place-fricamping" type="radio" name="place-type" class="sr-only">
+                        <label for="place-fricamping" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Fricamping</label>
+
+                        <input id="place-parkering" type="radio" name="place-type" class="sr-only">
+                        <label for="place-parkering" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Parkering</label>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <p class="text-sm font-semibold text-gray-700">Faciliteter</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-2 text-sm">
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Toa</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Dusch</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Toatömning</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Gråvattentömning</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Vatten</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>El</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Wifi</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Sopor</span></label>
+                    </div>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <label class="space-y-2 block">
+                        <span class="text-sm font-semibold text-gray-700">Mätarställning (km)</span>
+                        <input type="number" min="0" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="48320">
+                    </label>
+                    <label class="space-y-2 block">
+                        <span class="text-sm font-semibold text-gray-700">Temperatur (°C)</span>
+                        <input type="number" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="17">
+                    </label>
+                </div>
+
+                <div class="space-y-3">
+                    <p class="text-sm font-semibold text-gray-700">Väder (ikoner)</p>
+                    <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 weather-pill text-sm max-w-xl">
+                        <div>
+                            <input id="weather-sun" type="radio" name="weather" class="sr-only" checked>
+                            <label for="weather-sun" aria-label="Soligt" title="Soligt" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v3M12 19v3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M2 12h3M19 12h3M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
+                            </label>
+                        </div>
+                        <div>
+                            <input id="weather-partly" type="radio" name="weather" class="sr-only">
+                            <label for="weather-partly" aria-label="Växlande molnighet" title="Växlande molnighet" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 14a4 4 0 1 1 .5-7.97A5 5 0 0 1 15 8a4 4 0 1 1 1 7.87"/><path d="M12 2v2M3 10h2M7 4l1.5 1.5"/></svg>
+                            </label>
+                        </div>
+                        <div>
+                            <input id="weather-cloud" type="radio" name="weather" class="sr-only">
+                            <label for="weather-cloud" aria-label="Molnigt" title="Molnigt" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 18h9a4 4 0 0 0 .3-7.99A5.5 5.5 0 0 0 5.5 8.5 4.5 4.5 0 0 0 7 18z"/></svg>
+                            </label>
+                        </div>
+                        <div>
+                            <input id="weather-rain" type="radio" name="weather" class="sr-only">
+                            <label for="weather-rain" aria-label="Regn" title="Regn" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 15h9a4 4 0 0 0 .3-8A5.5 5.5 0 0 0 5.5 5.5 4.5 4.5 0 0 0 7 15z"/><path d="M8 17l-1 3M12 17l-1 3M16 17l-1 3"/></svg>
+                            </label>
+                        </div>
+                        <div>
+                            <input id="weather-snow" type="radio" name="weather" class="sr-only">
+                            <label for="weather-snow" aria-label="Snö" title="Snö" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 15h9a4 4 0 0 0 .3-8A5.5 5.5 0 0 0 5.5 5.5 4.5 4.5 0 0 0 7 15z"/><path d="M8 18h0M12 18h0M16 18h0" stroke-linecap="round"/><path d="M8 17v2M12 17v2M16 17v2"/></svg>
+                            </label>
+                        </div>
+                        <div>
+                            <input id="weather-wind" type="radio" name="weather" class="sr-only">
+                            <label for="weather-wind" aria-label="Blåst" title="Blåst" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 8h11a3 3 0 1 0-3-3"/><path d="M3 12h15a3 3 0 1 1-3 3"/><path d="M3 16h8"/></svg>
+                            </label>
+                        </div>
+                        <div>
+                            <input id="weather-other" type="radio" name="weather" class="sr-only">
+                            <label for="weather-other" aria-label="Annat" title="Annat" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+                            </label>
+                        </div>
+                    </div>
+                    <label class="space-y-2 block">
+                        <span class="text-sm font-semibold text-gray-700">Väder – fritext för "Annat"</span>
+                        <input type="text" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="T.ex. dimma på morgonen">
+                    </label>
+                </div>
+
+                <div class="grid sm:grid-cols-3 gap-4">
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold text-gray-700 block">Betyg</span>
+                        <div class="flex items-center gap-1.5 text-[var(--terracotta)]" role="radiogroup" aria-label="Betyg med stjärnor">
+                            <label class="cursor-pointer" title="1 stjärna" aria-label="1 stjärna">
+                                <input type="radio" name="rating" value="1" class="sr-only">
+                                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
+                            </label>
+                            <label class="cursor-pointer" title="2 stjärnor" aria-label="2 stjärnor">
+                                <input type="radio" name="rating" value="2" class="sr-only">
+                                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
+                            </label>
+                            <label class="cursor-pointer" title="3 stjärnor" aria-label="3 stjärnor">
+                                <input type="radio" name="rating" value="3" class="sr-only" checked>
+                                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
+                            </label>
+                            <label class="cursor-pointer" title="4 stjärnor" aria-label="4 stjärnor">
+                                <input type="radio" name="rating" value="4" class="sr-only">
+                                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
+                            </label>
+                            <label class="cursor-pointer" title="5 stjärnor" aria-label="5 stjärnor">
+                                <input type="radio" name="rating" value="5" class="sr-only">
+                                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
+                            </label>
+                        </div>
+                    </div>
+                    <label class="space-y-2 block">
+                        <span class="text-sm font-semibold text-gray-700">Pris utan el (SEK)</span>
+                        <input type="number" min="0" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="180">
+                    </label>
+                    <label class="space-y-2 block">
+                        <span class="text-sm font-semibold text-gray-700">Pris med el (SEK)</span>
+                        <input type="number" min="0" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="230">
+                    </label>
+                </div>
+
+                <label class="space-y-2 block">
+                    <span class="text-sm font-semibold text-gray-700">Egna anteckningar</span>
+                    <textarea class="cf-input w-full rounded-2xl border-2 border-gray-200 px-4 py-3 min-h-28" placeholder="Vad var bäst? Något att tänka på nästa gång?"></textarea>
+                </label>
+
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <label class="space-y-2 block">
+                        <span class="text-sm font-semibold text-gray-700">Sällskap</span>
+                        <input type="text" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="Länka profil eller skriv e-post för inbjudan">
+                    </label>
+                    <div class="space-y-2">
+                        <span class="text-sm font-semibold text-gray-700 block">Inställningar</span>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Kan vi tänka oss att åka hit igen</span></label>
+                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Tillåtet för husbilar</span></label>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <button type="submit" class="bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all text-sm">Spara logg</button>
+                    <button type="button" class="border-2 border-gray-300 text-gray-700 px-6 py-2.5 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">Förhandsgranska</button>
+                </div>
+            </form>
+        </section>
+
+    </div>
+</main>
+
+<div id="footer-slot"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+    const map = L.map('location-map').setView([62.0, 15.0], 5);
+    const marker = L.marker([62.0, 15.0], { draggable: true }).addTo(map);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    map.on('click', (e) => {
+        marker.setLatLng(e.latlng);
+    });
+
+
+    async function searchPlace() {
+        const q = document.getElementById('location-search').value.trim();
+        if (!q) return;
+
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(q)}&limit=1`;
+        const response = await fetch(url);
+        const results = await response.json();
+
+        if (results.length > 0) {
+            const lat = Number(results[0].lat);
+            const lon = Number(results[0].lon);
+            map.setView([lat, lon], 13);
+            marker.setLatLng([lat, lon]);
+        }
+    }
+
+    document.getElementById('search-location-btn').addEventListener('click', searchPlace);
+    document.getElementById('location-search').addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+            searchPlace();
+        }
+    });
+</script>
+<script src="../components/load-components.js"></script>
+</body>
+</html>
