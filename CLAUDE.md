@@ -277,32 +277,6 @@ background-color: var(--slate-deep); /* fallback */
         </div>
     </div>
 </div>
-```
-
-### Tabell (admin)
-```html
-<div class="bg-white rounded-2xl p-5 card-shadow overflow-x-auto">
-    <table class="w-full text-sm">
-        <thead>
-            <tr class="border-b-2 border-gray-200">
-                <th class="text-left py-3 px-3 font-semibold text-gray-700">Rubrik</th>
-                <th class="text-right py-3 px-3 font-semibold text-gray-700">Åtgärder</th>
-            </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-            <tr class="hover:bg-gray-50 transition-colors">
-                <td class="py-3 px-3">Innehåll</td>
-                <td class="py-3 px-3">
-                    <div class="flex gap-1 justify-end">
-                        <button class="px-3 py-1.5 text-[var(--forest)] hover:bg-[#e4efe8] rounded-lg transition-all text-xs font-medium">Redigera</button>
-                        <button class="px-3 py-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all text-xs font-medium">Ta bort</button>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-```
 
 ### Sidmall (ny sida)
 ```html
