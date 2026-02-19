@@ -30,6 +30,7 @@ pages/
   campfire-editera-loggbok.html        # Loggbok: skapa/ändra stopp med karta, väder och kostnader
   campfire-profil.html         # Profilsida med redigeringsläge
   campfire-nyheter-inspiration.html  # Artikelsida (nyheter/inspiration)
+  campfire-traff-detaljer.html  # Detaljvy för en husbilsträff med temataggar
 ```
 
 ## Tech
