@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Träffdetaljer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+</head>
+<body class="bg-[var(--bg-mist)] text-gray-800">
+<div id="navbar-slot" data-variant="dark"></div>
+
+<header class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <p class="text-white/70 text-sm font-semibold tracking-wide uppercase mb-2">Husbilstreff</p>
+                <h1 class="text-3xl sm:text-4xl font-bold">Vårträff vid Vänern</h1>
+                <p class="text-white/80 text-sm sm:text-base max-w-xl mt-2">Detaljvy för en träff med schema, praktisk info och temataggar för att snabbt förstå vad träffen handlar om.</p>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+                <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">12–14 maj</span>
+                <span class="badge bg-white/20 text-white">32/50 anmälda</span>
+                <span class="badge bg-[#e4efe8] text-[var(--forest)]">Platser kvar</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5 py-8 lg:py-10 grid lg:grid-cols-3 gap-6">
+    <section class="lg:col-span-2 space-y-6">
+        <article class="bg-white rounded-3xl p-6 card-shadow space-y-4">
+            <div class="flex flex-wrap gap-2">
+                <span class="badge bg-[#e4efe8] text-[var(--forest)]">Natur</span>
+                <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Familjevänligt</span>
+                <span class="badge bg-[#eef4ff] text-[#365b9a]">Hundvänligt</span>
+                <span class="badge bg-[#f1eefe] text-[#6244a3]">Workshop</span>
+                <span class="badge bg-[#fff3e8] text-[#9a5e2a]">Grillkväll</span>
+            </div>
+            <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Om träffen</h2>
+            <p class="text-sm text-gray-600 leading-relaxed">En social helg för husbilsentusiaster med fokus på naturupplevelser, erfarenhetsutbyte och gemensamma aktiviteter. Träffen passar både nybörjare och vana resenärer.</p>
+        </article>
+
+        <article class="bg-white rounded-3xl p-6 card-shadow">
+            <h2 class="text-2xl font-bold text-[var(--slate-deep)] mb-4">Schema</h2>
+            <div class="space-y-3">
+                <div class="border-2 border-gray-100 rounded-2xl p-4">
+                    <p class="text-xs uppercase tracking-wide text-gray-500">Fredag 12 maj</p>
+                    <p class="font-semibold">16:00 Incheckning & välkomstfika</p>
+                </div>
+                <div class="border-2 border-gray-100 rounded-2xl p-4">
+                    <p class="text-xs uppercase tracking-wide text-gray-500">Lördag 13 maj</p>
+                    <p class="font-semibold">10:00 Workshop: smart förvaring i husbil</p>
+                </div>
+                <div class="border-2 border-gray-100 rounded-2xl p-4">
+                    <p class="text-xs uppercase tracking-wide text-gray-500">Lördag 13 maj</p>
+                    <p class="font-semibold">19:00 Gemensam grillkväll vid sjön</p>
+                </div>
+            </div>
+        </article>
+
+        <article class="bg-white rounded-3xl p-6 card-shadow">
+            <h2 class="text-2xl font-bold text-[var(--slate-deep)] mb-4">Praktisk info</h2>
+            <div class="grid sm:grid-cols-2 gap-3 text-sm">
+                <div class="border-2 border-gray-100 rounded-xl p-3">Elplatser: <strong>20 st</strong></div>
+                <div class="border-2 border-gray-100 rounded-xl p-3">Vattenpåfyllning: <strong>Ja</strong></div>
+                <div class="border-2 border-gray-100 rounded-xl p-3">Tömning gråvatten: <strong>Ja</strong></div>
+                <div class="border-2 border-gray-100 rounded-xl p-3">Tillåten längd: <strong>Upp till 10 m</strong></div>
+            </div>
+        </article>
+    </section>
+
+    <aside class="space-y-6 lg:sticky lg:top-24 self-start">
+        <div class="bg-white rounded-3xl p-6 card-shadow space-y-3">
+            <h2 class="text-xl font-bold text-[var(--slate-deep)]">Snabbfakta</h2>
+            <p class="text-sm text-gray-600">Läckö Strand, Lidköping</p>
+            <p class="text-sm text-gray-600">Pris: 350 kr / ekipage</p>
+            <p class="text-sm text-gray-600">Sista anmälan: 7 maj</p>
+            <button class="w-full bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all text-sm">Anmäl dig</button>
+            <button class="w-full bg-[var(--sand-light)] text-[var(--terracotta)] px-6 py-2.5 rounded-full font-semibold hover:opacity-90 transition-all text-sm">Dela träffen</button>
+        </div>
+
+        <div class="bg-white rounded-3xl p-6 card-shadow">
+            <h2 class="text-xl font-bold text-[var(--slate-deep)] mb-2">Temataggar</h2>
+            <p class="text-sm text-gray-600 mb-3">Används för filtrering och rekommendationer i listvyn.</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="badge bg-[#e4efe8] text-[var(--forest)]">#natur</span>
+                <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">#grillkväll</span>
+                <span class="badge bg-[#eef4ff] text-[#365b9a]">#familj</span>
+                <span class="badge bg-[#f1eefe] text-[#6244a3]">#workshop</span>
+            </div>
+        </div>
+    </aside>
+</main>
+
+<div id="footer-slot"></div>
+<script src="../components/load-components.js"></script>
+</body>
+</html>
