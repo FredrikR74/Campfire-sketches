@@ -23,12 +23,13 @@ components/
   navbar.html                  # Navbar (fixed, scroll-effekt)
   footer.html                  # Gemensam footer
   load-components.js           # JS-loader för navbar + footer
-pages/
+  pages/
   campfire-landing.html        # Landningssida
   campfire-checklistor.html    # Checklistor & formulär
   campfire-loggbok.html        # Loggbok: listvy med sök, filter och paginering
   campfire-editera-loggbok.html        # Loggbok: skapa/ändra stopp med karta, väder och kostnader
   campfire-profil.html         # Profilsida med redigeringsläge
+  campfire-profiler.html       # Profilsök med filter för medlemmar och resepreferenser
   campfire-nyheter-inspiration.html  # Artikelsida (nyheter/inspiration)
   campfire-traff-detaljer.html  # Detaljvy för en husbilsträff med temataggar
 ```
