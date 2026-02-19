@@ -197,20 +197,17 @@ components/
 </div>
 ```
 
-### Träffrad (listrad med datumblock)
+### Träffrad (listrad med datum-badge i bild)
 ```html
 <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
     <div class="flex flex-col sm:flex-row gap-4">
-        <!-- Datumblock -->
-        <div class="flex-shrink-0">
-            <div class="w-20 h-20 rounded-2xl deep-gradient flex flex-col items-center justify-center text-white">
-                <div class="text-2xl font-bold">15</div>
-                <div class="text-xs uppercase tracking-wide">Aug</div>
+        <!-- Bild + datum-badge -->
+        <div class="relative flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=700&q=80" alt="Husbilar parkerade vid havet" class="w-full sm:w-52 h-40 sm:h-32 object-cover rounded-2xl border-2 border-gray-100">
+            <div class="absolute top-3 left-3 px-3 py-2 rounded-xl deep-gradient text-white text-center shadow-lg leading-tight min-w-[64px]">
+                <div class="text-xl font-bold">15</div>
+                <div class="text-[11px] uppercase tracking-wide">Aug</div>
             </div>
-        </div>
-        <!-- Bild -->
-        <div class="flex-shrink-0">
-            <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=300&q=80" alt="Husbilar parkerade vid havet" class="w-24 sm:w-32 h-20 object-cover rounded-2xl border-2 border-gray-100">
         </div>
         <div class="flex-grow space-y-1.5">
             <h3 class="text-lg font-bold text-gray-800">Rubrik</h3>
