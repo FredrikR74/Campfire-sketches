@@ -208,6 +208,10 @@ components/
                 <div class="text-xs uppercase tracking-wide">Aug</div>
             </div>
         </div>
+        <!-- Bild -->
+        <div class="flex-shrink-0">
+            <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=300&q=80" alt="Husbilar parkerade vid havet" class="w-24 sm:w-32 h-20 object-cover rounded-2xl border-2 border-gray-100">
+        </div>
         <div class="flex-grow space-y-1.5">
             <h3 class="text-lg font-bold text-gray-800">Rubrik</h3>
             <p class="text-gray-600 text-sm">Plats · Datum</p>
