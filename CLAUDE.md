@@ -32,6 +32,7 @@ components/
   campfire-profiler.html       # Profilsök med filter för medlemmar och resepreferenser
   campfire-nyheter-inspiration.html  # Artikelsida (nyheter/inspiration)
   campfire-traff-detaljer.html  # Detaljvy för en husbilsträff med temataggar
+  campfire-traff-edit.html     # Formulär för att redigera husbilsträff (info, schema och kapacitet)
 ```
 
 ## Tech
