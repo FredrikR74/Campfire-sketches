@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Bjud in vänner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        .invite-input-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 0.5rem;
+            align-items: start;
+        }
+        .sent-badge {
+            animation: popIn 0.3s ease forwards;
+        }
+        @keyframes popIn {
+            0%   { transform: scale(0.8); opacity: 0; }
+            70%  { transform: scale(1.05); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .copy-tooltip {
+            transition: opacity 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg-mist)]">
+
+<div id="navbar-slot" data-variant="dark"></div>
+
+<!-- KOMPAKT HERO -->
+<div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 bg-white/15 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-bold">Bjud in vänner</h1>
+                </div>
+                <p class="text-white/70 text-sm sm:text-base max-w-md">Dela Campfire med folk du känner – tillsammans är det roligare runt lägerelden.</p>
+            </div>
+            <!-- Statistik -->
+            <div class="flex gap-6">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-[var(--sand-light)]">3</div>
+                    <div class="text-white/60 text-xs mt-0.5">Skickade</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-[var(--sand-light)]">1</div>
+                    <div class="text-white/60 text-xs mt-0.5">Registrerade</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- HUVUDINNEHÅLL -->
+<main class="max-w-6xl mx-auto px-5 py-10">
+    <div class="grid lg:grid-cols-3 gap-8">
+
+        <!-- VÄNSTER: Formulär -->
+        <div class="lg:col-span-2 space-y-6">
+
+            <!-- Skicka inbjudan via e-post -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow">
+                <h2 class="text-xl font-bold text-[var(--slate-deep)] mb-1">Bjud in via e-post</h2>
+                <p class="text-gray-500 text-sm mb-6">Fyll i en eller flera e-postadresser. Vi skickar ett personligt inbjudningsmail.</p>
+
+                <!-- E-postrader -->
+                <div class="space-y-3" id="emailList">
+                    <!-- Rad 1 -->
+                    <div class="invite-input-row">
+                        <input type="email" placeholder="vän@exempel.se"
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors text-sm">
+                        <button onclick="removeRow(this)" aria-label="Ta bort" class="w-11 h-11 flex items-center justify-center rounded-xl border-2 border-gray-200 text-gray-400 hover:border-red-300 hover:text-red-400 transition-all flex-shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                    <!-- Rad 2 -->
+                    <div class="invite-input-row">
+                        <input type="email" placeholder="vän@exempel.se"
+                               class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors text-sm">
+                        <button onclick="removeRow(this)" aria-label="Ta bort" class="w-11 h-11 flex items-center justify-center rounded-xl border-2 border-gray-200 text-gray-400 hover:border-red-300 hover:text-red-400 transition-all flex-shrink-0">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lägg till fler -->
+                <button onclick="addRow()" class="mt-3 px-4 py-2 border-2 border-dashed border-gray-300 text-gray-500 rounded-xl font-semibold text-sm hover:border-[var(--forest)] hover:text-[var(--forest)] transition-all w-full">
+                    + Lägg till fler adresser
+                </button>
+
+                <!-- Personligt meddelande (valfritt) -->
+                <div class="mt-6 space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Personligt meddelande <span class="text-gray-400 font-normal">(valfritt)</span></label>
+                    <textarea rows="3" placeholder="Hej! Jag hittade det här communityt för husbilsresenärer – tror du skulle gilla det!" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors text-sm resize-none"></textarea>
+                </div>
+
+                <!-- Skicka-knapp -->
+                <div class="mt-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+                    <p class="text-xs text-gray-400">Vi delar inte dina kontakters e-postadresser med tredje part.</p>
+                    <button onclick="sendInvites()" class="bg-[var(--forest)] text-white px-7 py-3 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm flex items-center gap-2 shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                        Skicka inbjudningar
+                    </button>
+                </div>
+
+                <!-- Bekräftelse (dold by default) -->
+                <div id="sendConfirmation" class="hidden mt-4 p-4 bg-[#e4efe8] border border-[var(--forest)]/20 rounded-2xl flex items-center gap-3">
+                    <div class="w-8 h-8 bg-[var(--forest)] rounded-full flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    <div>
+                        <div class="font-semibold text-[var(--forest)] text-sm">Inbjudningar skickade!</div>
+                        <div class="text-xs text-gray-600 mt-0.5">Dina vänner får ett mail med en personlig länk.</div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Dela länk -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow">
+                <h2 class="text-xl font-bold text-[var(--slate-deep)] mb-1">Dela din inbjudningslänk</h2>
+                <p class="text-gray-500 text-sm mb-5">Dela länken var du vill – i en chattgrupp, på sociala medier eller direkt till en vän.</p>
+
+                <!-- Länkfält -->
+                <div class="flex gap-2">
+                    <input type="text" id="inviteLink" value="campfire.se/gå-med/ref=erik123" readonly
+                           class="flex-grow px-4 py-3 border-2 border-gray-200 rounded-xl bg-gray-50 text-sm text-gray-700 font-mono focus:outline-none select-all cursor-pointer"
+                           onclick="this.select()">
+                    <button onclick="copyLink()" id="copyBtn"
+                            class="flex items-center gap-2 px-5 py-3 bg-[var(--forest)] text-white rounded-xl font-semibold text-sm hover:bg-[var(--slate-deep)] transition-all shadow-md whitespace-nowrap shrink-0">
+                        <svg class="w-4 h-4" id="copyIcon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        <span id="copyText">Kopiera</span>
+                    </button>
+                </div>
+
+                <!-- Dela via sociala medier -->
+                <div class="mt-5">
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-3">Dela direkt via</p>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="flex items-center gap-2 px-4 py-2 bg-[#1877f2] text-white rounded-full text-sm font-semibold hover:opacity-90 transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            Facebook
+                        </button>
+                        <button class="flex items-center gap-2 px-4 py-2 bg-[#25D366] text-white rounded-full text-sm font-semibold hover:opacity-90 transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                            WhatsApp
+                        </button>
+                        <button class="flex items-center gap-2 px-4 py-2 bg-[#0088cc] text-white rounded-full text-sm font-semibold hover:opacity-90 transition-all">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                            Telegram
+                        </button>
+                        <button onclick="nativeShare()" class="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold hover:bg-gray-200 transition-all">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/></svg>
+                            Fler alternativ
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Skickade inbjudningar -->
+            <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow">
+                <h2 class="text-xl font-bold text-[var(--slate-deep)] mb-5">Skickade inbjudningar</h2>
+
+                <div class="space-y-3">
+                    <!-- Registrerad -->
+                    <div class="flex items-center gap-4 p-3 bg-[#e4efe8] rounded-2xl">
+                        <div class="w-9 h-9 bg-[var(--forest)] rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <div class="font-semibold text-gray-800 text-sm">anna.karlsson@gmail.com</div>
+                            <div class="text-xs text-gray-500">Skickad 14 feb · Registrerade sig 16 feb</div>
+                        </div>
+                        <span class="badge bg-[#e4efe8] text-[var(--forest)] shrink-0">Registrerad</span>
+                    </div>
+
+                    <!-- Väntar -->
+                    <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-2xl border-2 border-gray-100">
+                        <div class="w-9 h-9 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <div class="font-semibold text-gray-800 text-sm">peter.ek@hotmail.com</div>
+                            <div class="text-xs text-gray-500">Skickad 15 feb · Ej öppnad</div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <span class="badge bg-yellow-100 text-yellow-700">Väntar</span>
+                            <button class="text-xs text-[var(--forest)] font-semibold hover:underline">Påminn</button>
+                        </div>
+                    </div>
+
+                    <!-- Väntar / öppnad -->
+                    <div class="flex items-center gap-4 p-3 bg-gray-50 rounded-2xl border-2 border-gray-100">
+                        <div class="w-9 h-9 bg-[var(--sand-light)] rounded-full flex items-center justify-center flex-shrink-0">
+                            <svg class="w-4 h-4 text-[var(--terracotta)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </div>
+                        <div class="flex-grow min-w-0">
+                            <div class="font-semibold text-gray-800 text-sm">maja.svensson@icloud.com</div>
+                            <div class="text-xs text-gray-500">Skickad 18 feb · Öppnade länken</div>
+                        </div>
+                        <div class="flex items-center gap-2 shrink-0">
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Öppnad</span>
+                            <button class="text-xs text-[var(--forest)] font-semibold hover:underline">Påminn</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- HÖGER: Info + belöningar -->
+        <div class="space-y-6">
+
+            <!-- Hur det fungerar -->
+            <div class="bg-white rounded-3xl p-6 card-shadow">
+                <h3 class="text-base font-bold text-[var(--slate-deep)] mb-4">Hur det fungerar</h3>
+                <ol class="space-y-4">
+                    <li class="flex gap-3">
+                        <div class="w-7 h-7 bg-[var(--forest)] rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-0.5">1</div>
+                        <div>
+                            <div class="font-semibold text-gray-800 text-sm">Bjud in via e-post eller länk</div>
+                            <div class="text-xs text-gray-500 mt-0.5">Skriv in din väns e-postadress eller dela din personliga inbjudningslänk.</div>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <div class="w-7 h-7 bg-[var(--sage-green)] rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-0.5">2</div>
+                        <div>
+                            <div class="font-semibold text-gray-800 text-sm">Din vän skapar ett konto</div>
+                            <div class="text-xs text-gray-500 mt-0.5">De registrerar sig via länken och välkomnas till communityn.</div>
+                        </div>
+                    </li>
+                    <li class="flex gap-3">
+                        <div class="w-7 h-7 bg-[var(--terracotta)] rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0 mt-0.5">3</div>
+                        <div>
+                            <div class="font-semibold text-gray-800 text-sm">Ni är anslutna!</div>
+                            <div class="text-xs text-gray-500 mt-0.5">Ni kan följa varandras resor, loggar och delta i samma träffar.</div>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- Fördelar-kort -->
+            <div class="deep-gradient rounded-3xl p-6 text-white">
+                <div class="text-[var(--sand-light)] mb-3">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                </div>
+                <h3 class="font-bold text-base mb-2">Starkare tillsammans</h3>
+                <p class="text-white/70 text-xs leading-relaxed mb-4">Ju fler vänner du har på Campfire, desto roligare resor! Planera träffar, dela tips och hitta reskamrater.</p>
+                <ul class="space-y-2 text-xs text-white/80">
+                    <li class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-[var(--sand-light)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Följ varandras äventyr
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-[var(--sand-light)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Anmäl er till träffar tillsammans
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-[var(--sand-light)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Dela favoritplatser och tips
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <svg class="w-3.5 h-3.5 text-[var(--sand-light)] flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Hitta reskamrater
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Dela som kort (preview) -->
+            <div class="bg-white rounded-3xl p-6 card-shadow">
+                <h3 class="text-base font-bold text-[var(--slate-deep)] mb-3">Förhandsgranskning</h3>
+                <p class="text-xs text-gray-500 mb-4">Så här ser inbjudan ut för din vän.</p>
+                <!-- E-postpreview -->
+                <div class="border-2 border-gray-100 rounded-2xl overflow-hidden text-sm">
+                    <div class="deep-gradient px-4 py-3 flex items-center gap-2">
+                        <div class="w-6 h-6 bg-[var(--sand-light)] rounded-full flex items-center justify-center">
+                            <svg class="w-3 h-3 text-[var(--slate-deep)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"/></svg>
+                        </div>
+                        <span class="text-white/90 text-xs font-semibold">Campfire</span>
+                    </div>
+                    <div class="p-4 bg-gray-50">
+                        <p class="text-xs text-gray-600 mb-3"><span class="font-semibold text-gray-800">Erik Larsson</span> bjuder in dig till Campfire – husbilscommunityt!</p>
+                        <div class="bg-white rounded-xl p-3 text-xs text-gray-500 italic border border-gray-100 mb-3">
+                            "Hej! Jag hittade det här communityt för husbilsresenärer – tror du skulle gilla det!"
+                        </div>
+                        <button class="w-full bg-[var(--forest)] text-white py-2 rounded-full text-xs font-bold">Gå med gratis →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+<div id="footer-slot"></div>
+<script src="../components/load-components.js"></script>
+<script>
+    // Lägg till ny e-postrad
+    function addRow() {
+        const list = document.getElementById('emailList');
+        const div = document.createElement('div');
+        div.className = 'invite-input-row sent-badge';
+        div.innerHTML = `
+            <input type="email" placeholder="vän@exempel.se"
+                   class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors text-sm">
+            <button onclick="removeRow(this)" aria-label="Ta bort" class="w-11 h-11 flex items-center justify-center rounded-xl border-2 border-gray-200 text-gray-400 hover:border-red-300 hover:text-red-400 transition-all flex-shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>`;
+        list.appendChild(div);
+        div.querySelector('input').focus();
+    }
+
+    // Ta bort rad (behåll minst 1)
+    function removeRow(btn) {
+        const rows = document.querySelectorAll('#emailList .invite-input-row');
+        if (rows.length > 1) {
+            btn.closest('.invite-input-row').remove();
+        }
+    }
+
+    // Skicka inbjudningar (demo)
+    function sendInvites() {
+        const inputs = document.querySelectorAll('#emailList input[type="email"]');
+        const hasValue = [...inputs].some(i => i.value.trim());
+        if (!hasValue) {
+            inputs[0].focus();
+            inputs[0].classList.add('border-red-300');
+            setTimeout(() => inputs[0].classList.remove('border-red-300'), 1500);
+            return;
+        }
+        const confirmation = document.getElementById('sendConfirmation');
+        confirmation.classList.remove('hidden');
+        confirmation.classList.add('flex');
+        inputs.forEach(i => i.value = '');
+        setTimeout(() => {
+            confirmation.classList.add('hidden');
+            confirmation.classList.remove('flex');
+        }, 4000);
+    }
+
+    // Kopiera länk
+    function copyLink() {
+        const link = document.getElementById('inviteLink');
+        navigator.clipboard.writeText(link.value).catch(() => {
+            link.select();
+            document.execCommand('copy');
+        });
+        const btn = document.getElementById('copyBtn');
+        const text = document.getElementById('copyText');
+        const icon = document.getElementById('copyIcon');
+        text.textContent = 'Kopierad!';
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/>';
+        btn.classList.add('bg-[var(--sage-green)]');
+        btn.classList.remove('bg-[var(--forest)]');
+        setTimeout(() => {
+            text.textContent = 'Kopiera';
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>';
+            btn.classList.remove('bg-[var(--sage-green)]');
+            btn.classList.add('bg-[var(--forest)]');
+        }, 2000);
+    }
+
+    // Native share (mobil)
+    function nativeShare() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'Campfire – Husbilscommunityt',
+                text: 'Gå med i Campfire – communityt för husbilsentusiaster!',
+                url: document.getElementById('inviteLink').value
+            });
+        }
+    }
+</script>
+</body>
+</html>
