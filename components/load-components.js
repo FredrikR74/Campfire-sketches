@@ -19,6 +19,17 @@
             .then(function (r) { return r.text(); })
             .then(function (html) {
                 navSlot.innerHTML = html;
+                // Exekvera <script>-taggar som injicerats via innerHTML
+                // (webbläsare kör dem inte automatiskt)
+                navSlot.querySelectorAll('script').forEach(function (oldScript) {
+                    var newScript = document.createElement('script');
+                    oldScript.getAttributeNames().forEach(function (attr) {
+                        newScript.setAttribute(attr, oldScript.getAttribute(attr));
+                    });
+                    newScript.textContent = oldScript.textContent;
+                    document.head.appendChild(newScript);
+                    oldScript.parentNode.removeChild(oldScript);
+                });
                 // Aktivera scroll-effekt för navbar
                 var nb = document.getElementById('navbar');
                 if (nb) {
