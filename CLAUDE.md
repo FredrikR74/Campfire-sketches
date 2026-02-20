@@ -31,6 +31,7 @@ pages/
   campfire-profil.html         # Profilsida med redigeringsläge
   campfire-profiler.html       # Profilsök med filter för medlemmar och resepreferenser
   campfire-nyheter-inspiration.html  # Artikelsida (nyheter/inspiration)
+  campfire-traffar.html         # Listvy över alla husbilsträffar med sök/filter
   campfire-traff-detaljer.html  # Detaljvy för en husbilsträff med temataggar
   campfire-traff-edit.html     # Formulär för att redigera husbilsträff (info, schema och kapacitet)
 ```
