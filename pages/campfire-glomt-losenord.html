@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Glömt lösenord</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        body { min-height: 100vh; }
+        .auth-panel { min-height: 100vh; }
+    </style>
+</head>
+<body class="flex">
+
+<!-- Vänsterpanel – branding (dold på mobil) -->
+<div class="hidden lg:flex lg:w-5/12 deep-gradient relative overflow-hidden flex-col justify-between p-12 auth-panel">
+    <div class="forest-pattern absolute inset-0 opacity-20"></div>
+    <div class="relative">
+        <a href="../index.html" class="handwritten text-4xl text-[var(--sand-light)]">Campfire</a>
+    </div>
+    <div class="relative space-y-5">
+        <!-- Ikon -->
+        <div class="w-16 h-16 rounded-2xl bg-white/15 flex items-center justify-center">
+            <svg class="w-8 h-8 text-[var(--sand-light)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+            </svg>
+        </div>
+        <h2 class="text-4xl font-bold text-white leading-tight">Det händer<br>de bästa.</h2>
+        <p class="text-white/70 text-base max-w-xs">Vi skickar en länk till din e-post så att du kan sätta ett nytt lösenord.</p>
+        <div class="pt-2 space-y-2">
+            <div class="flex items-center gap-2.5 text-white/60 text-sm">
+                <svg class="w-4 h-4 text-[var(--sand-light)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Länken är giltig i 30 minuter
+            </div>
+            <div class="flex items-center gap-2.5 text-white/60 text-sm">
+                <svg class="w-4 h-4 text-[var(--sand-light)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Kontrollera skräpposten om mailet dröjer
+            </div>
+            <div class="flex items-center gap-2.5 text-white/60 text-sm">
+                <svg class="w-4 h-4 text-[var(--sand-light)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                Du kan alltid logga in med Google
+            </div>
+        </div>
+    </div>
+    <div class="relative text-white/40 text-sm">
+        © 2025 Campfire Community
+    </div>
+</div>
+
+<!-- Högerpanel -->
+<div class="flex-1 flex flex-col justify-center px-6 py-12 sm:px-10 lg:px-16 xl:px-24 bg-[var(--bg-mist)] auth-panel">
+
+    <!-- Mobil-logotyp -->
+    <div class="lg:hidden mb-8 text-center">
+        <a href="../index.html" class="handwritten text-3xl text-[var(--slate-deep)]">Campfire</a>
+    </div>
+
+    <div class="w-full max-w-md mx-auto">
+
+        <!-- VY 1: Formulär -->
+        <div id="view-form">
+
+            <div class="mb-8">
+                <!-- Tillbaka-länk -->
+                <a href="campfire-login.html" class="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-[var(--forest)] transition-colors font-medium mb-6">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                    Tillbaka till inloggning
+                </a>
+                <h1 class="text-3xl font-bold text-[var(--slate-deep)]">Glömt lösenordet?</h1>
+                <p class="text-gray-500 mt-1.5 text-sm">Ange din e-postadress så skickar vi en återställningslänk.</p>
+            </div>
+
+            <form class="space-y-5" onsubmit="showSuccess(); return false;">
+
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700" for="email">E-postadress</label>
+                    <input
+                        id="email"
+                        type="email"
+                        placeholder="din@epost.se"
+                        class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors text-sm"
+                    >
+                </div>
+
+                <button type="submit" class="w-full bg-[var(--forest)] text-white py-3.5 rounded-xl font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">
+                    Skicka återställningslänk
+                </button>
+
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-gray-200">
+                <p class="text-sm text-gray-500 text-center">
+                    Kom du ihåg det?
+                    <a href="campfire-login.html" class="text-[var(--forest)] font-semibold hover:underline ml-1">Logga in</a>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- VY 2: Bekräftelse (visas efter att formuläret skickas) -->
+        <div id="view-success" style="display:none;">
+
+            <div class="text-center space-y-6">
+
+                <!-- Ikon -->
+                <div class="w-20 h-20 rounded-full bg-[#e4efe8] flex items-center justify-center mx-auto">
+                    <svg class="w-10 h-10 text-[var(--forest)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Kolla din inbox!</h2>
+                    <p class="text-gray-500 text-sm mt-2 max-w-xs mx-auto">
+                        Vi har skickat en återställningslänk till
+                        <span id="sent-to" class="font-semibold text-gray-700"></span>.
+                        Länken gäller i 30 minuter.
+                    </p>
+                </div>
+
+                <!-- Tips-kort -->
+                <div class="bg-white rounded-2xl p-5 text-left space-y-3 card-shadow">
+                    <p class="text-sm font-semibold text-gray-700">Kom du inte in?</p>
+                    <ul class="space-y-2">
+                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                            <span class="text-[var(--forest)] mt-0.5">•</span>
+                            Kontrollera skräppost/spam-mappen
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                            <span class="text-[var(--forest)] mt-0.5">•</span>
+                            Vänta ett par minuter och försök igen
+                        </li>
+                        <li class="flex items-start gap-2 text-sm text-gray-600">
+                            <span class="text-[var(--forest)] mt-0.5">•</span>
+                            Kontakta support om problemet kvarstår
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="space-y-3 pt-2">
+                    <button onclick="resend()" class="w-full border-2 border-gray-200 text-gray-700 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-all text-sm" id="resend-btn">
+                        Skicka igen
+                    </button>
+                    <a href="campfire-login.html" class="block w-full text-center text-sm text-[var(--forest)] font-semibold hover:underline py-2">
+                        ← Tillbaka till inloggning
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function showSuccess() {
+    const email = document.getElementById('email').value || 'din e-post';
+    document.getElementById('sent-to').textContent = email;
+    document.getElementById('view-form').style.display = 'none';
+    document.getElementById('view-success').style.display = 'block';
+}
+
+function resend() {
+    const btn = document.getElementById('resend-btn');
+    btn.textContent = 'Skickat!';
+    btn.disabled = true;
+    btn.classList.add('opacity-50');
+    setTimeout(() => {
+        btn.textContent = 'Skicka igen';
+        btn.disabled = false;
+        btn.classList.remove('opacity-50');
+    }, 5000);
+}
+</script>
+
+</body>
+</html>
