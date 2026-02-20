@@ -310,3 +310,55 @@ background-color: var(--slate-deep); /* fallback */
 </body>
 </html>
 ```
+
+### Tillbaka-header (redigera-sidor)
+Används på undersidor där användaren redigerar något (t.ex. redigera logg, redigera profil). Ingen kompakt hero – enbart en smal mörk remsa med tillbaka-knapp och sidtitel.
+```html
+<div class="deep-gradient">
+    <div class="max-w-4xl mx-auto px-6 pt-24 sm:pt-28 pb-8">
+        <div class="flex items-center gap-3">
+            <button class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <h1 class="text-2xl font-bold text-white">Sidtitel</h1>
+        </div>
+    </div>
+</div>
+```
+
+### Ikon-picker (radio pill grid)
+Radioknappar med SVG-ikoner i ett rutnät – används för t.ex. väder. Kräver `.weather-pill` CSS i sidans `<style>`.
+```html
+<!-- CSS i <style>: -->
+<!-- .weather-pill input:checked + label { border-color: var(--forest); background: #e4efe8; color: var(--slate-deep); transform: translateY(-1px); } -->
+<div class="grid grid-cols-4 sm:grid-cols-7 gap-2 weather-pill max-w-xl">
+    <div>
+        <input id="icon-sun" type="radio" name="weather" class="sr-only" checked>
+        <label for="icon-sun" aria-label="Soligt" title="Soligt"
+               class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+            <svg class="w-6 h-6" style="stroke-linecap:round;stroke-linejoin:round" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="4"/>
+                <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/>
+            </svg>
+        </label>
+    </div>
+    <!-- Fler alternativ på samma sätt... -->
+</div>
+```
+
+### Stjärnbetyg
+Fem klickbara stjärnor som radio-inputs. Kräver `.rating-stars` / `.rating-star` / `.rating-star.is-active` CSS + JS för att sätta `is-active` på stjärnor ≤ valt värde. Använd `--terracotta` för aktiv färg.
+```html
+<!-- CSS i <style>: -->
+<!-- .rating-stars { color: #cbd5e1; } -->
+<!-- .rating-star { transition: color 0.2s ease; } -->
+<!-- .rating-star.is-active { color: var(--terracotta); } -->
+<div class="rating-stars flex items-center gap-1.5" role="radiogroup" aria-label="Betyg">
+    <label class="rating-star cursor-pointer" data-value="1" title="1 stjärna">
+        <input type="radio" name="rating" value="1" class="sr-only">
+        <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.94 5.96 6.58.96-4.76 4.64 1.12 6.56L12 17.52 6.12 20.62l1.12-6.56-4.76-4.64 6.58-.96L12 2.5z"/></svg>
+    </label>
+    <!-- Upprepa för data-value 2–5 -->
+</div>
+<!-- JS: -->
+<!-- document.querySelectorAll('.rating-star').forEach(star => star.classList.toggle('is-active', +star.dataset.value <= value)); -->
