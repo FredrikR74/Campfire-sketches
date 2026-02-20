@@ -30,6 +30,8 @@ pages/
   campfire-editera-loggbok.html        # Loggbok: skapa/ändra stopp med karta, väder och kostnader
   campfire-profil.html         # Profilsida med redigeringsläge
   campfire-profiler.html       # Profilsök med filter för medlemmar och resepreferenser
+  campfire-nyheter-lista.html  # Nyhetslista med filter och paginering
+  campfire-inspiration-lista.html  # Inspirationslista med filter och paginering
   campfire-nyheter-inspiration.html  # Artikelsida (nyheter/inspiration)
   campfire-traff-detaljer.html  # Detaljvy för en husbilsträff med temataggar
   campfire-traff-edit.html     # Formulär för att redigera husbilsträff (info, schema och kapacitet)

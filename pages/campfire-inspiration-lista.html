@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Inspiration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        .inspo-thumb {
+            position: relative;
+            height: 14rem;
+            overflow: hidden;
+        }
+        .inspo-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.25s ease;
+        }
+        .inspo-thumb::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(30,58,58,0.85) 0%, rgba(30,58,58,0.2) 70%);
+        }
+        article:hover .inspo-thumb img {
+            transform: scale(1.04);
+        }
+        .page-btn[aria-current="page"] {
+            background: var(--forest);
+            color: white;
+            border-color: var(--forest);
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg-mist)]">
+<div id="navbar-slot" data-variant="dark"></div>
+
+<header class="pt-24 sm:pt-28 pb-10 text-white" style="background: radial-gradient(circle at 20% 10%, rgba(193,124,92,0.35), transparent 40%), linear-gradient(135deg, rgba(30,58,58,0.95), rgba(74,122,107,0.88));">
+    <div class="max-w-6xl mx-auto px-5">
+        <span class="badge bg-white/20 text-white mb-3 inline-block">Inspiration</span>
+        <h1 class="text-3xl sm:text-4xl font-extrabold">Berättelser och idéer från vägen</h1>
+        <p class="text-white/75 mt-3 max-w-2xl">Skissvy med filter och paginering (statisk demo).</p>
+    </div>
+</header>
+
+<main class="max-w-6xl mx-auto px-5 py-10 space-y-8">
+    <section class="bg-white rounded-3xl card-shadow p-4 sm:p-6">
+        <div class="flex flex-col lg:flex-row gap-3 lg:items-center">
+            <input type="search" placeholder="Sök inspiration" class="flex-1 border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:border-[var(--forest)] focus:outline-none">
+            <select class="border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 focus:border-[var(--forest)] focus:outline-none">
+                <option>Alla teman</option>
+                <option>Berättelse</option>
+                <option>Tips</option>
+                <option>Recept</option>
+                <option>Rutt</option>
+            </select>
+            <select class="border-2 border-gray-200 rounded-xl px-4 py-2.5 text-sm text-gray-700 focus:border-[var(--forest)] focus:outline-none">
+                <option>Alla längder</option>
+                <option>Kort läsning (0–5 min)</option>
+                <option>Längre läsning (6+ min)</option>
+            </select>
+        </div>
+    </section>
+
+    <section>
+        <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="inspo-thumb">
+                    <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=900&q=80" alt="Nordkap med barn">
+                    <div class="absolute top-4 left-4 z-10"><span class="badge bg-white/20 text-white backdrop-blur-sm">Berättelse</span></div>
+                    <div class="absolute bottom-4 left-4 right-4 z-10"><h2 class="text-white text-lg font-bold leading-snug">Nordkap med barn – så planerade vi vår drömresa</h2></div>
+                </div>
+                <div class="p-5 space-y-2.5">
+                    <p class="text-sm text-gray-600 leading-relaxed">En 6-veckors resa med vardagsrutiner, budget och favoriter.</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500"><span>Sara Lindqvist</span><span>9 min läsning</span></div>
+                    <a href="./campfire-nyheter-inspiration.html" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs artikel <span class="ml-1">→</span></a>
+                </div>
+            </article>
+
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="inspo-thumb">
+                    <img src="https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=900&q=80" alt="Tre enkla middagar">
+                    <div class="absolute top-4 left-4 z-10"><span class="badge bg-white/20 text-white backdrop-blur-sm">Recept</span></div>
+                    <div class="absolute bottom-4 left-4 right-4 z-10"><h2 class="text-white text-lg font-bold leading-snug">Tre enkla middagar för små kök</h2></div>
+                </div>
+                <div class="p-5 space-y-2.5">
+                    <p class="text-sm text-gray-600 leading-relaxed">Snabba recept som fungerar även med två kokplattor.</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500"><span>Linn Nyström</span><span>4 min läsning</span></div>
+                    <a href="./campfire-nyheter-inspiration.html" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs artikel <span class="ml-1">→</span></a>
+                </div>
+            </article>
+
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="inspo-thumb">
+                    <img src="https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=900&q=80" alt="Rutt Höga kusten">
+                    <div class="absolute top-4 left-4 z-10"><span class="badge bg-white/20 text-white backdrop-blur-sm">Rutt</span></div>
+                    <div class="absolute bottom-4 left-4 right-4 z-10"><h2 class="text-white text-lg font-bold leading-snug">Rutt: Höga kusten på 5 dagar</h2></div>
+                </div>
+                <div class="p-5 space-y-2.5">
+                    <p class="text-sm text-gray-600 leading-relaxed">Utsiktsplatser, bra nattstopp och bästa tid för besök.</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500"><span>Rasmus Falk</span><span>7 min läsning</span></div>
+                    <a href="./campfire-nyheter-inspiration.html" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs artikel <span class="ml-1">→</span></a>
+                </div>
+            </article>
+
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="inspo-thumb">
+                    <img src="https://images.unsplash.com/photo-1519817650390-64a93db51149?w=900&q=80" alt="Ordning i garaget">
+                    <div class="absolute top-4 left-4 z-10"><span class="badge bg-white/20 text-white backdrop-blur-sm">Tips</span></div>
+                    <div class="absolute bottom-4 left-4 right-4 z-10"><h2 class="text-white text-lg font-bold leading-snug">Så får du ordning i garaget under långresa</h2></div>
+                </div>
+                <div class="p-5 space-y-2.5">
+                    <p class="text-sm text-gray-600 leading-relaxed">Praktiska förvaringslösningar som sparar både tid och plats.</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500"><span>Maria Lind</span><span>3 min läsning</span></div>
+                    <a href="./campfire-nyheter-inspiration.html" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs artikel <span class="ml-1">→</span></a>
+                </div>
+            </article>
+
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="inspo-thumb">
+                    <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900&q=80" alt="Regniga dagar i husbil">
+                    <div class="absolute top-4 left-4 z-10"><span class="badge bg-white/20 text-white backdrop-blur-sm">Tips</span></div>
+                    <div class="absolute bottom-4 left-4 right-4 z-10"><h2 class="text-white text-lg font-bold leading-snug">Regniga dagar i husbil – våra bästa aktiviteter</h2></div>
+                </div>
+                <div class="p-5 space-y-2.5">
+                    <p class="text-sm text-gray-600 leading-relaxed">Spel, pyssel och små utflykter för dagar med dåligt väder.</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500"><span>Emma Sjö</span><span>5 min läsning</span></div>
+                    <a href="./campfire-nyheter-inspiration.html" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs artikel <span class="ml-1">→</span></a>
+                </div>
+            </article>
+
+            <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+                <div class="inspo-thumb">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=900&q=80" alt="Helgtur i skärgården">
+                    <div class="absolute top-4 left-4 z-10"><span class="badge bg-white/20 text-white backdrop-blur-sm">Berättelse</span></div>
+                    <div class="absolute bottom-4 left-4 right-4 z-10"><h2 class="text-white text-lg font-bold leading-snug">Helgtur i skärgården med fokus på lugn</h2></div>
+                </div>
+                <div class="p-5 space-y-2.5">
+                    <p class="text-sm text-gray-600 leading-relaxed">Två nätter, noll stress och full återhämtning vid havet.</p>
+                    <div class="flex items-center justify-between text-xs text-gray-500"><span>Lars Holm</span><span>6 min läsning</span></div>
+                    <a href="./campfire-nyheter-inspiration.html" class="inline-flex items-center text-[var(--forest)] font-semibold text-sm hover:underline">Läs artikel <span class="ml-1">→</span></a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <nav class="flex justify-center items-center gap-2" aria-label="Paginering för inspiration">
+        <button class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-semibold text-gray-700 hover:border-[var(--forest)] hover:text-[var(--forest)] transition-colors">Föregående</button>
+        <div class="flex gap-2">
+            <button class="page-btn w-10 h-10 rounded-full border-2 border-gray-200 text-sm font-semibold" aria-current="page">1</button>
+            <button class="page-btn w-10 h-10 rounded-full border-2 border-gray-200 text-sm font-semibold">2</button>
+            <button class="page-btn w-10 h-10 rounded-full border-2 border-gray-200 text-sm font-semibold">3</button>
+        </div>
+        <button class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-semibold text-gray-700 hover:border-[var(--forest)] hover:text-[var(--forest)] transition-colors">Nästa</button>
+    </nav>
+</main>
+
+<div id="footer-slot"></div>
+<script src="../components/load-components.js"></script>
+</body>
+</html>
