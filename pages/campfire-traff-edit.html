@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Redigera husbilsträff</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+</head>
+<body class="bg-[var(--bg-mist)] text-gray-800">
+<div id="navbar-slot" data-variant="dark"></div>
 
+<header class="deep-gradient relative overflow-hidden text-white">
+    <div class="max-w-4xl mx-auto px-6 pt-24 sm:pt-28 pb-8">
+        <div class="flex items-center gap-3">
+            <button class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <div>
+                <p class="text-xs sm:text-sm text-white/70 uppercase tracking-wide font-semibold">Husbilsträff</p>
+                <h1 class="text-2xl sm:text-3xl font-bold">Redigera träff</h1>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="max-w-4xl mx-auto px-6 py-8 space-y-6">
+    <section class="bg-white rounded-3xl p-6 card-shadow">
+        <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-100 pb-2 mb-5">Grundinformation</h2>
+        <div class="space-y-5">
+            <div class="space-y-1.5">
+                <label class="block text-sm font-semibold text-gray-700">Namn på träff</label>
+                <input type="text" value="Vårträff vid Vänern" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+            </div>
+            <div class="grid sm:grid-cols-2 gap-5">
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Startdatum</label>
+                    <input type="date" value="2026-05-12" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Slutdatum</label>
+                    <input type="date" value="2026-05-14" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-5">
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Plats</label>
+                    <input type="text" value="Läckö Strand, Lidköping" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Pris per ekipage (SEK)</label>
+                    <input type="number" value="350" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                </div>
+            </div>
+            <div class="space-y-1.5">
+                <label class="block text-sm font-semibold text-gray-700">Beskrivning</label>
+                <textarea rows="4" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">En social helg för husbilsentusiaster med naturupplevelser, erfarenhetsutbyte och gemensamma aktiviteter.</textarea>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-white rounded-3xl p-6 card-shadow">
+        <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-100 pb-2 mb-5">Kapacitet och anmälan</h2>
+        <div class="grid sm:grid-cols-2 gap-5">
+            <div class="space-y-1.5">
+                <label class="block text-sm font-semibold text-gray-700">Max antal ekipage</label>
+                <input type="number" value="50" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+            </div>
+            <div class="space-y-1.5">
+                <label class="block text-sm font-semibold text-gray-700">Sista anmälningsdatum</label>
+                <input type="date" value="2026-05-07" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+            </div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-3 mt-5">
+            <label class="flex items-start gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-[var(--forest)] transition-colors cursor-pointer">
+                <input type="checkbox" checked class="mt-1 w-5 h-5 accent-[var(--forest)]">
+                <div>
+                    <div class="font-semibold text-gray-800 text-sm">Öppen för alla medlemmar</div>
+                    <div class="text-xs text-gray-500">Tillåt anmälningar utan inbjudan.</div>
+                </div>
+            </label>
+            <label class="flex items-start gap-3 p-4 border-2 border-gray-200 rounded-xl hover:border-[var(--forest)] transition-colors cursor-pointer">
+                <input type="checkbox" class="mt-1 w-5 h-5 accent-[var(--forest)]">
+                <div>
+                    <div class="font-semibold text-gray-800 text-sm">Väntelista aktiv</div>
+                    <div class="text-xs text-gray-500">Låt fler ställa sig i kö när platserna är slut.</div>
+                </div>
+            </label>
+        </div>
+    </section>
+
+    <section class="bg-white rounded-3xl p-6 card-shadow">
+        <h2 class="text-lg font-bold text-gray-800 border-b-2 border-gray-100 pb-2 mb-5">Schema och praktisk info</h2>
+        <div class="space-y-4">
+            <div class="grid sm:grid-cols-[140px,1fr] gap-3">
+                <input type="time" value="16:00" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                <input type="text" value="Incheckning & välkomstfika" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+            </div>
+            <div class="grid sm:grid-cols-[140px,1fr] gap-3">
+                <input type="time" value="10:00" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                <input type="text" value="Workshop: smart förvaring i husbil" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+            </div>
+            <div class="grid sm:grid-cols-[140px,1fr] gap-3">
+                <input type="time" value="19:00" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                <input type="text" value="Gemensam grillkväll vid sjön" class="px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+            </div>
+            <button class="w-full border-2 border-dashed border-gray-300 rounded-2xl p-4 text-center hover:border-[var(--forest)] hover:text-[var(--forest)] transition-all text-gray-500 text-sm font-semibold">+ Lägg till programpunkt</button>
+            <div class="grid sm:grid-cols-2 gap-5 pt-2">
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Kontaktperson</label>
+                    <input type="text" value="Anna Andersson, 070-456 78 90" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Samlingsplats</label>
+                    <input type="text" value="Servicehuset vid sjön" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="flex flex-col sm:flex-row gap-3 justify-end pb-8">
+        <button class="border-2 border-gray-300 text-gray-700 px-6 py-2.5 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">Avbryt</button>
+        <button class="bg-[var(--forest)] text-white px-8 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">Spara träff</button>
+    </div>
+</main>
+
+<div id="footer-slot"></div>
+<script src="../components/load-components.js"></script>
+</body>
+</html>
