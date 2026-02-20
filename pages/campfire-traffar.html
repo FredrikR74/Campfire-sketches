@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Husbilsträffar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+</head>
+<body class="bg-[var(--bg-mist)] text-gray-800">
+<div id="navbar-slot" data-variant="dark"></div>
+
+<div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%)">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <svg class="w-8 h-8 text-[var(--sand-light)]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                    </svg>
+                    <h1 class="text-3xl sm:text-4xl font-bold">Alla husbilsträffar</h1>
+                </div>
+                <p class="text-white/70 text-sm sm:text-base max-w-md">Hitta kommande träffar i hela Norden och filtrera efter tema, plats och datum.</p>
+            </div>
+            <div class="flex-shrink-0">
+                <a href="campfire-traff-edit.html" class="inline-flex items-center gap-2 bg-white text-[var(--slate-deep)] px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all shadow-lg text-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                    Skapa träff
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<main class="max-w-6xl mx-auto px-5 py-10 sm:py-12 space-y-7">
+    <section class="bg-white rounded-3xl p-5 sm:p-6 card-shadow">
+        <form class="grid lg:grid-cols-12 gap-4 items-end">
+            <div class="lg:col-span-4 space-y-1.5">
+                <label for="search-traff" class="block text-sm font-semibold text-gray-700">Sök träff</label>
+                <input id="search-traff" type="text" placeholder="Ex. grillkväll, familj, fjäll" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+            </div>
+
+            <div class="lg:col-span-2 space-y-1.5">
+                <label for="filter-region" class="block text-sm font-semibold text-gray-700">Region</label>
+                <select id="filter-region" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                    <option>Alla regioner</option>
+                    <option>Sverige</option>
+                    <option>Norge</option>
+                    <option>Danmark</option>
+                    <option>Finland</option>
+                </select>
+            </div>
+
+            <div class="lg:col-span-2 space-y-1.5">
+                <label for="filter-manad" class="block text-sm font-semibold text-gray-700">Månad</label>
+                <select id="filter-manad" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                    <option>Alla månader</option>
+                    <option>Maj</option>
+                    <option>Juni</option>
+                    <option>Juli</option>
+                    <option>Augusti</option>
+                </select>
+            </div>
+
+            <div class="lg:col-span-2 space-y-1.5">
+                <label for="filter-tema" class="block text-sm font-semibold text-gray-700">Tema</label>
+                <select id="filter-tema" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                    <option>Alla teman</option>
+                    <option>Familj</option>
+                    <option>Friluftsliv</option>
+                    <option>Workshop</option>
+                    <option>Mat & socialt</option>
+                </select>
+            </div>
+
+            <div class="lg:col-span-2 flex flex-col gap-2 lg:justify-end">
+                <button type="button" class="w-full whitespace-nowrap bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">Filtrera</button>
+            </div>
+        </form>
+    </section>
+
+    <section class="space-y-4" aria-live="polite">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+                <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Kommande träffar</h2>
+                <p class="text-sm text-gray-500 font-medium mt-0.5">Visar 6 träffar (statisk skiss)</p>
+            </div>
+        </div>
+
+        <article class="bg-white rounded-3xl p-5 sm:p-6 card-shadow space-y-4">
+            <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=700&q=80" alt="Husbilar parkerade vid havet" class="w-full sm:w-52 h-40 sm:h-32 object-cover rounded-2xl border-2 border-gray-100">
+                        <div class="absolute top-3 left-3 px-3 py-2 rounded-xl deep-gradient text-white text-center shadow-lg leading-tight min-w-[64px]">
+                            <div class="text-xl font-bold">15</div>
+                            <div class="text-[11px] uppercase tracking-wide">Maj</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-1.5">
+                        <h3 class="text-lg font-bold text-gray-800">Vårträff vid Vänern</h3>
+                        <p class="text-gray-600 text-sm">Lidköping · 15–17 maj</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">32 deltagare</span>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Grillkväll</span>
+                            <span class="badge bg-[#eef4ff] text-[#365b9a]">Familjevänligt</span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="campfire-traff-detaljer.html" class="px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Visa träff</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1502780402662-acc01917d7f8?auto=format&fit=crop&w=900&q=80" alt="Husbilar i fjällmiljö" class="w-full sm:w-52 h-40 sm:h-32 object-cover rounded-2xl border-2 border-gray-100">
+                        <div class="absolute top-3 left-3 px-3 py-2 rounded-xl deep-gradient text-white text-center shadow-lg leading-tight min-w-[64px]">
+                            <div class="text-xl font-bold">06</div>
+                            <div class="text-[11px] uppercase tracking-wide">Jun</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-1.5">
+                        <h3 class="text-lg font-bold text-gray-800">Midnattssol i Abisko</h3>
+                        <p class="text-gray-600 text-sm">Abisko · 6–9 juni</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">24 deltagare</span>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Vandring</span>
+                            <span class="badge bg-[#f1eefe] text-[#6244a3]">Fotoworkshop</span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="campfire-traff-detaljer.html" class="px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Visa träff</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1493558103817-58b2924bce98?auto=format&fit=crop&w=900&q=80" alt="Camping vid kust" class="w-full sm:w-52 h-40 sm:h-32 object-cover rounded-2xl border-2 border-gray-100">
+                        <div class="absolute top-3 left-3 px-3 py-2 rounded-xl deep-gradient text-white text-center shadow-lg leading-tight min-w-[64px]">
+                            <div class="text-xl font-bold">21</div>
+                            <div class="text-[11px] uppercase tracking-wide">Jun</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-1.5">
+                        <h3 class="text-lg font-bold text-gray-800">Sommarhäng på Österlen</h3>
+                        <p class="text-gray-600 text-sm">Kivik · 21–23 juni</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">40 deltagare</span>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Matlagning</span>
+                            <span class="badge bg-[#fff3e8] text-[#9a5e2a]">Loppis</span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="campfire-traff-detaljer.html" class="px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Visa träff</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1504851149312-7a075b496cc7?auto=format&fit=crop&w=900&q=80" alt="Campingplats i skog" class="w-full sm:w-52 h-40 sm:h-32 object-cover rounded-2xl border-2 border-gray-100">
+                        <div class="absolute top-3 left-3 px-3 py-2 rounded-xl deep-gradient text-white text-center shadow-lg leading-tight min-w-[64px]">
+                            <div class="text-xl font-bold">05</div>
+                            <div class="text-[11px] uppercase tracking-wide">Jul</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-1.5">
+                        <h3 class="text-lg font-bold text-gray-800">Skog & sjö i Dalarna</h3>
+                        <p class="text-gray-600 text-sm">Rättvik · 5–7 juli</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">28 deltagare</span>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Kanot</span>
+                            <span class="badge bg-[#eef4ff] text-[#365b9a]">Barnaktiviteter</span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="campfire-traff-detaljer.html" class="px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Visa träff</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1470004914212-05527e49370b?auto=format&fit=crop&w=900&q=80" alt="Husbilar vid sjö och solnedgång" class="w-full sm:w-52 h-40 sm:h-32 object-cover rounded-2xl border-2 border-gray-100">
+                        <div class="absolute top-3 left-3 px-3 py-2 rounded-xl deep-gradient text-white text-center shadow-lg leading-tight min-w-[64px]">
+                            <div class="text-xl font-bold">19</div>
+                            <div class="text-[11px] uppercase tracking-wide">Jul</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-1.5">
+                        <h3 class="text-lg font-bold text-gray-800">Kvällar vid Siljan</h3>
+                        <p class="text-gray-600 text-sm">Leksand · 19–21 juli</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">36 deltagare</span>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Live-musik</span>
+                            <span class="badge bg-[#f1eefe] text-[#6244a3]">After beach</span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="campfire-traff-detaljer.html" class="px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Visa träff</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-2 border-gray-100 rounded-2xl p-5 hover:border-[var(--forest)] hover:shadow-lg hover:-translate-y-0.5 transition-all">
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <div class="relative flex-shrink-0">
+                        <img src="https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=900&q=80" alt="Husbilar på grusplan nära fjord" class="w-full sm:w-52 h-40 sm:h-32 object-cover rounded-2xl border-2 border-gray-100">
+                        <div class="absolute top-3 left-3 px-3 py-2 rounded-xl deep-gradient text-white text-center shadow-lg leading-tight min-w-[64px]">
+                            <div class="text-xl font-bold">09</div>
+                            <div class="text-[11px] uppercase tracking-wide">Aug</div>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-1.5">
+                        <h3 class="text-lg font-bold text-gray-800">Fjordträff i Geiranger</h3>
+                        <p class="text-gray-600 text-sm">Geiranger · 9–11 augusti</p>
+                        <div class="flex flex-wrap gap-1.5 pt-1">
+                            <span class="badge bg-[#e4efe8] text-[var(--forest)]">31 deltagare</span>
+                            <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Sightseeing</span>
+                            <span class="badge bg-[#fff3e8] text-[#9a5e2a]">Båtutflykt</span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex items-center">
+                        <a href="campfire-traff-detaljer.html" class="px-5 py-2 bg-[var(--sage-green)] text-white rounded-full font-semibold hover:bg-[var(--forest)] transition-all text-sm">Visa träff</a>
+                    </div>
+                </div>
+            </div>
+        </article>
+    </section>
+</main>
+
+<div id="footer-slot"></div>
+<script src="../components/load-components.js"></script>
+</body>
+</html>
