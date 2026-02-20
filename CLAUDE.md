@@ -36,6 +36,9 @@ pages/
   campfire-traffar.html         # Listvy över alla husbilsträffar med sök/filter
   campfire-traff-detaljer.html  # Detaljvy för en husbilsträff med temataggar
   campfire-traff-edit.html     # Formulär för att redigera husbilsträff (info, schema och kapacitet)
+  campfire-login.html          # Inloggning med e-post/lösenord och Google
+  campfire-registrera.html     # Registrering med e-post/lösenord och Google, inkl. lösenordsstyrka
+  campfire-glomt-losenord.html # Återställ lösenord via e-post, inkl. bekräftelsevy
 ```
 
 ## Tech
