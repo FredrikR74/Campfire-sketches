@@ -23,7 +23,7 @@ components/
   navbar.html                  # Navbar (fixed, scroll-effekt)
   footer.html                  # Gemensam footer
   load-components.js           # JS-loader för navbar + footer
-  pages/
+pages/
   campfire-landing.html        # Landningssida
   campfire-checklistor.html    # Checklistor & formulär
   campfire-loggbok.html        # Loggbok: listvy med sök, filter och paginering
@@ -281,6 +281,7 @@ background-color: var(--slate-deep); /* fallback */
         </div>
     </div>
 </div>
+```
 
 ### Sidmall (ny sida)
 ```html
@@ -362,3 +363,31 @@ Fem klickbara stjärnor som radio-inputs. Kräver `.rating-stars` / `.rating-sta
 </div>
 <!-- JS: -->
 <!-- document.querySelectorAll('.rating-star').forEach(star => star.classList.toggle('is-active', +star.dataset.value <= value)); -->
+
+### Loggbok-kort (bild med gradientövertäckning och badge)
+Kort med omslagsbild, mörk gradientövertäckning och en kategori-badge i övre vänster. Används i listvyer som loggboken. Kräver `.log-entry-image`-CSS i sidans `<style>`.
+```html
+<!-- CSS i <style>: -->
+<!--
+.log-entry-image { position: relative; height: 11rem; overflow: hidden; }
+.log-entry-image img { width: 100%; height: 100%; object-fit: cover; }
+.log-entry-image::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(30,58,58,0.12) 15%, rgba(30,58,58,0.72) 100%); }
+.log-entry-image .badge { position: absolute; top: 1rem; left: 1rem; z-index: 1; }
+-->
+<article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow">
+    <div class="log-entry-image">
+        <img src="URL" alt="Beskrivning">
+        <span class="badge bg-white/20 text-white">Kategori</span>
+    </div>
+    <div class="p-5 space-y-2.5">
+        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">11 februari 2025</p>
+        <h3 class="text-lg font-bold text-[var(--slate-deep)]">Plats, Land</h3>
+        <p class="text-sm text-gray-600 leading-relaxed">Kort beskrivning av stoppet.</p>
+    </div>
+    <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
+        <span class="badge bg-[#e4efe8] text-[var(--forest)]">Väder</span>
+        <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">XX km</span>
+        <span class="badge bg-[#f3f4f6] text-gray-600">Land</span>
+    </div>
+</article>
+```
