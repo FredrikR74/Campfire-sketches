@@ -25,7 +25,7 @@
             inset: 0;
             background:
                 linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%),
-                url('https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=1600&q=80') center/cover no-repeat;
+                url('https://images.unsplash.com/photo-1509057199576-632a47484ece?w=1600&q=80') center/cover no-repeat;
             /* Fallback if image doesn't load */
             background-color: var(--slate-deep);
         }
@@ -51,6 +51,11 @@
             position: relative;
             overflow: hidden;
             border-radius: 1.5rem;
+        }
+        .inspo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .inspo-card .inspo-overlay {
             position: absolute;
@@ -136,13 +141,8 @@
         <!-- News 1 -->
         <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow fade-up stagger-1">
             <div class="h-44 relative overflow-hidden">
-                <div class="absolute inset-0 deep-gradient"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1498036882173-b41c28a8ba34?w=900&q=80" alt="Husbil på kustväg i Bohuslän" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[rgba(30,58,58,0.6)] to-transparent"></div>
                 <div class="absolute top-4 left-4">
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Nyhet</span>
                 </div>
@@ -160,12 +160,8 @@
         <!-- News 2 -->
         <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow fade-up stagger-2">
             <div class="h-44 relative overflow-hidden">
-                <div class="absolute inset-0 sage-gradient"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1521207418485-99c705420785?w=900&q=80" alt="Parkerad husbil under vinterförvaring" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[rgba(74,122,107,0.6)] to-transparent"></div>
                 <div class="absolute top-4 left-4">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">Tips</span>
                 </div>
@@ -183,12 +179,8 @@
         <!-- News 3 -->
         <article class="card-hover bg-white rounded-3xl overflow-hidden card-shadow fade-up stagger-3">
             <div class="h-44 relative overflow-hidden">
-                <div class="absolute inset-0 terracotta-gradient"></div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <svg class="w-16 h-16 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1533142266415-ac591a4deae9?w=900&q=80" alt="Husbilsvänner samlade vid midsommarfirande" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[rgba(193,124,92,0.62)] to-transparent"></div>
                 <div class="absolute top-4 left-4">
                     <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Event</span>
                 </div>
@@ -221,12 +213,7 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 fade-up">
         <!-- Inspo 1 - tall -->
         <div class="inspo-card col-span-2 row-span-2 h-80 lg:h-[420px] cursor-pointer">
-            <div class="absolute inset-0 deep-gradient"></div>
-            <div class="absolute inset-0 flex items-end justify-center pb-2">
-                <svg class="w-32 h-32 text-white/5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="0.5" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path>
-                </svg>
-            </div>
+            <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=1200&q=80" alt="Husbil vid nordiskt bergslandskap">
             <div class="inspo-overlay"></div>
             <div class="inspo-content absolute bottom-0 left-0 right-0 p-6">
                 <span class="badge bg-white/20 text-white mb-3">Berättelse</span>
@@ -244,7 +231,7 @@
 
         <!-- Inspo 2 -->
         <div class="inspo-card h-48 lg:h-[200px] cursor-pointer">
-            <div class="absolute inset-0 sage-gradient"></div>
+            <img src="https://images.unsplash.com/photo-1521292270410-a8c4d716d518?w=700&q=80" alt="Par planerar husbilsstopp med karta">
             <div class="inspo-overlay"></div>
             <div class="inspo-content absolute bottom-0 left-0 right-0 p-4">
                 <span class="badge bg-white/20 text-white text-[10px] mb-2">Tips</span>
@@ -254,7 +241,7 @@
 
         <!-- Inspo 3 -->
         <div class="inspo-card h-48 lg:h-[200px] cursor-pointer">
-            <div class="absolute inset-0 terracotta-gradient"></div>
+            <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=700&q=80" alt="Enkel matlagning utanför husbilen">
             <div class="inspo-overlay"></div>
             <div class="inspo-content absolute bottom-0 left-0 right-0 p-4">
                 <span class="badge bg-white/20 text-white text-[10px] mb-2">Recept</span>
@@ -264,7 +251,7 @@
 
         <!-- Inspo 4 -->
         <div class="inspo-card h-48 lg:h-[200px] cursor-pointer">
-            <div class="absolute inset-0" style="background: linear-gradient(135deg, #3a5a5a 0%, var(--forest) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?w=700&q=80" alt="Husbil med solpaneler vid en skogsglänta">
             <div class="inspo-overlay"></div>
             <div class="inspo-content absolute bottom-0 left-0 right-0 p-4">
                 <span class="badge bg-white/20 text-white text-[10px] mb-2">Guide</span>
@@ -274,7 +261,7 @@
 
         <!-- Inspo 5 -->
         <div class="inspo-card h-48 lg:h-[200px] cursor-pointer">
-            <div class="absolute inset-0" style="background: linear-gradient(135deg, var(--terracotta) 0%, var(--slate-deep) 100%);"></div>
+            <img src="https://images.unsplash.com/photo-1501776192498-77f2e5c5d67f?w=700&q=80" alt="Husbil på kustväg under en roadtrip">
             <div class="inspo-overlay"></div>
             <div class="inspo-content absolute bottom-0 left-0 right-0 p-4">
                 <span class="badge bg-white/20 text-white text-[10px] mb-2">Rutt</span>
