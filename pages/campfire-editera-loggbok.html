@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWix+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkR4j8R9gQ8K/ux5f8bQYxF5f4N5M6r8a5AQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link rel="stylesheet" href="../campfire-base.css">
     <style>
@@ -30,10 +29,6 @@
             background: var(--forest);
             border-color: var(--forest);
             color: white;
-        }
-
-        .weather-icon {
-            font-size: 1.25rem;
         }
 
         .rating-stars {
@@ -172,54 +167,81 @@
                 <!-- Väder -->
                 <div class="space-y-3">
                     <p class="text-sm font-semibold text-gray-700">Väder</p>
-                    <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 weather-pill text-sm max-w-xl">
+                    <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 weather-pill max-w-xl">
                         <!-- Soligt -->
                         <div>
                             <input id="weather-sun" type="radio" name="weather" class="sr-only" checked>
-                            <label for="weather-sun" aria-label="Soligt" title="Soligt" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <i class="weather-icon fa-solid fa-sun"></i>
+                            <label for="weather-sun" aria-label="Soligt" title="Soligt" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all text-gray-500">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/>
+                                </svg>
                             </label>
                         </div>
                         <!-- Halvklart -->
                         <div>
                             <input id="weather-partly" type="radio" name="weather" class="sr-only">
-                            <label for="weather-partly" aria-label="Halvklart" title="Halvklart" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <i class="weather-icon fa-solid fa-cloud-sun"></i>
+                            <label for="weather-partly" aria-label="Halvklart" title="Halvklart" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all text-gray-500">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="9" r="3"/>
+                                    <path d="M12 2v1.5M16.95 4.05l-1.06 1.06M19.5 9H18M16.95 13.95l-1.06-1.06"/>
+                                    <path d="M5 19h12a4 4 0 0 0 0-8h-.65A6 6 0 0 0 5 15.58V19z"/>
+                                </svg>
                             </label>
                         </div>
                         <!-- Molnigt -->
                         <div>
                             <input id="weather-cloud" type="radio" name="weather" class="sr-only">
-                            <label for="weather-cloud" aria-label="Molnigt" title="Molnigt" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <i class="weather-icon fa-solid fa-cloud"></i>
+                            <label for="weather-cloud" aria-label="Molnigt" title="Molnigt" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all text-gray-500">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>
+                                </svg>
                             </label>
                         </div>
                         <!-- Regn -->
                         <div>
                             <input id="weather-rain" type="radio" name="weather" class="sr-only">
-                            <label for="weather-rain" aria-label="Regn" title="Regn" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <i class="weather-icon fa-solid fa-cloud-rain"></i>
+                            <label for="weather-rain" aria-label="Regn" title="Regn" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all text-gray-500">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"/>
+                                    <line x1="8" y1="19" x2="8" y2="21"/>
+                                    <line x1="12" y1="17" x2="12" y2="19"/>
+                                    <line x1="16" y1="19" x2="16" y2="21"/>
+                                </svg>
                             </label>
                         </div>
                         <!-- Snö -->
                         <div>
                             <input id="weather-snow" type="radio" name="weather" class="sr-only">
-                            <label for="weather-snow" aria-label="Snö" title="Snö" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <i class="weather-icon fa-solid fa-snowflake"></i>
+                            <label for="weather-snow" aria-label="Snö" title="Snö" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all text-gray-500">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="2" x2="12" y2="22"/>
+                                    <line x1="3.34" y1="7" x2="20.66" y2="17"/>
+                                    <line x1="20.66" y1="7" x2="3.34" y2="17"/>
+                                    <path d="m9 5 3-3 3 3M9 19l3 3 3-3M5 9.27l-3 1.73 3 1.73M21.73 9.27l-3 1.73 3 1.73"/>
+                                </svg>
                             </label>
                         </div>
                         <!-- Blåst -->
                         <div>
                             <input id="weather-wind" type="radio" name="weather" class="sr-only">
-                            <label for="weather-wind" aria-label="Blåst" title="Blåst" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <i class="weather-icon fa-solid fa-wind"></i>
+                            <label for="weather-wind" aria-label="Blåst" title="Blåst" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all text-gray-500">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17.7 7.7a2.5 2.5 0 1 1 1.8 4.3H2"/>
+                                    <path d="M9.6 4.6A2 2 0 1 1 11 8H2"/>
+                                    <path d="M12.6 19.4A2 2 0 1 0 14 16H2"/>
+                                </svg>
                             </label>
                         </div>
                         <!-- Annat -->
                         <div>
                             <input id="weather-other" type="radio" name="weather" class="sr-only">
-                            <label for="weather-other" aria-label="Annat" title="Annat" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <i class="weather-icon fa-solid fa-circle-question"></i>
+                            <label for="weather-other" aria-label="Annat" title="Annat" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all text-gray-500">
+                                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                                </svg>
                             </label>
                         </div>
                     </div>
