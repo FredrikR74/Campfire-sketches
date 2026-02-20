@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campfire – Loggbok</title>
+    <title>Campfire – Redigera loggbok</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,7 +47,7 @@
         }
 
         .rating-star.is-active {
-            color: var(--forest);
+            color: var(--terracotta);
         }
 
         .log-photo-upload {
@@ -76,21 +76,23 @@
 
 <div id="navbar-slot" data-variant="dark"></div>
 
-
 <div class="deep-gradient">
-        <div class="max-w-4xl mx-auto px-6 pt-24 sm:pt-28 pb-8">
-            <div class="flex items-center gap-3">
-                <button data-page="profile" class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                </button>
-                <h1 class="text-2xl font-bold text-white">Redigera logg</h1>
-            </div>
+    <div class="max-w-4xl mx-auto px-6 pt-24 sm:pt-28 pb-8">
+        <div class="flex items-center gap-3">
+            <button data-page="profile" class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <h1 class="text-2xl font-bold text-white">Redigera logg</h1>
         </div>
+    </div>
 </div>
+
 <main class="max-w-6xl mx-auto px-5 py-10 lg:py-14">
     <div class="max-w-4xl mx-auto">
         <section class="bg-white rounded-3xl p-6 sm:p-8 card-shadow space-y-8">
             <form class="space-y-8">
+
+                <!-- Datum -->
                 <div class="grid sm:grid-cols-2 gap-4">
                     <label class="space-y-2 block">
                         <span class="text-sm font-semibold text-gray-700">Datum från</span>
@@ -102,6 +104,9 @@
                     </label>
                 </div>
 
+                <hr class="border-gray-100">
+
+                <!-- Plats -->
                 <div class="space-y-4">
                     <div class="grid sm:grid-cols-3 gap-4">
                         <label class="sm:col-span-2 space-y-2 block">
@@ -116,6 +121,7 @@
                     <p class="text-xs text-gray-500">Tips: skriv en plats och klicka sedan mer exakt i kartan.</p>
                 </div>
 
+                <!-- Typ av plats -->
                 <div class="space-y-3">
                     <p class="text-sm font-semibold text-gray-700">Typ av plats</p>
                     <div class="chip-check flex flex-wrap gap-2">
@@ -133,6 +139,7 @@
                     </div>
                 </div>
 
+                <!-- Faciliteter -->
                 <div class="space-y-3">
                     <p class="text-sm font-semibold text-gray-700">Faciliteter</p>
                     <div class="flex flex-wrap gap-2">
@@ -148,6 +155,9 @@
                     </div>
                 </div>
 
+                <hr class="border-gray-100">
+
+                <!-- Körjournal -->
                 <div class="grid sm:grid-cols-2 gap-4">
                     <label class="space-y-2 block">
                         <span class="text-sm font-semibold text-gray-700">Mätarställning (km)</span>
@@ -159,45 +169,76 @@
                     </label>
                 </div>
 
+                <hr class="border-gray-100">
+
+                <!-- Väder -->
                 <div class="space-y-3">
-                    <p class="text-sm font-semibold text-gray-700">Väder (ikoner)</p>
+                    <p class="text-sm font-semibold text-gray-700">Väder</p>
                     <div class="grid grid-cols-4 sm:grid-cols-7 gap-2 weather-pill text-sm max-w-xl">
+                        <!-- Soligt -->
                         <div>
                             <input id="weather-sun" type="radio" name="weather" class="sr-only" checked>
                             <label for="weather-sun" aria-label="Soligt" title="Soligt" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3.75"/><path d="M12 2.5v2.75M12 18.75V21.5M4.57 4.57l1.95 1.95M17.48 17.48l1.95 1.95M2.5 12h2.75M18.75 12h2.75M4.57 19.43l1.95-1.95M17.48 6.52l1.95-1.95"/></svg>
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="4"/>
+                                    <path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.93 4.93l1.77 1.77M17.3 17.3l1.77 1.77M4.93 19.07l1.77-1.77M17.3 6.7l1.77-1.77"/>
+                                </svg>
                             </label>
                         </div>
+                        <!-- Halvklart -->
                         <div>
                             <input id="weather-partly" type="radio" name="weather" class="sr-only">
-                            <label for="weather-partly" aria-label="Växlande molnighet" title="Växlande molnighet" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 18h8a3.5 3.5 0 1 0-.5-6.96A4.5 4.5 0 0 0 7.02 9.7 3.75 3.75 0 0 0 8 18Z"/><path d="M10.25 6.75a2.75 2.75 0 1 1 5.07 1.48"/></svg>
+                            <label for="weather-partly" aria-label="Halvklart" title="Halvklart" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="16" cy="8" r="2.5"/>
+                                    <path d="M16 4V5.5M16 10.5V12M12 8H13.5M18.5 8H20"/>
+                                    <path d="M5 19.5h9.5a3 3 0 0 0 .3-5.99A4.5 4.5 0 0 0 4.5 15.5 3 3 0 0 0 5 19.5Z"/>
+                                </svg>
                             </label>
                         </div>
+                        <!-- Molnigt -->
                         <div>
                             <input id="weather-cloud" type="radio" name="weather" class="sr-only">
                             <label for="weather-cloud" aria-label="Molnigt" title="Molnigt" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.5 18h8.75a3.75 3.75 0 0 0 .3-7.49A5.25 5.25 0 0 0 6.25 9.5 4 4 0 0 0 7.5 18Z"/></svg>
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5.5 19h12a4 4 0 0 0 .4-7.98A5.5 5.5 0 0 0 4.5 14 3.5 3.5 0 0 0 5.5 19Z"/>
+                                </svg>
                             </label>
                         </div>
+                        <!-- Regn -->
                         <div>
                             <input id="weather-rain" type="radio" name="weather" class="sr-only">
                             <label for="weather-rain" aria-label="Regn" title="Regn" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.5 14.25h8.75a3.75 3.75 0 0 0 .3-7.49A5.25 5.25 0 0 0 6.25 5.75a4 4 0 0 0 1.25 8.5Z"/><path d="M8.75 16.75l-.85 2.25M12 17l-.85 2.25M15.25 16.75l-.85 2.25"/></svg>
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 14h10a3.5 3.5 0 0 0 .4-6.98A5 5 0 0 0 5.5 9.5 3 3 0 0 0 6 14Z"/>
+                                    <path stroke-linecap="round" d="M9.5 17l-1 3M13 16.5l-1 3M16.5 17l-1 3"/>
+                                </svg>
                             </label>
                         </div>
+                        <!-- Snö -->
                         <div>
                             <input id="weather-snow" type="radio" name="weather" class="sr-only">
                             <label for="weather-snow" aria-label="Snö" title="Snö" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.5 14.25h8.75a3.75 3.75 0 0 0 .3-7.49A5.25 5.25 0 0 0 6.25 5.75a4 4 0 0 0 1.25 8.5Z"/><path d="M8.75 18.25h.01M12 18.25h.01M15.25 18.25h.01"/></svg>
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 14h10a3.5 3.5 0 0 0 .4-6.98A5 5 0 0 0 5.5 9.5 3 3 0 0 0 6 14Z"/>
+                                    <circle cx="9" cy="18" r="1.3" fill="currentColor" stroke="none"/>
+                                    <circle cx="15" cy="18" r="1.3" fill="currentColor" stroke="none"/>
+                                    <circle cx="12" cy="20.5" r="1.3" fill="currentColor" stroke="none"/>
+                                </svg>
                             </label>
                         </div>
+                        <!-- Blåst -->
                         <div>
                             <input id="weather-wind" type="radio" name="weather" class="sr-only">
                             <label for="weather-wind" aria-label="Blåst" title="Blåst" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
-                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10a2.5 2.5 0 1 0-2.5-2.5"/><path d="M3 12h14a2.5 2.5 0 1 1-2.5 2.5"/><path d="M3 16h7.5"/></svg>
+                                <svg class="weather-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" d="M3 8h9.5a2.5 2.5 0 1 0-2-4"/>
+                                    <path stroke-linecap="round" d="M3 12h13a2.5 2.5 0 1 1-2 4"/>
+                                    <path stroke-linecap="round" d="M3 16h7"/>
+                                </svg>
                             </label>
                         </div>
+                        <!-- Annat -->
                         <div>
                             <input id="weather-other" type="radio" name="weather" class="sr-only">
                             <label for="weather-other" aria-label="Annat" title="Annat" class="border-2 border-gray-200 rounded-xl h-12 flex items-center justify-center cursor-pointer transition-all">
@@ -206,11 +247,14 @@
                         </div>
                     </div>
                     <label class="space-y-2 block">
-                        <span class="text-sm font-semibold text-gray-700">Väder – fritext för "Annat"</span>
+                        <span class="text-sm font-semibold text-gray-700">Fritext (valfritt)</span>
                         <input type="text" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="T.ex. dimma på morgonen">
                     </label>
                 </div>
 
+                <hr class="border-gray-100">
+
+                <!-- Betyg & kostnader -->
                 <div class="grid sm:grid-cols-3 gap-4">
                     <div class="space-y-2">
                         <span class="text-sm font-semibold text-gray-700 block">Betyg</span>
@@ -247,6 +291,9 @@
                     </label>
                 </div>
 
+                <hr class="border-gray-100">
+
+                <!-- Bild -->
                 <div class="space-y-2">
                     <span class="text-sm font-semibold text-gray-700 block">Bild för loggen</span>
                     <div class="space-y-3">
@@ -260,25 +307,36 @@
                     </div>
                 </div>
 
+                <hr class="border-gray-100">
+
+                <!-- Anteckningar -->
                 <label class="space-y-2 block">
                     <span class="text-sm font-semibold text-gray-700">Egna anteckningar</span>
-                    <textarea class="cf-input w-full rounded-2xl border-2 border-gray-200 px-4 py-3 min-h-28" placeholder="Vad var bäst? Något att tänka på nästa gång?"></textarea>
+                    <textarea class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-3 min-h-28" placeholder="Vad var bäst? Något att tänka på nästa gång?"></textarea>
                 </label>
 
-                <div class="grid sm:grid-cols-2 gap-4">
-                    
-                    <div class="space-y-2">
-                        <span class="text-sm font-semibold text-gray-700 block">Övrigt</span>
-                        <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" class="w-4 h-4 accent-[var(--forest)]"> <span>Vi kan tänka oss att åka hit igen</span></label>
-                    </div>
+                <hr class="border-gray-100">
+
+                <!-- Övrigt -->
+                <div class="space-y-3">
+                    <p class="text-sm font-semibold text-gray-700">Övrigt</p>
+                    <label class="flex items-center justify-between p-4 border-2 border-gray-200 rounded-xl hover:border-[var(--forest)] transition-colors cursor-pointer">
+                        <div>
+                            <div class="font-semibold text-gray-800 text-sm">Kom hit igen</div>
+                            <div class="text-xs text-gray-500">Vi kan tänka oss att åka hit igen</div>
+                        </div>
+                        <input type="checkbox" class="w-6 h-6 accent-[var(--forest)]">
+                    </label>
                 </div>
 
-                <div class="flex flex-wrap gap-3 pt-2">
+                <!-- Knappar -->
+                <div class="flex flex-wrap items-center gap-3 pt-2">
                     <button type="submit" class="bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all text-sm">Spara logg</button>
+                    <button type="button" class="px-4 py-2 text-red-500 hover:bg-red-50 rounded-lg transition-all text-sm font-medium">Radera logg</button>
                 </div>
+
             </form>
         </section>
-
     </div>
 </main>
 
@@ -296,7 +354,6 @@
     map.on('click', (e) => {
         marker.setLatLng(e.latlng);
     });
-
 
     async function searchPlace() {
         const q = document.getElementById('location-search').value.trim();
@@ -321,7 +378,6 @@
             searchPlace();
         }
     });
-
 
     const ratingStars = document.querySelectorAll('.rating-star');
     const ratingInputs = document.querySelectorAll('input[name="rating"]');
