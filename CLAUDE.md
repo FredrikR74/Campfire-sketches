@@ -210,10 +210,13 @@ pages/
     <div class="flex flex-col sm:flex-row gap-4">
         <!-- Bild + datum-badge -->
         <div class="relative flex-shrink-0">
-            <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=700&q=80" alt="Husbilar parkerade vid havet" class="w-full sm:w-52 h-40 sm:h-32 object-cover rounded-2xl border-2 border-gray-100">
-            <div class="absolute top-3 left-3 px-3 py-2 rounded-xl deep-gradient text-white text-center shadow-lg leading-tight min-w-[64px]">
-                <div class="text-xl font-bold">15</div>
-                <div class="text-[11px] uppercase tracking-wide">Aug</div>
+            <div class="relative w-full sm:w-52 h-40 sm:h-32 rounded-2xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1526772662000-3f88f10405ff?w=700&q=80" alt="Husbilar parkerade vid havet" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-[rgba(30,58,58,0.45)] to-transparent"></div>
+            </div>
+            <div class="absolute top-3 left-3 rounded-xl overflow-hidden shadow-lg text-center min-w-[52px]">
+                <div class="bg-[var(--slate-deep)] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white/90">Aug</div>
+                <div class="bg-white px-3 py-2 text-xl font-bold text-[var(--slate-deep)]">15</div>
             </div>
         </div>
         <div class="flex-grow space-y-1.5">
