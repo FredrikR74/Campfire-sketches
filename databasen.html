@@ -40,21 +40,52 @@ classDiagram
 direction LR
 
 class User {
-  +Id: Guid
+  +Id: string
   +Email: string
-  +PasswordHash: string
+  +AuthProvider: string
   +CreatedAt: datetime
   +Status: UserStatus
 }
 
+class Role {
+  +Id: string
+  +Name: string
+}
+
+class UserRole {
+  +UserId: string
+  +RoleId: string
+}
+
 class Profile {
   +Id: Guid
-  +UserId: Guid
+  +UserId: string
   +DisplayName: string
   +Bio: string
   +HomeRegion: string
-  +VehicleType: string
   +AvatarUrl: string
+  +InvitedByProfileId: Guid
+}
+
+class Vehicle {
+  +Id: Guid
+  +ProfileId: Guid
+  +Nickname: string
+  +BrandModel: string
+  +Year: int
+  +VehicleType: string
+  +Powertrain: string
+  +LengthCm: int
+  +PhotoUrl: string
+}
+
+class Child {
+  +Id: Guid
+  +ProfileId: Guid
+  +Name: string
+  +BirthDate: date
+  +Description: string
+  +PhotoUrl: string
 }
 
 class LogbookEntry {
@@ -131,6 +162,8 @@ class Article {
   +TitleCode: string
   +ExcerptCode: string
   +BodyCode: string
+  +CmsProvider: string
+  +CmsEntryId: string
   +PublishedAt: datetime
 }
 
@@ -172,26 +205,33 @@ class TagAssignment {
   +EntityId: Guid
 }
 
-User "1" --> "1" Profile : äger
-Profile "1" --> "0..*" LogbookEntry : skriver
-Profile "1" --> "0..*" Checklist : har
-ChecklistTemplate "1" --> "0..*" Checklist : baseras på
-ChecklistTemplate "1" --> "1..*" ChecklistTemplateItem : innehåller
-Checklist "1" --> "1..*" ChecklistItem : innehåller
-Profile "1" --> "0..*" Meetup : arrangerar
-Meetup "1" --> "0..*" MeetupAgendaItem : schema
-Profile "1" --> "0..*" Article : publicerar
-Profile "1" --> "0..*" Invitation : skickar
+User "1" --> "1" Profile : owns
+Profile "1" --> "0..1" Vehicle : has
+Profile "1" --> "0..*" Child : has
+Profile "1" --> "0..*" LogbookEntry : writes
+Profile "1" --> "0..*" Checklist : has
+ChecklistTemplate "1" --> "0..*" Checklist : isBasedOn
+ChecklistTemplate "1" --> "1..*" ChecklistTemplateItem : contains
+Checklist "1" --> "1..*" ChecklistItem : contains
+Profile "1" --> "0..*" Meetup : hosts
+Meetup "1" --> "0..*" MeetupAgendaItem : hasAgenda
+Profile "1" --> "0..*" Article : publishes
+Profile "1" --> "0..*" Invitation : sends
+Profile "0..1" --> "0..*" Profile : invitedBy
 
-TagGroup "1" --> "0..*" Tag : grupperar
-Tag "1" --> "0..*" TagAssignment : sätts i
+User "1" --> "0..*" UserRole : hasRoles
+Role "1" --> "0..*" UserRole : isAssignedTo
+
+TagGroup "1" --> "0..*" Tag : groups
+Tag "1" --> "0..*" TagAssignment : isAssignedIn
 
 LogbookEntry "1" ..> "0..*" TagAssignment : EntityId
 Meetup "1" ..> "0..*" TagAssignment : EntityId
 Article "1" ..> "0..*" TagAssignment : EntityId
 Profile "1" ..> "0..*" TagAssignment : EntityId
 
-Profile "1" ..> "0..*" Translation : översättningsbara fält
+Profile "1" ..> "0..*" Translation : translatableFields
+Child "1" ..> "0..*" Translation : Description
 Checklist "1" ..> "0..*" Translation : NameCode/DescriptionCode
 ChecklistItem "1" ..> "0..*" Translation : TextCode
 ChecklistTemplate "1" ..> "0..*" Translation : NameCode/DescriptionCode/CategoryCode
@@ -201,6 +241,10 @@ MeetupAgendaItem "1" ..> "0..*" Translation : TitleCode/DescriptionCode
 Article "1" ..> "0..*" Translation : Title/Excerpt/Body
 TagGroup "1" ..> "0..*" Translation : NameCode
 Tag "1" ..> "0..*" Translation : NameCode
+
+note for User "Uses ASP.NET Core Identity\n(.NET Blazor Individual Auth)."
+note for Role "Allowed values: User, Admin"
+note for Article "Editorial content is stored\nin Storyblok CMS."
       </div>
     </section>
 
@@ -211,6 +255,9 @@ Tag "1" ..> "0..*" Translation : NameCode
         <li><strong>Taggar</strong> hanteras generiskt med <code>TagGroup</code>, <code>Tag</code> och <code>TagAssignment</code> för att kunna återanvändas mellan profiler, artiklar, loggbok och träffar.</li>
         <li><strong>NameCode/TextCode</strong> används i primärentiteter för nyckelbaserade texter som översätts via <code>Translation</code>.</li>
         <li><strong>Checklistor</strong> kan baseras på en <code>ChecklistTemplate</code> för återanvändbara mallar med fördefinierade punkter.</li>
+        <li><strong>User-auth</strong> följer ASP.NET Core Identity (Blazor Individual Auth) med rollerna <code>User</code> och <code>Admin</code>.</li>
+        <li><strong>Profile</strong> har separat relation för <code>Vehicle</code>, <code>Child</code> samt <code>InvitedByProfileId</code>.</li>
+        <li><strong>Articles</strong> redigeras/lagras i Storyblok CMS och länkas via <code>CmsProvider + CmsEntryId</code>.</li>
       </ul>
     </section>
 
