@@ -3,24 +3,23 @@
     <div class="max-w-6xl mx-auto px-5">
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
-            <a href="#" class="flex items-center group relative">
+            <a href="campfire-landing.html" class="flex items-center group relative">
                 <img src="../images/campfire-logo-light.png" alt="Campfire" class="nav-logo nav-logo-light h-14">
                 <img src="../images/campfire-logo-dark-no-tagline.png" alt="Campfire" class="nav-logo nav-logo-dark h-9 absolute left-0">
             </a>
 
             <!-- Desktop menu -->
             <div class="hidden md:flex items-center space-x-7">
-                <a href="#news" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Nyheter</a>
-                <a href="#meets" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Träffar</a>
-                <a href="#inspiration" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Inspiration</a>
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Rutter</a>
-                <a href="#" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Forum</a>
+                <a href="campfire-nyheter-lista.html" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Nyheter</a>
+                <a href="campfire-traffar.html" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Träffar</a>
+                <a href="campfire-inspiration-lista.html" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Inspiration</a>
+                <a href="campfire-loggbok.html" class="nav-link text-white/80 hover:text-white font-medium transition-colors text-sm">Loggbok</a>
             </div>
 
             <!-- Desktop right -->
             <div class="hidden md:flex items-center space-x-3">
                 <button onclick="openAuthModal('login')" class="nav-link text-white/80 hover:text-white font-medium text-sm transition-colors">Logga in</button>
-                <button onclick="openAuthModal('register')" class="bg-white text-[var(--slate-deep)] px-5 py-2 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all text-sm shadow-lg">Kom igång</button>
+                <a href="campfire-profil.html" class="bg-white text-[var(--slate-deep)] px-5 py-2 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all text-sm shadow-lg">Min profil</a>
             </div>
 
             <!-- Mobile hamburger -->
@@ -34,14 +33,13 @@
         <!-- Mobile menu -->
         <div id="mobileMenu" class="mobile-menu md:hidden">
             <div class="pb-4 pt-2 px-4 space-y-2 bg-[var(--slate-deep)] rounded-2xl mt-2 shadow-lg">
-                <a href="#news" class="block text-white/80 hover:text-white font-medium text-sm py-2">Nyheter</a>
-                <a href="#meets" class="block text-white/80 hover:text-white font-medium text-sm py-2">Träffar</a>
-                <a href="#inspiration" class="block text-white/80 hover:text-white font-medium text-sm py-2">Inspiration</a>
-                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Rutter</a>
-                <a href="#" class="block text-white/80 hover:text-white font-medium text-sm py-2">Forum</a>
+                <a href="campfire-nyheter-lista.html" class="block text-white/80 hover:text-white font-medium text-sm py-2">Nyheter</a>
+                <a href="campfire-traffar.html" class="block text-white/80 hover:text-white font-medium text-sm py-2">Träffar</a>
+                <a href="campfire-inspiration-lista.html" class="block text-white/80 hover:text-white font-medium text-sm py-2">Inspiration</a>
+                <a href="campfire-loggbok.html" class="block text-white/80 hover:text-white font-medium text-sm py-2">Loggbok</a>
                 <div class="pt-2 border-t border-white/15 flex gap-3">
                     <button onclick="openAuthModal('login')" class="text-white font-medium text-sm">Logga in</button>
-                    <button onclick="openAuthModal('register')" class="bg-white text-[var(--slate-deep)] px-5 py-2 rounded-full font-semibold text-sm">Kom igång</button>
+                    <a href="campfire-profil.html" class="bg-white text-[var(--slate-deep)] px-5 py-2 rounded-full font-semibold text-sm">Min profil</a>
                 </div>
             </div>
         </div>
