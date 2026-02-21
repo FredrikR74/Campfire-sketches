@@ -213,6 +213,55 @@ Tag "1" ..> "0..*" Translation : NameCode
         <li><strong>Checklistor</strong> kan baseras på en <code>ChecklistTemplate</code> för återanvändbara mallar med fördefinierade punkter.</li>
       </ul>
     </section>
+
+    <section class="bg-white rounded-3xl card-shadow p-6 space-y-4">
+      <h2 class="text-xl font-bold">Pragmatisk separation: domän vs databas</h2>
+      <p class="text-sm text-gray-700 max-w-4xl">
+        Ett mellanläge för implementation: behåll SQL-modellen som den är, men exponera enklare domänobjekt
+        i applikationen och lägg mappning i repository-lagret. Då minskar kopplingen till
+        <code>EntityType/FieldName</code> utan att öka komplexiteten för mycket.
+      </p>
+
+      <div class="overflow-auto">
+        <table class="min-w-full text-sm border-separate border-spacing-0">
+          <thead>
+            <tr>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)] rounded-tl-xl">Domän (appkod)</th>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)]">Databas (SQL)</th>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)] rounded-tr-xl">Kommentar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Checklist.Name</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Checklist.NameCode + Translation</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Repository hämtar kultur och returnerar färdig text.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Meetup.Description</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Meetup.DescriptionCode + Translation</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Domän slipper känna till kod-nycklar.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2"><code>Article.Tags[]</code></td>
+              <td class="px-3 py-2"><code>Tag + TagAssignment</code></td>
+              <td class="px-3 py-2">Databas kan vara generisk även om domänen är tydlig.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pre class="bg-[var(--bg-mist)] border border-gray-200 rounded-2xl p-4 text-xs sm:text-sm overflow-auto"><code>// Exempel på domänobjekt (ingen SQL-detalj)
+Checklist {
+  Id,
+  Name,
+  Description,
+  Items[]
+}
+
+// Exempel på repository-signatur
+GetChecklist(checklistId, culture) -&gt; Checklist</code></pre>
+    </section>
   </main>
 </body>
 </html>
