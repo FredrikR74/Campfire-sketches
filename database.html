@@ -39,20 +39,32 @@
 classDiagram
 direction LR
 
-class User {
+class AspNetUsers {
   +Id: string
+  +UserName: string
+  +NormalizedUserName: string
   +Email: string
-  +AuthProvider: string
-  +CreatedAt: datetime
-  +Status: UserStatus
+  +NormalizedEmail: string
+  +EmailConfirmed: bool
+  +PasswordHash: string
+  +SecurityStamp: string
+  +ConcurrencyStamp: string
+  +PhoneNumber: string
+  +PhoneNumberConfirmed: bool
+  +TwoFactorEnabled: bool
+  +LockoutEnd: datetimeoffset
+  +LockoutEnabled: bool
+  +AccessFailedCount: int
 }
 
-class Role {
+class AspNetRoles {
   +Id: string
   +Name: string
+  +NormalizedName: string
+  +ConcurrencyStamp: string
 }
 
-class UserRole {
+class AspNetUserRoles {
   +UserId: string
   +RoleId: string
 }
@@ -197,7 +209,7 @@ class TagAssignment {
   +EntityId: Guid
 }
 
-User "1" --> "1" Profile : owns
+AspNetUsers "1" --> "1" Profile : owns
 Profile "1" --> "0..1" Vehicle : has
 Profile "1" --> "0..*" Relative : has
 Profile "1" --> "0..*" Pet : has
@@ -212,8 +224,8 @@ Profile "1" --> "0..*" Article : publishes
 Profile "1" --> "0..*" Invitation : sends
 Profile "0..1" --> "0..*" Profile : invitedBy
 
-User "1" --> "0..*" UserRole : hasRoles
-Role "1" --> "0..*" UserRole : isAssignedTo
+AspNetUsers "1" --> "0..*" AspNetUserRoles : hasRoles
+AspNetRoles "1" --> "0..*" AspNetUserRoles : isAssignedTo
 
 TagGroup "1" --> "0..*" Tag : groups
 Tag "1" --> "0..*" TagAssignment : isAssignedIn
@@ -236,8 +248,8 @@ Article "1" ..> "0..*" Translation : Title/Excerpt/Body
 TagGroup "1" ..> "0..*" Translation : Name
 Tag "1" ..> "0..*" Translation : Name
 
-note for User "Uses ASP.NET Core Identity\n(.NET Blazor Individual Auth)."
-note for Role "Allowed values: User, Admin"
+note for AspNetUsers "ASP.NET Core Identity standard table\nfor authenticated users."
+note for AspNetRoles "Application roles, e.g. User and Admin."
 note for Relative "RelativeType examples:\nchild, husband, wife, partner"
 note for Article "Editorial content is stored\nin Storyblok CMS."
       </div>
@@ -250,7 +262,7 @@ note for Article "Editorial content is stored\nin Storyblok CMS."
         <li><strong>Taggar</strong> hanteras generiskt med <code>TagGroup</code>, <code>Tag</code> och <code>TagAssignment</code> för att kunna återanvändas mellan profiler, artiklar, loggbok och träffar.</li>
         <li><strong>Primärentiteter</strong> lagrar inga översättningsbara textfält; dessa finns enbart i <code>Translation</code>.</li>
         <li><strong>Checklistor</strong> kan baseras på en <code>ChecklistTemplate</code> för återanvändbara mallar med fördefinierade punkter.</li>
-        <li><strong>User-auth</strong> följer ASP.NET Core Identity (Blazor Individual Auth) med rollerna <code>User</code> och <code>Admin</code>.</li>
+        <li><strong>User-auth</strong> följer ASP.NET Core Identity-tabellerna <code>AspNetUsers</code>, <code>AspNetRoles</code> och <code>AspNetUserRoles</code> (Blazor Individual Auth) med roller som <code>User</code> och <code>Admin</code>.</li>
         <li><strong>Profile</strong> har separata relationer för <code>Vehicle</code>, <code>Relative</code> (t.ex. <code>Child</code>, <code>Husband</code>, <code>Wife</code>), <code>Pet</code> samt <code>InvitedByProfileId</code>.</li>
         <li><strong>Articles</strong> redigeras/lagras i Storyblok CMS och länkas via <code>CmsProvider + CmsEntryId</code>.</li>
       </ul>
