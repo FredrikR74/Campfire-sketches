@@ -60,9 +60,6 @@ class UserRole {
 class Profile {
   +Id: Guid
   +UserId: string
-  +DisplayName: string
-  +Bio: string
-  +HomeRegion: string
   +AvatarUrl: string
   +InvitedByProfileId: Guid
 }
@@ -84,7 +81,6 @@ class Child {
   +ProfileId: Guid
   +Name: string
   +BirthDate: date
-  +Description: string
   +PhotoUrl: string
 }
 
@@ -104,16 +100,12 @@ class LogbookEntry {
 
 class ChecklistTemplate {
   +Id: Guid
-  +NameCode: string
-  +DescriptionCode: string
-  +CategoryCode: string
   +IsPublic: bool
 }
 
 class ChecklistTemplateItem {
   +Id: Guid
   +ChecklistTemplateId: Guid
-  +TextCode: string
   +SortOrder: int
 }
 
@@ -121,15 +113,12 @@ class Checklist {
   +Id: Guid
   +ProfileId: Guid
   +ChecklistTemplateId: Guid
-  +NameCode: string
-  +DescriptionCode: string
   +IsTemplate: bool
 }
 
 class ChecklistItem {
   +Id: Guid
   +ChecklistId: Guid
-  +TextCode: string
   +IsChecked: bool
   +SortOrder: int
 }
@@ -137,8 +126,6 @@ class ChecklistItem {
 class Meetup {
   +Id: Guid
   +HostProfileId: Guid
-  +NameCode: string
-  +DescriptionCode: string
   +LocationName: string
   +StartsAt: datetime
   +EndsAt: datetime
@@ -148,8 +135,6 @@ class Meetup {
 class MeetupAgendaItem {
   +Id: Guid
   +MeetupId: Guid
-  +TitleCode: string
-  +DescriptionCode: string
   +StartsAt: datetime
   +EndsAt: datetime
   +SortOrder: int
@@ -159,9 +144,6 @@ class Article {
   +Id: Guid
   +AuthorProfileId: Guid
   +Type: ArticleType
-  +TitleCode: string
-  +ExcerptCode: string
-  +BodyCode: string
   +CmsProvider: string
   +CmsEntryId: string
   +PublishedAt: datetime
@@ -189,13 +171,11 @@ class Translation {
 class TagGroup {
   +Id: Guid
   +EntityType: string
-  +NameCode: string
 }
 
 class Tag {
   +Id: Guid
   +TagGroupId: Guid
-  +NameCode: string
   +SortOrder: int
   +ColorCode: string
 }
@@ -232,15 +212,15 @@ Profile "1" ..> "0..*" TagAssignment : EntityId
 
 Profile "1" ..> "0..*" Translation : translatableFields
 Child "1" ..> "0..*" Translation : Description
-Checklist "1" ..> "0..*" Translation : NameCode/DescriptionCode
-ChecklistItem "1" ..> "0..*" Translation : TextCode
-ChecklistTemplate "1" ..> "0..*" Translation : NameCode/DescriptionCode/CategoryCode
-ChecklistTemplateItem "1" ..> "0..*" Translation : TextCode
-Meetup "1" ..> "0..*" Translation : NameCode/DescriptionCode
-MeetupAgendaItem "1" ..> "0..*" Translation : TitleCode/DescriptionCode
+Checklist "1" ..> "0..*" Translation : Name/Description
+ChecklistItem "1" ..> "0..*" Translation : Text
+ChecklistTemplate "1" ..> "0..*" Translation : Name/Description/Category
+ChecklistTemplateItem "1" ..> "0..*" Translation : Text
+Meetup "1" ..> "0..*" Translation : Name/Description
+MeetupAgendaItem "1" ..> "0..*" Translation : Title/Description
 Article "1" ..> "0..*" Translation : Title/Excerpt/Body
-TagGroup "1" ..> "0..*" Translation : NameCode
-Tag "1" ..> "0..*" Translation : NameCode
+TagGroup "1" ..> "0..*" Translation : Name
+Tag "1" ..> "0..*" Translation : Name
 
 note for User "Uses ASP.NET Core Identity\n(.NET Blazor Individual Auth)."
 note for Role "Allowed values: User, Admin"
@@ -253,7 +233,7 @@ note for Article "Editorial content is stored\nin Storyblok CMS."
       <ul class="list-disc pl-5 space-y-2 text-sm text-gray-700">
         <li><strong>Alla översättningsbara texter</strong> sparas i <code>Translation</code> via <code>EntityType + EntityId + FieldName + Culture</code>.</li>
         <li><strong>Taggar</strong> hanteras generiskt med <code>TagGroup</code>, <code>Tag</code> och <code>TagAssignment</code> för att kunna återanvändas mellan profiler, artiklar, loggbok och träffar.</li>
-        <li><strong>NameCode/TextCode</strong> används i primärentiteter för nyckelbaserade texter som översätts via <code>Translation</code>.</li>
+        <li><strong>Primärentiteter</strong> lagrar inga översättningsbara textfält; dessa finns enbart i <code>Translation</code>.</li>
         <li><strong>Checklistor</strong> kan baseras på en <code>ChecklistTemplate</code> för återanvändbara mallar med fördefinierade punkter.</li>
         <li><strong>User-auth</strong> följer ASP.NET Core Identity (Blazor Individual Auth) med rollerna <code>User</code> och <code>Admin</code>.</li>
         <li><strong>Profile</strong> har separat relation för <code>Vehicle</code>, <code>Child</code> samt <code>InvitedByProfileId</code>.</li>
@@ -264,9 +244,10 @@ note for Article "Editorial content is stored\nin Storyblok CMS."
     <section class="bg-white rounded-3xl card-shadow p-6 space-y-4">
       <h2 class="text-xl font-bold">Pragmatisk separation: domän vs databas</h2>
       <p class="text-sm text-gray-700 max-w-4xl">
-        Ett mellanläge för implementation: behåll SQL-modellen som den är, men exponera enklare domänobjekt
-        i applikationen och lägg mappning i repository-lagret. Då minskar kopplingen till
-        <code>EntityType/FieldName</code> utan att öka komplexiteten för mycket.
+        Implementation: gör SQL-modellen konsekvent genom att låta språkfält ligga i <code>Translation</code>
+        och returnera färdiga domänobjekt från repository-lagret. Domänen använder bara
+        vanliga fält som <code>Name</code>/<code>Description</code>, medan repository hanterar
+        <code>EntityType/FieldName/Culture</code> internt.
       </p>
 
       <div class="overflow-auto">
@@ -281,13 +262,13 @@ note for Article "Editorial content is stored\nin Storyblok CMS."
           <tbody>
             <tr>
               <td class="px-3 py-2 border-b border-gray-100"><code>Checklist.Name</code></td>
-              <td class="px-3 py-2 border-b border-gray-100"><code>Checklist.NameCode + Translation</code></td>
-              <td class="px-3 py-2 border-b border-gray-100">Repository hämtar kultur och returnerar färdig text.</td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Translation(EntityType=Checklist, FieldName=Name)</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Primärtabellen har inte fältet; värdet kommer alltid från <code>Translation</code>.</td>
             </tr>
             <tr>
               <td class="px-3 py-2 border-b border-gray-100"><code>Meetup.Description</code></td>
-              <td class="px-3 py-2 border-b border-gray-100"><code>Meetup.DescriptionCode + Translation</code></td>
-              <td class="px-3 py-2 border-b border-gray-100">Domän slipper känna till kod-nycklar.</td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Translation(EntityType=Meetup, FieldName=Description)</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Inget språkfält finns i primärtabellen; allt språk styrs via Translation-kontrakt.</td>
             </tr>
             <tr>
               <td class="px-3 py-2"><code>Article.Tags[]</code></td>
@@ -309,6 +290,80 @@ Checklist {
 // Exempel på repository-signatur
 GetChecklist(checklistId, culture) -&gt; Checklist</code></pre>
     </section>
+
+
+    <section class="bg-white rounded-3xl card-shadow p-6 space-y-4">
+      <h2 class="text-xl font-bold">Translation-kontrakt (EntityType / FieldName)</h2>
+      <p class="text-sm text-gray-700 max-w-4xl">
+        Dokumentera och validera tillåtna kombinationer i applikationen.
+        Detta är källan till sanning för vilka fält som får översättas.
+      </p>
+
+      <div class="overflow-auto">
+        <table class="min-w-full text-sm border-separate border-spacing-0">
+          <thead>
+            <tr>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)] rounded-tl-xl">EntityType</th>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)]">Tillåtna FieldName</th>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)] rounded-tr-xl">Kommentar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Profile</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>DisplayName</code>, <code>Bio</code>, <code>HomeRegion</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Visningsfält i profil.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Checklist</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Name</code>, <code>Description</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Inga <code>Name</code>/<code>Description</code> i primärtabellen (endast i Translation).</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>ChecklistItem</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Text</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">En text per rad och kultur.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>ChecklistTemplate</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Name</code>, <code>Description</code>, <code>Category</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Återanvändbar mall med översatta etiketter.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Meetup</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Name</code>, <code>Description</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Plats/tider ligger kvar i primärtabell.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>MeetupAgendaItem</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Title</code>, <code>Description</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Rubrik + beskrivning per programpunkt.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Article</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Title</code>, <code>Excerpt</code>, <code>Body</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Om ni inte hämtar dessa direkt från CMS.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2"><code>TagGroup</code>, <code>Tag</code></td>
+              <td class="px-3 py-2"><code>Name</code></td>
+              <td class="px-3 py-2">Delad taxonomi med översatta etiketter.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-[var(--bg-mist)] border border-gray-200 rounded-2xl p-4 text-sm text-gray-700 space-y-2">
+        <p><strong>Rekommenderade constraints/index:</strong></p>
+        <ul class="list-disc pl-5 space-y-1">
+          <li>Unikt index på <code>(EntityType, EntityId, FieldName, Culture)</code>.</li>
+          <li>CHECK/enum-lista för tillåtna <code>EntityType</code>.</li>
+          <li>Validering av tillåtna <code>FieldName</code> per <code>EntityType</code> i app/repository.</li>
+          <li>Fallback-regel vid läsning: <code>sv-SE -&gt; sv -&gt; defaultCulture</code>.</li>
+        </ul>
+      </div>
+    </section>
+
   </main>
 </body>
 </html>
