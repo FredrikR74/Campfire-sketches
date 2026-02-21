@@ -37,6 +37,7 @@ pages/
   campfire-traff-detaljer.html  # Detaljvy för en husbilsträff med temataggar
   campfire-traff-edit.html     # Formulär för att redigera husbilsträff (info, schema och kapacitet)
   campfire-glomt-losenord.html # Återställ lösenord (landningssida för e-postlänk, inkl. nytt lösenord-formulär)
+  campfire-bjud-in.html        # Bjud in vänner: formulär med e-postinbjudningar, delningsbar länk och statistik
 ```
 
 ## Tech
