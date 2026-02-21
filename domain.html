@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campfire – Domänmodell</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="campfire-base.css" />
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#e4efe8',
+        primaryTextColor: '#1e3a3a',
+        primaryBorderColor: '#4a7a6b',
+        lineColor: '#5a5a5a',
+        tertiaryColor: '#f8f8f6'
+      }
+    });
+  </script>
+</head>
+<body class="bg-[var(--bg-mist)] text-[var(--slate-deep)]">
+  <header class="deep-gradient text-white px-6 py-10">
+    <div class="max-w-6xl mx-auto">
+      <p class="handwritten text-4xl text-[var(--sand-light)]">Campfire</p>
+      <h1 class="text-3xl sm:text-4xl font-bold">Domänmodell (förslag)</h1>
+      <p class="text-white/75 mt-2 max-w-3xl">Sammanställd utifrån alla befintliga skisser (profil, loggbok, checklistor, träffar, nyheter/inspiration och inbjudningar).</p>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <section class="bg-white rounded-3xl card-shadow p-6 overflow-auto">
+      <div class="mermaid min-w-[1200px]">
+classDiagram
+direction LR
+
+class User {
+  +Id: Guid
+  +Email: string
+  +PasswordHash: string
+  +CreatedAt: datetime
+  +Status: UserStatus
+}
+
+class Profile {
+  +Id: Guid
+  +UserId: Guid
+  +DisplayName: string
+  +Bio: string
+  +HomeRegion: string
+  +VehicleType: string
+  +AvatarUrl: string
+}
+
+class LogbookEntry {
+  +Id: Guid
+  +ProfileId: Guid
+  +Title: string
+  +Description: string
+  +CountryCode: string
+  +Latitude: decimal
+  +Longitude: decimal
+  +VisitedAt: date
+  +DistanceKm: int
+  +Rating: int
+}
+
+
+class ChecklistTemplate {
+  +Id: Guid
+  +NameCode: string
+  +DescriptionCode: string
+  +CategoryCode: string
+  +IsPublic: bool
+}
+
+class ChecklistTemplateItem {
+  +Id: Guid
+  +ChecklistTemplateId: Guid
+  +TextCode: string
+  +SortOrder: int
+}
+
+class Checklist {
+  +Id: Guid
+  +ProfileId: Guid
+  +ChecklistTemplateId: Guid
+  +NameCode: string
+  +DescriptionCode: string
+  +IsTemplate: bool
+}
+
+class ChecklistItem {
+  +Id: Guid
+  +ChecklistId: Guid
+  +TextCode: string
+  +IsChecked: bool
+  +SortOrder: int
+}
+
+class Meetup {
+  +Id: Guid
+  +HostProfileId: Guid
+  +NameCode: string
+  +DescriptionCode: string
+  +LocationName: string
+  +StartsAt: datetime
+  +EndsAt: datetime
+  +Capacity: int
+}
+
+class MeetupAgendaItem {
+  +Id: Guid
+  +MeetupId: Guid
+  +TitleCode: string
+  +DescriptionCode: string
+  +StartsAt: datetime
+  +EndsAt: datetime
+  +SortOrder: int
+}
+
+class Article {
+  +Id: Guid
+  +AuthorProfileId: Guid
+  +Type: ArticleType
+  +TitleCode: string
+  +ExcerptCode: string
+  +BodyCode: string
+  +PublishedAt: datetime
+}
+
+class Invitation {
+  +Id: Guid
+  +InviterProfileId: Guid
+  +Email: string
+  +InviteToken: string
+  +Status: InvitationStatus
+  +SentAt: datetime
+  +AcceptedAt: datetime
+}
+
+class Translation {
+  +Id: Guid
+  +EntityType: string
+  +EntityId: Guid
+  +FieldName: string
+  +Culture: string
+  +Value: string
+}
+
+class TagGroup {
+  +Id: Guid
+  +EntityType: string
+  +NameCode: string
+}
+
+class Tag {
+  +Id: Guid
+  +TagGroupId: Guid
+  +NameCode: string
+  +SortOrder: int
+  +ColorCode: string
+}
+
+class TagAssignment {
+  +TagId: Guid
+  +EntityId: Guid
+}
+
+User "1" --> "1" Profile : äger
+Profile "1" --> "0..*" LogbookEntry : skriver
+Profile "1" --> "0..*" Checklist : har
+ChecklistTemplate "1" --> "0..*" Checklist : baseras på
+ChecklistTemplate "1" --> "1..*" ChecklistTemplateItem : innehåller
+Checklist "1" --> "1..*" ChecklistItem : innehåller
+Profile "1" --> "0..*" Meetup : arrangerar
+Meetup "1" --> "0..*" MeetupAgendaItem : schema
+Profile "1" --> "0..*" Article : publicerar
+Profile "1" --> "0..*" Invitation : skickar
+
+TagGroup "1" --> "0..*" Tag : grupperar
+Tag "1" --> "0..*" TagAssignment : sätts i
+
+LogbookEntry "1" ..> "0..*" TagAssignment : EntityId
+Meetup "1" ..> "0..*" TagAssignment : EntityId
+Article "1" ..> "0..*" TagAssignment : EntityId
+Profile "1" ..> "0..*" TagAssignment : EntityId
+
+Profile "1" ..> "0..*" Translation : översättningsbara fält
+Checklist "1" ..> "0..*" Translation : NameCode/DescriptionCode
+ChecklistItem "1" ..> "0..*" Translation : TextCode
+ChecklistTemplate "1" ..> "0..*" Translation : NameCode/DescriptionCode/CategoryCode
+ChecklistTemplateItem "1" ..> "0..*" Translation : TextCode
+Meetup "1" ..> "0..*" Translation : NameCode/DescriptionCode
+MeetupAgendaItem "1" ..> "0..*" Translation : TitleCode/DescriptionCode
+Article "1" ..> "0..*" Translation : Title/Excerpt/Body
+TagGroup "1" ..> "0..*" Translation : NameCode
+Tag "1" ..> "0..*" Translation : NameCode
+      </div>
+    </section>
+
+    <section class="bg-white rounded-3xl card-shadow p-6">
+      <h2 class="text-xl font-bold mb-3">Modelleringsprinciper i förslaget</h2>
+      <ul class="list-disc pl-5 space-y-2 text-sm text-gray-700">
+        <li><strong>Alla översättningsbara texter</strong> sparas i <code>Translation</code> via <code>EntityType + EntityId + FieldName + Culture</code>.</li>
+        <li><strong>Taggar</strong> hanteras generiskt med <code>TagGroup</code>, <code>Tag</code> och <code>TagAssignment</code> för att kunna återanvändas mellan profiler, artiklar, loggbok och träffar.</li>
+        <li><strong>NameCode/TextCode</strong> används i primärentiteter för nyckelbaserade texter som översätts via <code>Translation</code>.</li>
+        <li><strong>Checklistor</strong> kan baseras på en <code>ChecklistTemplate</code> för återanvändbara mallar med fördefinierade punkter.</li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

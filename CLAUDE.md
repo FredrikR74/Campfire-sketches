@@ -15,6 +15,7 @@ Skisser/mockups för en husbilscommunity-plattform. **Ingen utveckling sker här
 ## Filstruktur
 ```
 index.html                     # Hub med länkar till alla skisser
+domain.html                    # Mermaid.js-baserad visualisering av föreslagen domänmodell
 campfire-base.css              # Delade CSS-variabler & utility-klasser
 campfire-framework.html        # Layout-template (använder components/)
 campfire-styleguide.html       # Designsystem & komponenter (visuell referens)
