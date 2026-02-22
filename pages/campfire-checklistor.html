@@ -533,7 +533,7 @@
                     <div class="p-5">
                         <div class="flex flex-col sm:flex-row gap-4">
                             <div class="flex-grow space-y-2">
-                                <div class="flex items-center gap-2">
+                                <div class="flex flex-wrap items-center gap-2">
                                     <h3 class="text-lg font-bold text-gray-800">Daglig avgångskontroll</h3>
                                     <span class="badge bg-[#e8f4e8] text-[var(--sage-green)]">Aktiv</span>
                                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Återkommande</span>
@@ -638,9 +638,12 @@
                 <!-- Section 1 -->
                 <div class="bg-white rounded-2xl card-shadow overflow-hidden">
                     <div class="px-5 py-4 bg-gray-50 flex items-center gap-3">
-                        <span class="drag-handle text-lg">⠿</span>
-                        <input type="text" value="Dokument & försäkring" class="flex-grow bg-transparent font-bold text-gray-800 cf-input focus:outline-none text-base border-b-2 border-transparent focus:border-[var(--forest)] transition-colors">
-                        <button class="px-3 py-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all text-xs font-medium">Ta bort</button>
+                        <span class="drag-handle text-lg flex-shrink-0">⠿</span>
+                        <input type="text" value="Dokument & försäkring" class="flex-grow min-w-0 bg-transparent font-bold text-gray-800 cf-input focus:outline-none text-base border-b-2 border-transparent focus:border-[var(--forest)] transition-colors">
+                        <button class="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all text-xs font-medium">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            <span class="hidden sm:inline">Ta bort</span>
+                        </button>
                     </div>
                     <div class="p-5 space-y-2">
                         <!-- Item rows -->
@@ -670,9 +673,12 @@
                 <!-- Section 2 -->
                 <div class="bg-white rounded-2xl card-shadow overflow-hidden">
                     <div class="px-5 py-4 bg-gray-50 flex items-center gap-3">
-                        <span class="drag-handle text-lg">⠿</span>
-                        <input type="text" value="Teknik & el" class="flex-grow bg-transparent font-bold text-gray-800 cf-input focus:outline-none text-base border-b-2 border-transparent focus:border-[var(--forest)] transition-colors">
-                        <button class="px-3 py-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all text-xs font-medium">Ta bort</button>
+                        <span class="drag-handle text-lg flex-shrink-0">⠿</span>
+                        <input type="text" value="Teknik & el" class="flex-grow min-w-0 bg-transparent font-bold text-gray-800 cf-input focus:outline-none text-base border-b-2 border-transparent focus:border-[var(--forest)] transition-colors">
+                        <button class="flex-shrink-0 flex items-center gap-1.5 px-2.5 py-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-all text-xs font-medium">
+                            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                            <span class="hidden sm:inline">Ta bort</span>
+                        </button>
                     </div>
                     <div class="p-5 space-y-2">
                         <div class="flex items-center gap-2 group">
@@ -700,8 +706,12 @@
             </div>
 
             <!-- Save bar -->
-            <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-end">
+            <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center justify-end">
                 <button onclick="showView('library')" class="border-2 border-gray-300 text-gray-700 px-6 py-2.5 rounded-full font-semibold hover:bg-gray-50 transition-all text-sm">Avbryt</button>
+                <button class="border-2 border-[var(--forest)] text-[var(--forest)] px-6 py-2.5 rounded-full font-semibold hover:bg-[#e4efe8] transition-all text-sm flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"/></svg>
+                    Spara som mall
+                </button>
                 <button onclick="showView('my')" class="bg-[var(--forest)] text-white px-8 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">Spara checklista</button>
             </div>
 
