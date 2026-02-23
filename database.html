@@ -85,8 +85,8 @@ class Vehicle {
   +Nickname: string
   +BrandModel: string
   +Year: int
-  +VehicleType: string
-  +Powertrain: string
+  +VehicleTypeId: uuid
+  +PowertrainId: uuid
   +LengthCm: int
   +PhotoUrl: string
 }
@@ -211,6 +211,20 @@ class Translation {
   +Value: string
 }
 
+class LookupGroup {
+  +Id: uuid
+  +Slug: string
+  +Name_t: string
+}
+
+class LookupValue {
+  +Id: uuid
+  +LookupGroupId: uuid
+  +SortOrder: int
+  +IsActive: bool
+  +Name_t: string
+}
+
 class TagGroup {
   +Id: uuid
   +EntityType: string
@@ -250,6 +264,10 @@ Profile "0..1" --> "0..*" Profile : invitedBy
 AspNetUsers "1" --> "0..*" AspNetUserRoles : hasRoles
 AspNetRoles "1" --> "0..*" AspNetUserRoles : isAssignedTo
 
+LookupGroup "1" --> "0..*" LookupValue : groups
+LookupValue "1" --> "0..*" Vehicle : vehicleType
+LookupValue "1" --> "0..*" Vehicle : powertrain
+
 TagGroup "1" --> "0..*" Tag : groups
 Tag "1" --> "0..*" TagAssignment : isAssignedIn
 
@@ -272,7 +290,7 @@ note for Translation "Fält märkta med _t-suffix i övriga entiteter\nlagras IN
         <li><strong>Alla översättningsbara texter</strong> sparas i <code>Translation</code> via <code>EntityType + EntityId + FieldName + Culture</code>.</li>
         <li><strong>Fält märkta med <code>_t</code>-suffix</strong> i diagrammet (t.ex. <code>Name_t</code>, <code>Description_t</code>) är <em>virtuella</em> – de visas på entiteten i diagrammet för läsbarhetens skull, men lagras <strong>inte</strong> i primärtabellen. Värdet hämtas alltid från <code>Translation</code>-tabellen.</li>
         <li><strong>Taggar och multi-select-val</strong> hanteras generiskt med <code>TagGroup</code>, <code>Tag</code> och <code>TagAssignment</code> för att kunna återanvändas mellan profiler, artiklar, loggbok och träffar. <code>TagGroup.Slug</code> används som kodnamn för att referera till en specifik grupp (t.ex. <code>"meetup-theme"</code>, <code>"travel-preference"</code>). <code>Tag.IsActive</code> möjliggör mjuk-inaktivering utan att ta bort värden.</li>
-        <li><strong>Stabila, små single-select-listor</strong> (t.ex. <code>VehicleType</code>, <code>Powertrain</code>, <code>RelationType</code>) hanteras som <em>enum i appkoden</em> och lagras som sträng i primärtabellen. Ingen DB-tabell behövs – dessa listor förändras sällan och appkoden behöver ändå känna till värdena.</li>
+        <li><strong>Single-select dropdown-listor</strong> (t.ex. <code>VehicleType</code>, <code>Powertrain</code>) hanteras via <code>LookupGroup</code> och <code>LookupValue</code>. Valt värde lagras som FK direkt på entitetsraden (t.ex. <code>Vehicle.VehicleTypeId</code>). Ingen junction-tabell behövs. <code>LookupGroup.Slug</code> används som kodnamn (t.ex. <code>"vehicle-type"</code>). <code>LookupValue.IsActive</code> möjliggör mjuk-inaktivering.</li>
         <li><strong>Primärentiteter</strong> lagrar inga översättningsbara textfält; dessa finns enbart i <code>Translation</code>.</li>
         <li><strong>Checklistor</strong> kan baseras på en <code>ChecklistTemplate</code> för återanvändbara mallar med fördefinierade punkter.</li>
         <li><strong>User-auth</strong> följer ASP.NET Core Identity-tabellerna <code>AspNetUsers</code>, <code>AspNetRoles</code> och <code>AspNetUserRoles</code> (Blazor Individual Auth) med roller som <code>User</code> och <code>Admin</code>.</li>
