@@ -27,7 +27,10 @@
                     JA
                 </div>
                 <div class="text-white flex-grow">
-                    <h1 class="text-3xl font-bold">Johan Andersson</h1>
+                    <div class="flex items-center gap-3 flex-wrap">
+                        <h1 class="text-3xl font-bold">Johan Andersson</h1>
+                        <span class="px-3 py-0.5 bg-white/20 rounded-full text-sm font-semibold text-white/90 tracking-wide">@husbilaventyr</span>
+                    </div>
                     <p class="text-white/70 text-sm mt-1">Husbilist sedan 2018 · Göteborg</p>
                     <div class="flex flex-wrap gap-2 mt-3">
                         <span class="badge bg-white/20 text-white">Bohuslän-entusiast</span>
@@ -342,6 +345,13 @@
                     <div class="space-y-1.5">
                         <label class="block text-sm font-semibold text-gray-700">Efternamn</label>
                         <input type="text" value="Andersson" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
+                    </div>
+                </div>
+                <div class="space-y-1.5">
+                    <label class="block text-sm font-semibold text-gray-700">Alias <span class="text-gray-400 font-normal">(valfritt – visas på profilen för influencers och välkända husbildare)</span></label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-semibold text-sm select-none">@</span>
+                        <input type="text" value="husbilaventyr" placeholder="dittnamn" class="w-full pl-8 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
                     </div>
                 </div>
                 <div class="grid sm:grid-cols-2 gap-5">
