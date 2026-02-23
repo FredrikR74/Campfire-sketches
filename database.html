@@ -40,7 +40,7 @@ classDiagram
 direction LR
 
 class AspNetUsers {
-  +Id: string
+  +Id: uuid
   +UserName: string
   +NormalizedUserName: string
   +Email: string
@@ -58,30 +58,30 @@ class AspNetUsers {
 }
 
 class AspNetRoles {
-  +Id: string
+  +Id: uuid
   +Name: string
   +NormalizedName: string
   +ConcurrencyStamp: string
 }
 
 class AspNetUserRoles {
-  +UserId: string
-  +RoleId: string
+  +UserId: uuid
+  +RoleId: uuid
 }
 
 class Profile {
-  +Id: Guid
-  +UserId: string
+  +Id: uuid
+  +UserId: uuid
   +AvatarUrl: string
-  +InvitedByProfileId: Guid
+  +InvitedByProfileId: uuid
   +DisplayName_t: string
   +Bio_t: string
   +HomeRegion_t: string
 }
 
 class Vehicle {
-  +Id: Guid
-  +ProfileId: Guid
+  +Id: uuid
+  +ProfileId: uuid
   +Nickname: string
   +BrandModel: string
   +Year: int
@@ -92,8 +92,8 @@ class Vehicle {
 }
 
 class Relative {
-  +Id: Guid
-  +ProfileId: Guid
+  +Id: uuid
+  +ProfileId: uuid
   +RelationType: RelativeType
   +Name: string
   +BirthDate: date
@@ -102,8 +102,8 @@ class Relative {
 }
 
 class Pet {
-  +Id: Guid
-  +ProfileId: Guid
+  +Id: uuid
+  +ProfileId: uuid
   +Name: string
   +Species: string
   +Breed: string
@@ -114,8 +114,8 @@ class Pet {
 }
 
 class LogbookEntry {
-  +Id: Guid
-  +ProfileId: Guid
+  +Id: uuid
+  +ProfileId: uuid
   +Title: string
   +Description: string
   +CountryCode: string
@@ -128,7 +128,7 @@ class LogbookEntry {
 
 
 class ChecklistTemplate {
-  +Id: Guid
+  +Id: uuid
   +IsPublic: bool
   +Name_t: string
   +Description_t: string
@@ -136,32 +136,32 @@ class ChecklistTemplate {
 }
 
 class ChecklistTemplateItem {
-  +Id: Guid
-  +ChecklistTemplateId: Guid
+  +Id: uuid
+  +ChecklistTemplateId: uuid
   +SortOrder: int
   +Text_t: string
 }
 
 class Checklist {
-  +Id: Guid
-  +ProfileId: Guid
-  +ChecklistTemplateId: Guid
+  +Id: uuid
+  +ProfileId: uuid
+  +ChecklistTemplateId: uuid
   +IsTemplate: bool
   +Name_t: string
   +Description_t: string
 }
 
 class ChecklistItem {
-  +Id: Guid
-  +ChecklistId: Guid
+  +Id: uuid
+  +ChecklistId: uuid
   +IsChecked: bool
   +SortOrder: int
   +Text_t: string
 }
 
 class Meetup {
-  +Id: Guid
-  +HostProfileId: Guid
+  +Id: uuid
+  +HostProfileId: uuid
   +LocationName: string
   +StartsAt: datetime
   +EndsAt: datetime
@@ -171,8 +171,8 @@ class Meetup {
 }
 
 class MeetupAgendaItem {
-  +Id: Guid
-  +MeetupId: Guid
+  +Id: uuid
+  +MeetupId: uuid
   +StartsAt: datetime
   +EndsAt: datetime
   +SortOrder: int
@@ -181,8 +181,8 @@ class MeetupAgendaItem {
 }
 
 class Article {
-  +Id: Guid
-  +AuthorProfileId: Guid
+  +Id: uuid
+  +AuthorProfileId: uuid
   +Type: ArticleType
   +CmsProvider: string
   +CmsEntryId: string
@@ -193,8 +193,8 @@ class Article {
 }
 
 class Invitation {
-  +Id: Guid
-  +InviterProfileId: Guid
+  +Id: uuid
+  +InviterProfileId: uuid
   +Email: string
   +InviteToken: string
   +Status: InvitationStatus
@@ -203,31 +203,31 @@ class Invitation {
 }
 
 class Translation {
-  +Id: Guid
+  +Id: uuid
   +EntityType: string
-  +EntityId: Guid
+  +EntityId: uuid
   +FieldName: string
   +Culture: string
   +Value: string
 }
 
 class TagGroup {
-  +Id: Guid
+  +Id: uuid
   +EntityType: string
   +Name_t: string
 }
 
 class Tag {
-  +Id: Guid
-  +TagGroupId: Guid
+  +Id: uuid
+  +TagGroupId: uuid
   +SortOrder: int
   +ColorCode: string
   +Name_t: string
 }
 
 class TagAssignment {
-  +TagId: Guid
-  +EntityId: Guid
+  +TagId: uuid
+  +EntityId: uuid
 }
 
 AspNetUsers "1" --> "1" Profile : owns
