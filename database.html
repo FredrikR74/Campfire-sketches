@@ -211,38 +211,24 @@ class Translation {
   +Value: string
 }
 
-class LookupGroup {
+class OptionGroup {
   +Id: uuid
   +Slug: string
+  +AllowMultiple: bool
   +Name_t: string
 }
 
-class LookupValue {
+class Option {
   +Id: uuid
-  +LookupGroupId: uuid
-  +SortOrder: int
-  +IsActive: bool
-  +Name_t: string
-}
-
-class TagGroup {
-  +Id: uuid
-  +EntityType: string
-  +Slug: string
-  +Name_t: string
-}
-
-class Tag {
-  +Id: uuid
-  +TagGroupId: uuid
+  +OptionGroupId: uuid
   +SortOrder: int
   +ColorCode: string
   +IsActive: bool
   +Name_t: string
 }
 
-class TagAssignment {
-  +TagId: uuid
+class OptionAssignment {
+  +OptionId: uuid
   +EntityId: uuid
 }
 
@@ -264,17 +250,15 @@ Profile "0..1" --> "0..*" Profile : invitedBy
 AspNetUsers "1" --> "0..*" AspNetUserRoles : hasRoles
 AspNetRoles "1" --> "0..*" AspNetUserRoles : isAssignedTo
 
-LookupGroup "1" --> "0..*" LookupValue : groups
-LookupValue "1" --> "0..*" Vehicle : vehicleType
-LookupValue "1" --> "0..*" Vehicle : powertrain
+OptionGroup "1" --> "0..*" Option : groups
+Option "1" --> "0..*" OptionAssignment : isAssignedIn
+Option "1" --> "0..*" Vehicle : vehicleType
+Option "1" --> "0..*" Vehicle : powertrain
 
-TagGroup "1" --> "0..*" Tag : groups
-Tag "1" --> "0..*" TagAssignment : isAssignedIn
-
-LogbookEntry "1" ..> "0..*" TagAssignment : EntityId
-Meetup "1" ..> "0..*" TagAssignment : EntityId
-Article "1" ..> "0..*" TagAssignment : EntityId
-Profile "1" ..> "0..*" TagAssignment : EntityId
+LogbookEntry "1" ..> "0..*" OptionAssignment : EntityId
+Meetup "1" ..> "0..*" OptionAssignment : EntityId
+Article "1" ..> "0..*" OptionAssignment : EntityId
+Profile "1" ..> "0..*" OptionAssignment : EntityId
 
 note for AspNetUsers "ASP.NET Core Identity standard table\nfor authenticated users."
 note for AspNetRoles "Application roles, e.g. User and Admin."
@@ -289,8 +273,7 @@ note for Translation "Fält märkta med _t-suffix i övriga entiteter\nlagras IN
       <ul class="list-disc pl-5 space-y-2 text-sm text-gray-700">
         <li><strong>Alla översättningsbara texter</strong> sparas i <code>Translation</code> via <code>EntityType + EntityId + FieldName + Culture</code>.</li>
         <li><strong>Fält märkta med <code>_t</code>-suffix</strong> i diagrammet (t.ex. <code>Name_t</code>, <code>Description_t</code>) är <em>virtuella</em> – de visas på entiteten i diagrammet för läsbarhetens skull, men lagras <strong>inte</strong> i primärtabellen. Värdet hämtas alltid från <code>Translation</code>-tabellen.</li>
-        <li><strong>Taggar och multi-select-val</strong> hanteras generiskt med <code>TagGroup</code>, <code>Tag</code> och <code>TagAssignment</code> för att kunna återanvändas mellan profiler, artiklar, loggbok och träffar. <code>TagGroup.Slug</code> används som kodnamn för att referera till en specifik grupp (t.ex. <code>"meetup-theme"</code>, <code>"travel-preference"</code>). <code>Tag.IsActive</code> möjliggör mjuk-inaktivering utan att ta bort värden.</li>
-        <li><strong>Single-select dropdown-listor</strong> (t.ex. <code>VehicleType</code>, <code>Powertrain</code>) hanteras via <code>LookupGroup</code> och <code>LookupValue</code>. Valt värde lagras som FK direkt på entitetsraden (t.ex. <code>Vehicle.VehicleTypeId</code>). Ingen junction-tabell behövs. <code>LookupGroup.Slug</code> används som kodnamn (t.ex. <code>"vehicle-type"</code>). <code>LookupValue.IsActive</code> möjliggör mjuk-inaktivering.</li>
+        <li><strong>Alla valbara alternativ</strong> – taggar, multi-select-val och single-select dropdowns – hanteras enhetligt via <code>OptionGroup</code>, <code>Option</code> och <code>OptionAssignment</code>. <code>OptionGroup.AllowMultiple</code> styr om flera val är möjliga: <code>true</code> = multi-select (värden lagras via <code>OptionAssignment</code>), <code>false</code> = single-select (värde lagras som FK direkt på entitetsraden, t.ex. <code>Vehicle.VehicleTypeId</code>). <code>Option.ColorCode</code> används där alternativet visas som färgad badge/tagg. <code>OptionGroup.Slug</code> är kodnamnet (t.ex. <code>"vehicle-type"</code>, <code>"meetup-theme"</code>). <code>Option.IsActive</code> möjliggör mjuk-inaktivering.</li>
         <li><strong>Primärentiteter</strong> lagrar inga översättningsbara textfält; dessa finns enbart i <code>Translation</code>.</li>
         <li><strong>Checklistor</strong> kan baseras på en <code>ChecklistTemplate</code> för återanvändbara mallar med fördefinierade punkter.</li>
         <li><strong>User-auth</strong> följer ASP.NET Core Identity-tabellerna <code>AspNetUsers</code>, <code>AspNetRoles</code> och <code>AspNetUserRoles</code> (Blazor Individual Auth) med roller som <code>User</code> och <code>Admin</code>.</li>
@@ -410,7 +393,7 @@ GetChecklist(checklistId, culture) -&gt; Checklist</code></pre>
               <td class="px-3 py-2 border-b border-gray-100">Om ni inte hämtar dessa direkt från CMS.</td>
             </tr>
             <tr>
-              <td class="px-3 py-2"><code>TagGroup</code>, <code>Tag</code></td>
+              <td class="px-3 py-2"><code>OptionGroup</code>, <code>Option</code></td>
               <td class="px-3 py-2"><code>Name</code></td>
               <td class="px-3 py-2">Delad taxonomi med översatta etiketter.</td>
             </tr>
