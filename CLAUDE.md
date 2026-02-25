@@ -21,7 +21,7 @@ campfire-framework.html        # Layout-template (använder components/)
 campfire-styleguide.html       # Designsystem & komponenter (visuell referens)
 boilerplate-nya-sidor.md       # Guide för att skapa nya sidor (steg-för-steg)
 components/
-  navbar.html                  # Navbar (fixed, scroll-effekt) + auth-modal (login/registrera/glömt lösenord)
+  navbar.html                  # Navbar (fixed, scroll-effekt) – login-knapp pekar på campfire-login.html
   footer.html                  # Gemensam footer
   load-components.js           # JS-loader för navbar + footer
 pages/
@@ -37,7 +37,9 @@ pages/
   campfire-traffar.html         # Listvy över alla husbilsträffar med sök/filter
   campfire-traff-detaljer.html  # Detaljvy för en husbilsträff med temataggar
   campfire-traff-edit.html     # Formulär för att redigera husbilsträff (info, schema och kapacitet)
-  campfire-glomt-losenord.html # Återställ lösenord (landningssida för e-postlänk, inkl. nytt lösenord-formulär)
+  campfire-login.html          # Auth: Logga in (fristående sida, ingen navbar/footer)
+  campfire-registrera.html     # Auth: Skapa konto (fristående sida, ingen navbar/footer)
+  campfire-glomt-losenord.html # Auth: Glömt lösenord – begär länk → bekräftelse → nytt lösenord → klar (fristående sida, ingen navbar/footer)
   campfire-bjud-in.html        # Bjud in vänner: formulär med e-postinbjudningar, delningsbar länk och statistik
 ```
 
