@@ -223,6 +223,8 @@ class Option {
   +OptionGroupId: uuid
   +SortOrder: int
   +ColorCode: string
+  +AllowValue: bool
+  +ValueUnit: string
   +IsActive: bool
   +Name_t: string
 }
@@ -231,6 +233,7 @@ class OptionAssignment {
   +OptionId: uuid
   +EntityType: string
   +EntityId: uuid
+  +Value: string
 }
 
 AspNetUsers "1" --> "1" Profile : owns
@@ -275,6 +278,7 @@ note for Translation "Fält märkta med _t-suffix i övriga entiteter\nlagras IN
         <li><strong>Alla översättningsbara texter</strong> sparas i <code>Translation</code> via <code>EntityType + EntityId + FieldName + Culture</code>.</li>
         <li><strong>Fält märkta med <code>_t</code>-suffix</strong> i diagrammet (t.ex. <code>Name_t</code>, <code>Description_t</code>) är <em>virtuella</em> – de visas på entiteten i diagrammet för läsbarhetens skull, men lagras <strong>inte</strong> i primärtabellen. Värdet hämtas alltid från <code>Translation</code>-tabellen.</li>
         <li><strong>Alla valbara alternativ</strong> – taggar, multi-select-val och single-select dropdowns – hanteras enhetligt via <code>OptionGroup</code>, <code>Option</code> och <code>OptionAssignment</code>. <code>OptionGroup.AllowMultiple</code> styr om flera val är möjliga: <code>true</code> = multi-select/taggar (värden lagras via <code>OptionAssignment</code>), <code>false</code> = single-select dropdown (lagra helst FK direkt på entitetsraden, t.ex. <code>Vehicle.VehicleTypeId</code>). Om ni vill köra allt via <code>OptionAssignment</code> även för single-select behövs unik constraint per <code>(EntityType, EntityId, OptionGroupId)</code> så att endast ett aktivt val kan finnas per grupp.</li>
+        <li><strong>Kompletterande värde för option</strong>: <code>Option.AllowValue</code> anger om ett valt alternativ får ett extra värde i <code>OptionAssignment.Value</code>. <code>Option.ValueUnit</code> beskriver enheten (t.ex. <code>W</code> för solceller), så att man kan lagra både att ett alternativ är valt och vilket värde som hör till.</li>
         <li><strong><code>OptionAssignment.EntityType</code></strong> krävs för polymorf koppling i en delad assignment-tabell; annars kan samma <code>EntityId</code> (uuid) krocka mellan olika tabeller.</li>
         <li><strong>Primärentiteter</strong> lagrar inga översättningsbara textfält; dessa finns enbart i <code>Translation</code>.</li>
         <li><strong>Checklistor</strong> kan baseras på en <code>ChecklistTemplate</code> för återanvändbara mallar med fördefinierade punkter.</li>
