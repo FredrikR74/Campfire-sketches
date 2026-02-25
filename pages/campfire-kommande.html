@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campfire – Kommande funktioner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        .sketch-frame {
+            background: #fafaf8;
+            border: 2px dashed #c8c8c0;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+        .sketch-frame::before {
+            content: "Skiss";
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #b0b0a0;
+            font-family: 'Caveat', cursive;
+            font-size: 13px;
+        }
+        .sketch-line {
+            height: 10px;
+            background: #e2e2da;
+            border-radius: 5px;
+        }
+        .sketch-box {
+            background: #e2e2da;
+            border-radius: 6px;
+        }
+        .sketch-img {
+            background: linear-gradient(135deg, #d8d8d0 0%, #e8e8e0 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #a0a090;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .sketch-btn {
+            height: 30px;
+            background: #c8c8be;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sketch-chip {
+            height: 22px;
+            background: #dde8d8;
+            border-radius: 12px;
+        }
+        .quarter-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+        }
+        .q1 { background: #fef3c7; color: #b45309; }
+        .q2 { background: #dcfce7; color: #166534; }
+        .q3 { background: #dbeafe; color: #1d4ed8; }
+        .q4 { background: #f3e8ff; color: #7c3aed; }
+        .feature-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(30,58,58,0.08);
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+        .feature-card:hover {
+            border-color: var(--forest);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(30,58,58,0.13);
+        }
+    </style>
+</head>
+<body class="bg-[var(--bg-mist)]">
+
+<div id="navbar-slot" data-variant="dark"></div>
+
+<!-- Hero -->
+<div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+            <div>
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <h1 class="text-3xl sm:text-4xl font-bold">Kommande funktioner</h1>
+                </div>
+                <p class="text-white/70 text-sm sm:text-base max-w-lg">Vi bygger Campfire bit för bit. Här är ett smakprov på vad som är på väg – spännande funktioner som gör plattformen ännu bättre för hela husbilscommunityt.</p>
+            </div>
+            <div class="flex items-center gap-2 text-white/60 text-sm shrink-0">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                Uppdaterat februari 2026
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Intro-text -->
+<div class="max-w-6xl mx-auto px-5 py-10">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 card-shadow mb-10">
+        <div class="flex flex-col sm:flex-row gap-6 items-start">
+            <div class="w-12 h-12 rounded-2xl bg-[#e4efe8] flex items-center justify-center shrink-0">
+                <svg class="w-6 h-6 text-[var(--forest)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+                </svg>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold text-[var(--slate-deep)] mb-1">Byggt av och för husbilar</h2>
+                <p class="text-gray-600 text-sm leading-relaxed max-w-2xl">Campfire utvecklas i nära dialog med communityt. Har du idéer på funktioner du saknar, eller vill betatesta något av det som är på väg? Hör av dig till oss – vi älskar feedback från er som lever livet på vägen.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+        <!-- Checklistor -->
+        <div class="feature-card">
+            <div class="p-7 space-y-5">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-[#e4efe8] flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6 text-[var(--forest)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--slate-deep)]">Checklistor</h3>
+                    </div>
+                    <span class="quarter-badge q2 shrink-0">Q2 2026</span>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">Skapa och dela checklistor för allt från avreseförberedelser och vinterförvaring till servicekontroll och packlista. Välj bland communityns mallar eller bygg dina egna – och bocka av i realtid direkt från mobilen.</p>
+
+                <!-- Sketch -->
+                <div class="sketch-frame p-4 space-y-3">
+                    <div class="flex items-center gap-3 mb-1">
+                        <div class="sketch-box w-5 h-5 shrink-0"></div>
+                        <div class="sketch-line flex-1"></div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="sketch-box w-5 h-5 shrink-0" style="background:#c8dcc8;"></div>
+                        <div class="sketch-line flex-1" style="background:#c8dcc8;"></div>
+                        <div class="sketch-chip w-10"></div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="sketch-box w-5 h-5 shrink-0" style="background:#c8dcc8;"></div>
+                        <div class="sketch-line flex-1 w-2/3" style="background:#c8dcc8;"></div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="sketch-box w-5 h-5 shrink-0"></div>
+                        <div class="sketch-line" style="width:55%;"></div>
+                    </div>
+                    <div class="pt-2 flex gap-2">
+                        <div class="sketch-btn w-28"></div>
+                        <div class="sketch-btn w-20" style="background:#dde8d8;"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">Mallar från community</span>
+                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Dela med resekompis</span>
+                    <span class="badge bg-gray-100 text-gray-600">Offline-stöd</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bjud in en vän -->
+        <div class="feature-card">
+            <div class="p-7 space-y-5">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-[#fef3e8] flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6 text-[var(--terracotta)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--slate-deep)]">Bjud in en vän</h3>
+                    </div>
+                    <span class="quarter-badge q1 shrink-0">Q1 2026</span>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">Väx communityt tillsammans! Bjud in vänner och bekanta med ett personligt mejl eller en delningsbar länk. Följ hur många som gått med via dina inbjudningar och få statusuppdateringar när de registrerar sig.</p>
+
+                <!-- Sketch -->
+                <div class="sketch-frame p-4 space-y-3">
+                    <div class="flex flex-col gap-2">
+                        <div class="sketch-line w-24 h-3" style="background:#d8cfc0;"></div>
+                        <div class="flex gap-2">
+                            <div class="flex-1 h-9 sketch-box rounded-xl" style="background:#ede8de;"></div>
+                            <div class="sketch-btn w-20" style="background:#c8a888;"></div>
+                        </div>
+                    </div>
+                    <div class="border-t border-dashed border-gray-300 pt-3 space-y-2">
+                        <div class="sketch-line w-20 h-3" style="background:#d8cfc0;"></div>
+                        <div class="h-9 sketch-box rounded-xl flex items-center px-3 gap-2" style="background:#f0ebe2;">
+                            <div class="sketch-box w-4 h-4 rounded-full shrink-0" style="background:#c8a888;"></div>
+                            <div class="sketch-line flex-1 h-2" style="background:#d8cfc0;"></div>
+                            <div class="sketch-chip w-16 h-5" style="background:#c8e0c0;"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 pt-1">
+                        <div class="text-center flex-1">
+                            <div class="sketch-box h-8 rounded-xl mb-1" style="background:#dde8d8;"></div>
+                            <div class="sketch-line w-12 mx-auto h-2" style="background:#d8cfc0;"></div>
+                        </div>
+                        <div class="text-center flex-1">
+                            <div class="sketch-box h-8 rounded-xl mb-1" style="background:#e8dcc4;"></div>
+                            <div class="sketch-line w-12 mx-auto h-2" style="background:#d8cfc0;"></div>
+                        </div>
+                        <div class="text-center flex-1">
+                            <div class="sketch-box h-8 rounded-xl mb-1" style="background:#dde8d8;"></div>
+                            <div class="sketch-line w-12 mx-auto h-2" style="background:#d8cfc0;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">E-postinbjudan</span>
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">Delningsbar länk</span>
+                    <span class="badge bg-gray-100 text-gray-600">Inbjudningsstatistik</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nyheter -->
+        <div class="feature-card">
+            <div class="p-7 space-y-5">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-[#e8f0fe] flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6 text-[#1d4ed8]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--slate-deep)]">Nyheter</h3>
+                    </div>
+                    <span class="quarter-badge q2 shrink-0">Q2 2026</span>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">Håll koll på allt som händer i husbilsvärlden – regleringsförändringar, campingguider, fordonsnyheter och communityevent. Filtrera på ämne och spara favoriter för att läsa senare. Redaktörer och community-bidrag välkomnas.</p>
+
+                <!-- Sketch -->
+                <div class="sketch-frame p-4 space-y-3">
+                    <div class="flex gap-3">
+                        <div class="sketch-img w-20 h-16 shrink-0" style="font-size:9px;">Bild</div>
+                        <div class="flex-1 space-y-2 py-1">
+                            <div class="flex gap-1.5">
+                                <div class="sketch-chip w-12 h-4" style="background:#e8dcc4;"></div>
+                                <div class="sketch-chip w-10 h-4"></div>
+                            </div>
+                            <div class="sketch-line w-full h-3"></div>
+                            <div class="sketch-line w-3/4 h-2" style="background:#ebebeb;"></div>
+                        </div>
+                    </div>
+                    <div class="border-t border-dashed border-gray-300 pt-3 flex gap-3">
+                        <div class="sketch-img w-20 h-16 shrink-0" style="font-size:9px;">Bild</div>
+                        <div class="flex-1 space-y-2 py-1">
+                            <div class="sketch-chip w-14 h-4" style="background:#dde8f8;"></div>
+                            <div class="sketch-line w-full h-3"></div>
+                            <div class="sketch-line w-2/3 h-2" style="background:#ebebeb;"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 pt-1">
+                        <div class="sketch-chip w-16 h-6 rounded-full"></div>
+                        <div class="sketch-chip w-14 h-6 rounded-full" style="background:#dde8f8;"></div>
+                        <div class="sketch-chip w-20 h-6 rounded-full"></div>
+                        <div class="sketch-chip w-12 h-6 rounded-full"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge bg-[#dbeafe] text-[#1d4ed8]">Filter per ämne</span>
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">Spara favoriter</span>
+                    <span class="badge bg-gray-100 text-gray-600">Community-bidrag</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inspirationsartiklar -->
+        <div class="feature-card">
+            <div class="p-7 space-y-5">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-[#f0fdf4] flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6 text-[var(--sage-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold text-[var(--slate-deep)]">Inspirationsartiklar</h3>
+                    </div>
+                    <span class="quarter-badge q3 shrink-0">Q3 2026</span>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed">Djupdykande guider, ruttberättelser och tips från erfarna husbilsresenärer. Hitta din nästa drömrutt via vackra bildreportage, eller dela dina egna upplevelser med communityt. Taggar och kartor kopplas till artiklarna.</p>
+
+                <!-- Sketch -->
+                <div class="sketch-frame p-4 space-y-3">
+                    <div class="sketch-img w-full h-24" style="font-size:10px; background: linear-gradient(135deg, #c8d8c8, #d8e8d8);">Omslagsbild</div>
+                    <div class="space-y-2 px-1">
+                        <div class="flex gap-2">
+                            <div class="sketch-chip w-16 h-4" style="background:#dde8d8;"></div>
+                            <div class="sketch-chip w-20 h-4" style="background:#e8dcc4;"></div>
+                        </div>
+                        <div class="sketch-line w-4/5 h-4"></div>
+                        <div class="sketch-line w-full h-2" style="background:#ebebeb;"></div>
+                        <div class="sketch-line w-11/12 h-2" style="background:#ebebeb;"></div>
+                        <div class="sketch-line w-2/3 h-2" style="background:#ebebeb;"></div>
+                    </div>
+                    <div class="flex items-center gap-3 px-1 pt-1">
+                        <div class="sketch-box w-7 h-7 rounded-full shrink-0"></div>
+                        <div class="sketch-line w-24 h-2" style="background:#d8d8d0;"></div>
+                        <div class="ml-auto sketch-btn w-20 h-7" style="background:#c8dcc8;"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge bg-[#dcfce7] text-[#166534]">Ruttberättelser</span>
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">Kartkoppling</span>
+                    <span class="badge bg-gray-100 text-gray-600">Community-skribenter</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marknadsplats – full width -->
+        <div class="feature-card lg:col-span-2">
+            <div class="p-7 space-y-5">
+                <div class="flex items-start justify-between gap-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-xl bg-[#f5f3ff] flex items-center justify-center shrink-0">
+                            <svg class="w-6 h-6 text-[#7c3aed]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-[var(--slate-deep)]">Marknadsplats</h3>
+                            <p class="text-sm text-gray-500">Köp, sälj och byt med husbilscommunityt</p>
+                        </div>
+                    </div>
+                    <span class="quarter-badge q4 shrink-0">Q4 2026</span>
+                </div>
+                <p class="text-gray-600 text-sm leading-relaxed max-w-2xl">En dedikerad marknadsplats för husbilsrelaterade saker – husbilar, husvagnar, tillbehör, reservdelar och tjänster. Sälj direkt till andra i communityt eller hitta fynd från betrodda medlemmar. Verifierade profiler och reviews skapar trygghet.</p>
+
+                <!-- Sketch – wider layout -->
+                <div class="sketch-frame p-5">
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        <div class="space-y-2">
+                            <div class="sketch-img h-24 w-full" style="font-size:9px; background: linear-gradient(135deg, #d8d0e8, #e8e0f0);">Bild</div>
+                            <div class="sketch-chip w-12 h-4" style="background:#e0d8f0;"></div>
+                            <div class="sketch-line w-full h-3"></div>
+                            <div class="sketch-line w-3/4 h-2" style="background:#ebebeb;"></div>
+                            <div class="sketch-btn w-full h-7" style="background:#d0c8e8;"></div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="sketch-img h-24 w-full" style="font-size:9px; background: linear-gradient(135deg, #c8d8e8, #d8e8f0);">Bild</div>
+                            <div class="sketch-chip w-16 h-4" style="background:#e0d8f0;"></div>
+                            <div class="sketch-line w-full h-3"></div>
+                            <div class="sketch-line w-1/2 h-2" style="background:#ebebeb;"></div>
+                            <div class="sketch-btn w-full h-7" style="background:#d0c8e8;"></div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="sketch-img h-24 w-full" style="font-size:9px; background: linear-gradient(135deg, #d8e8c8, #e8f0d0);">Bild</div>
+                            <div class="sketch-chip w-10 h-4" style="background:#e0d8f0;"></div>
+                            <div class="sketch-line w-full h-3"></div>
+                            <div class="sketch-line w-4/5 h-2" style="background:#ebebeb;"></div>
+                            <div class="sketch-btn w-full h-7" style="background:#d0c8e8;"></div>
+                        </div>
+                        <div class="hidden sm:block space-y-2">
+                            <div class="sketch-img h-24 w-full" style="font-size:9px; background: linear-gradient(135deg, #e8d8c8, #f0e8d0);">Bild</div>
+                            <div class="sketch-chip w-14 h-4" style="background:#e0d8f0;"></div>
+                            <div class="sketch-line w-full h-3"></div>
+                            <div class="sketch-line w-2/3 h-2" style="background:#ebebeb;"></div>
+                            <div class="sketch-btn w-full h-7" style="background:#d0c8e8;"></div>
+                        </div>
+                    </div>
+                    <div class="mt-4 flex flex-wrap gap-2">
+                        <div class="sketch-chip w-20 h-6 rounded-full" style="background:#e0d8f0;"></div>
+                        <div class="sketch-chip w-16 h-6 rounded-full" style="background:#e0d8f0;"></div>
+                        <div class="sketch-chip w-24 h-6 rounded-full" style="background:#e0d8f0;"></div>
+                        <div class="sketch-chip w-18 h-6 rounded-full" style="background:#e0d8f0;"></div>
+                        <div class="ml-auto sketch-btn w-28 h-7" style="background:#c8b8e0;"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-2">
+                    <span class="badge bg-[#f3e8ff] text-[#7c3aed]">Husbilar & husvagnar</span>
+                    <span class="badge bg-[#f3e8ff] text-[#7c3aed]">Tillbehör & delar</span>
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">Verifierade säljare</span>
+                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">Omdömen & reviews</span>
+                    <span class="badge bg-gray-100 text-gray-600">Säkra betalningar</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 deep-gradient rounded-3xl p-8 sm:p-10 text-center text-white">
+        <h2 class="text-2xl sm:text-3xl font-bold mb-3">Vill du vara med och forma Campfire?</h2>
+        <p class="text-white/70 text-sm sm:text-base max-w-lg mx-auto mb-6">Vi söker betatestare och community-ambassadörer. Dina idéer och din feedback gör plattformen bättre för alla.</p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+            <button class="bg-white text-[var(--slate-deep)] px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all shadow-lg text-sm">Anmäl mig som betatestare</button>
+            <button class="border-2 border-white text-white px-6 py-2.5 rounded-full font-semibold hover:bg-white/10 transition-all text-sm">Skicka in en idé</button>
+        </div>
+    </div>
+</div>
+
+<div id="footer-slot"></div>
+<script src="../components/load-components.js"></script>
+</body>
+</html>
