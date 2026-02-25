@@ -21,7 +21,7 @@
             border: 2px solid #e5e7eb;
             border-radius: 1.25rem;
             box-shadow: 0 12px 40px rgba(30,58,58,0.13);
-            width: min(480px, calc(100vw - 2.5rem));
+            width: min(520px, calc(100vw - 2.5rem));
             padding: 1rem;
         }
         #equipment-picker.open { display: block; }
@@ -43,8 +43,24 @@
         .eq-option:hover { border-color: var(--forest); color: var(--forest); background: #e4efe8; }
         .eq-option.selected { background: var(--forest); border-color: var(--forest); color: white; }
         .eq-option.selected:hover { background: #c0392b; border-color: #c0392b; }
-        .eq-category { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9ca3af; margin-bottom: 0.4rem; margin-top: 0.75rem; }
-        .eq-category:first-child { margin-top: 0; }
+        .eq-option-wrap { display: inline-flex; align-items: center; gap: 0.3rem; }
+        .eq-value-field { display: none; align-items: center; gap: 3px; }
+        .eq-value-input {
+            width: 3.5rem;
+            padding: 0.2rem 0.4rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #374151;
+            outline: none;
+            transition: border-color 0.15s;
+            -moz-appearance: textfield;
+        }
+        .eq-value-input::-webkit-outer-spin-button,
+        .eq-value-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .eq-value-input:focus { border-color: var(--forest); }
+        .eq-unit-label { font-size: 0.75rem; font-weight: 700; color: var(--forest); }
     </style>
 </head>
 <body>
@@ -476,22 +492,24 @@
                         <!-- Dropdown-panel -->
                         <div id="equipment-picker" role="dialog" aria-label="Välj utrustning">
                             <p class="text-xs text-gray-400 mb-3">Välj den utrustning din husbil har. Klicka igen för att ta bort.</p>
-
-                            <div class="eq-category">Energi &amp; el</div>
-                            <div class="flex flex-wrap gap-1.5 mb-1">
-                                <button type="button" class="eq-option" data-tag="Solceller 100W">Solceller 100W</button>
-                                <button type="button" class="eq-option" data-tag="Solceller 200W">Solceller 200W</button>
-                                <button type="button" class="eq-option selected" data-tag="Solceller 400W">Solceller 400W</button>
+                            <div class="flex flex-wrap gap-1.5 items-center">
+                                <span class="eq-option-wrap">
+                                    <button type="button" class="eq-option selected" data-tag="Solceller" data-allow-value data-unit="W" data-initial-value="400">Solceller</button>
+                                    <span class="eq-value-field">
+                                        <input type="number" class="eq-value-input" min="0" placeholder="0">
+                                        <span class="eq-unit-label">W</span>
+                                    </span>
+                                </span>
                                 <button type="button" class="eq-option" data-tag="Generator">Generator</button>
                                 <button type="button" class="eq-option" data-tag="Landström 230V">Landström 230V</button>
                                 <button type="button" class="eq-option" data-tag="Laddningsbooster">Laddningsbooster</button>
-                                <button type="button" class="eq-option" data-tag="Litiumbatteri 100Ah">Litiumbatteri 100Ah</button>
-                                <button type="button" class="eq-option selected" data-tag="Litiumbatteri 200Ah">Litiumbatteri 200Ah</button>
-                                <button type="button" class="eq-option" data-tag="Litiumbatteri 300Ah">Litiumbatteri 300Ah</button>
-                            </div>
-
-                            <div class="eq-category">Komfort</div>
-                            <div class="flex flex-wrap gap-1.5 mb-1">
+                                <span class="eq-option-wrap">
+                                    <button type="button" class="eq-option selected" data-tag="Litiumbatteri" data-allow-value data-unit="Ah" data-initial-value="200">Litiumbatteri</button>
+                                    <span class="eq-value-field">
+                                        <input type="number" class="eq-value-input" min="0" placeholder="0">
+                                        <span class="eq-unit-label">Ah</span>
+                                    </span>
+                                </span>
                                 <button type="button" class="eq-option selected" data-tag="Markis">Markis</button>
                                 <button type="button" class="eq-option" data-tag="Stor markis">Stor markis</button>
                                 <button type="button" class="eq-option" data-tag="Luftkonditionering">Luftkonditionering</button>
@@ -500,10 +518,6 @@
                                 <button type="button" class="eq-option selected" data-tag="Vinterpaket">Vinterpaket</button>
                                 <button type="button" class="eq-option" data-tag="Golvvärme">Golvvärme</button>
                                 <button type="button" class="eq-option" data-tag="Gardinpaket">Gardinpaket</button>
-                            </div>
-
-                            <div class="eq-category">Teknik &amp; säkerhet</div>
-                            <div class="flex flex-wrap gap-1.5 mb-1">
                                 <button type="button" class="eq-option selected" data-tag="Backkamera">Backkamera</button>
                                 <button type="button" class="eq-option" data-tag="Sidokameror">Sidokameror</button>
                                 <button type="button" class="eq-option" data-tag="GPS/Navigation">GPS/Navigation</button>
@@ -513,20 +527,12 @@
                                 <button type="button" class="eq-option" data-tag="Gasdetektor">Gasdetektor</button>
                                 <button type="button" class="eq-option" data-tag="Brandsläckare">Brandsläckare</button>
                                 <button type="button" class="eq-option selected" data-tag="Hjärtstartare">Hjärtstartare</button>
-                            </div>
-
-                            <div class="eq-category">Transport &amp; tillbehör</div>
-                            <div class="flex flex-wrap gap-1.5 mb-1">
                                 <button type="button" class="eq-option selected" data-tag="Cykelställ">Cykelställ</button>
                                 <button type="button" class="eq-option" data-tag="Elcykelställ">Elcykelställ</button>
                                 <button type="button" class="eq-option" data-tag="Dragkrok">Dragkrok</button>
                                 <button type="button" class="eq-option" data-tag="Takbox">Takbox</button>
                                 <button type="button" class="eq-option" data-tag="Motorcykeltransport">Motorcykeltransport</button>
                                 <button type="button" class="eq-option" data-tag="Terrängdäck">Terrängdäck</button>
-                            </div>
-
-                            <div class="eq-category">Vatten &amp; avlopp</div>
-                            <div class="flex flex-wrap gap-1.5">
                                 <button type="button" class="eq-option" data-tag="Extra vattentank">Extra vattentank</button>
                                 <button type="button" class="eq-option" data-tag="Extra avloppstank">Extra avloppstank</button>
                                 <button type="button" class="eq-option" data-tag="Utomhusdusch">Utomhusdusch</button>
@@ -740,15 +746,25 @@
         var addBtn = document.getElementById('equipment-add-btn');
         var tagsContainer = document.getElementById('equipment-tags');
 
-        // Läs initialt valda (de med .selected i pickern)
+        function getTagLabel(opt) {
+            if (opt.hasAttribute('data-allow-value')) {
+                var wrap = opt.closest('.eq-option-wrap');
+                var input = wrap ? wrap.querySelector('.eq-value-input') : null;
+                var val = input ? input.value.trim() : '';
+                var unit = opt.getAttribute('data-unit') || '';
+                return val ? opt.getAttribute('data-tag') + ' ' + val + unit : opt.getAttribute('data-tag');
+            }
+            return opt.getAttribute('data-tag');
+        }
+
         function renderSelectedTags() {
             tagsContainer.innerHTML = '';
-            document.querySelectorAll('.eq-option.selected').forEach(function(opt) {
+            picker.querySelectorAll('.eq-option.selected').forEach(function(opt) {
                 var tag = opt.getAttribute('data-tag');
+                var label = getTagLabel(opt);
                 var span = document.createElement('span');
-                span.className = 'px-4 py-2 bg-[#e4efe8] text-[var(--forest)] rounded-full font-semibold text-sm flex items-center gap-2';
                 span.style.cssText = 'background:#e4efe8;color:var(--forest);padding:0.5rem 1rem;border-radius:9999px;font-weight:600;font-size:0.875rem;display:inline-flex;align-items:center;gap:0.5rem;';
-                span.innerHTML = tag + ' <button type="button" style="font-size:1rem;line-height:1;" data-remove="' + tag + '" title="Ta bort">&times;</button>';
+                span.innerHTML = label + ' <button type="button" style="font-size:1rem;line-height:1;" data-remove="' + tag + '" title="Ta bort">&times;</button>';
                 tagsContainer.appendChild(span);
             });
         }
@@ -771,7 +787,24 @@
             var opt = e.target.closest('.eq-option');
             if (!opt) return;
             opt.classList.toggle('selected');
+            var isSelected = opt.classList.contains('selected');
+            if (opt.hasAttribute('data-allow-value')) {
+                var wrap = opt.closest('.eq-option-wrap');
+                var field = wrap ? wrap.querySelector('.eq-value-field') : null;
+                if (field) field.style.display = isSelected ? 'inline-flex' : 'none';
+                if (!isSelected) {
+                    var input = wrap ? wrap.querySelector('.eq-value-input') : null;
+                    if (input) input.value = '';
+                }
+            }
             renderSelectedTags();
+        });
+
+        // Uppdatera taggar när värde ändras
+        picker.addEventListener('input', function(e) {
+            if (e.target.classList.contains('eq-value-input')) {
+                renderSelectedTags();
+            }
         });
 
         // Ta bort tagg via ×-knapp i tagglistan
@@ -779,8 +812,27 @@
             var removeTag = e.target.getAttribute('data-remove');
             if (!removeTag) return;
             var opt = picker.querySelector('.eq-option[data-tag="' + removeTag + '"]');
-            if (opt) opt.classList.remove('selected');
+            if (opt) {
+                opt.classList.remove('selected');
+                if (opt.hasAttribute('data-allow-value')) {
+                    var wrap = opt.closest('.eq-option-wrap');
+                    var field = wrap ? wrap.querySelector('.eq-value-field') : null;
+                    var input = wrap ? wrap.querySelector('.eq-value-input') : null;
+                    if (field) field.style.display = 'none';
+                    if (input) input.value = '';
+                }
+            }
             renderSelectedTags();
+        });
+
+        // Initiera förvalda options med egna värden
+        picker.querySelectorAll('.eq-option.selected[data-allow-value]').forEach(function(opt) {
+            var wrap = opt.closest('.eq-option-wrap');
+            var field = wrap ? wrap.querySelector('.eq-value-field') : null;
+            var input = wrap ? wrap.querySelector('.eq-value-input') : null;
+            var initVal = opt.getAttribute('data-initial-value');
+            if (field) field.style.display = 'inline-flex';
+            if (input && initVal) input.value = initVal;
         });
 
         renderSelectedTags();
