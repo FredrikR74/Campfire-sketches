@@ -41,6 +41,7 @@ pages/
   campfire-registrera.html     # Auth: Skapa konto (fristående sida, ingen navbar/footer)
   campfire-glomt-losenord.html # Auth: Glömt lösenord – begär länk → bekräftelse → nytt lösenord → klar (fristående sida, ingen navbar/footer)
   campfire-bjud-in.html        # Bjud in vänner: formulär med e-postinbjudningar, delningsbar länk och statistik
+  campfire-kommande.html       # Kommande funktioner: roadmap med skisser och kvartalsmål
 ```
 
 ## Tech
@@ -79,7 +80,7 @@ pages/
 ### Navbar
 - Fixed, transparent overlay på hero, vit vid scroll
 - Hero padding: `pt-24 sm:pt-28`
-- Meny: Nyheter, Träffar, Inspiration, Rutter, Forum
+- Meny: Träffar, Loggbok, Kommande funktioner
 - Navbar och footer laddas via `components/load-components.js` – redigera i `components/`
 
 ### Header under navbar (funktionssidor)
