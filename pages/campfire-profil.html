@@ -9,6 +9,43 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        /* Utrustnings-picker */
+        #equipment-picker {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            z-index: 50;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 1.25rem;
+            box-shadow: 0 12px 40px rgba(30,58,58,0.13);
+            width: min(480px, calc(100vw - 2.5rem));
+            padding: 1rem;
+        }
+        #equipment-picker.open { display: block; }
+        .eq-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.85rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+            color: #374151;
+            background: white;
+            user-select: none;
+        }
+        .eq-option:hover { border-color: var(--forest); color: var(--forest); background: #e4efe8; }
+        .eq-option.selected { background: var(--forest); border-color: var(--forest); color: white; }
+        .eq-option.selected:hover { background: #c0392b; border-color: #c0392b; }
+        .eq-category { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #9ca3af; margin-bottom: 0.4rem; margin-top: 0.75rem; }
+        .eq-category:first-child { margin-top: 0; }
+    </style>
 </head>
 <body>
 
@@ -428,29 +465,75 @@
                 </div>
                 <div class="space-y-1.5">
                     <label class="block text-sm font-semibold text-gray-700">Utrustning</label>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="px-4 py-2 bg-[#e4efe8] text-[var(--forest)] rounded-full font-semibold text-sm flex items-center gap-2">
-                            Solceller 400W <button class="hover:text-red-500 text-base leading-none">&times;</button>
-                        </span>
-                        <span class="px-4 py-2 bg-[#e4efe8] text-[var(--forest)] rounded-full font-semibold text-sm flex items-center gap-2">
-                            Markis <button class="hover:text-red-500 text-base leading-none">&times;</button>
-                        </span>
-                        <span class="px-4 py-2 bg-[#e4efe8] text-[var(--forest)] rounded-full font-semibold text-sm flex items-center gap-2">
-                            Backkamera <button class="hover:text-red-500 text-base leading-none">&times;</button>
-                        </span>
-                        <span class="px-4 py-2 bg-[#e8f4e8] text-[var(--sage-green)] rounded-full font-semibold text-sm flex items-center gap-2">
-                            Cykelställ <button class="hover:text-red-500 text-base leading-none">&times;</button>
-                        </span>
-                        <span class="px-4 py-2 bg-[#e8f4e8] text-[var(--sage-green)] rounded-full font-semibold text-sm flex items-center gap-2">
-                            Litiumbatteri 200Ah <button class="hover:text-red-500 text-base leading-none">&times;</button>
-                        </span>
-                        <span class="px-4 py-2 bg-[var(--sand-light)] text-[var(--terracotta)] rounded-full font-semibold text-sm flex items-center gap-2">
-                            Vinterpaket <button class="hover:text-red-500 text-base leading-none">&times;</button>
-                        </span>
-                        <span class="px-4 py-2 bg-[#e4efe8] text-[var(--forest)] rounded-full font-semibold text-sm flex items-center gap-2">
-                            Hjärtstartare <button class="hover:text-red-500 text-base leading-none">&times;</button>
-                        </span>
-                        <button class="px-4 py-2 border-2 border-dashed border-gray-300 text-gray-500 rounded-full font-semibold text-sm hover:border-[var(--forest)] hover:text-[var(--forest)] transition-all">+ Lägg till</button>
+                    <!-- Valda taggar -->
+                    <div id="equipment-tags" class="flex flex-wrap gap-2 min-h-[2.25rem] items-center"></div>
+                    <!-- Picker-wrapper (relativ för absolut positionering av dropdown) -->
+                    <div class="relative">
+                        <button id="equipment-add-btn" type="button"
+                            class="px-4 py-2 border-2 border-dashed border-gray-300 text-gray-500 rounded-full font-semibold text-sm hover:border-[var(--forest)] hover:text-[var(--forest)] transition-all">
+                            + Lägg till utrustning
+                        </button>
+                        <!-- Dropdown-panel -->
+                        <div id="equipment-picker" role="dialog" aria-label="Välj utrustning">
+                            <p class="text-xs text-gray-400 mb-3">Välj den utrustning din husbil har. Klicka igen för att ta bort.</p>
+
+                            <div class="eq-category">Energi &amp; el</div>
+                            <div class="flex flex-wrap gap-1.5 mb-1">
+                                <button type="button" class="eq-option" data-tag="Solceller 100W">Solceller 100W</button>
+                                <button type="button" class="eq-option" data-tag="Solceller 200W">Solceller 200W</button>
+                                <button type="button" class="eq-option selected" data-tag="Solceller 400W">Solceller 400W</button>
+                                <button type="button" class="eq-option" data-tag="Generator">Generator</button>
+                                <button type="button" class="eq-option" data-tag="Landström 230V">Landström 230V</button>
+                                <button type="button" class="eq-option" data-tag="Laddningsbooster">Laddningsbooster</button>
+                                <button type="button" class="eq-option" data-tag="Litiumbatteri 100Ah">Litiumbatteri 100Ah</button>
+                                <button type="button" class="eq-option selected" data-tag="Litiumbatteri 200Ah">Litiumbatteri 200Ah</button>
+                                <button type="button" class="eq-option" data-tag="Litiumbatteri 300Ah">Litiumbatteri 300Ah</button>
+                            </div>
+
+                            <div class="eq-category">Komfort</div>
+                            <div class="flex flex-wrap gap-1.5 mb-1">
+                                <button type="button" class="eq-option selected" data-tag="Markis">Markis</button>
+                                <button type="button" class="eq-option" data-tag="Stor markis">Stor markis</button>
+                                <button type="button" class="eq-option" data-tag="Luftkonditionering">Luftkonditionering</button>
+                                <button type="button" class="eq-option" data-tag="Dieselvärmare">Dieselvärmare</button>
+                                <button type="button" class="eq-option" data-tag="Gasuppvärmning">Gasuppvärmning</button>
+                                <button type="button" class="eq-option selected" data-tag="Vinterpaket">Vinterpaket</button>
+                                <button type="button" class="eq-option" data-tag="Golvvärme">Golvvärme</button>
+                                <button type="button" class="eq-option" data-tag="Gardinpaket">Gardinpaket</button>
+                            </div>
+
+                            <div class="eq-category">Teknik &amp; säkerhet</div>
+                            <div class="flex flex-wrap gap-1.5 mb-1">
+                                <button type="button" class="eq-option selected" data-tag="Backkamera">Backkamera</button>
+                                <button type="button" class="eq-option" data-tag="Sidokameror">Sidokameror</button>
+                                <button type="button" class="eq-option" data-tag="GPS/Navigation">GPS/Navigation</button>
+                                <button type="button" class="eq-option" data-tag="WiFi-router">WiFi-router</button>
+                                <button type="button" class="eq-option" data-tag="Satellitantenn">Satellitantenn</button>
+                                <button type="button" class="eq-option" data-tag="TV">TV</button>
+                                <button type="button" class="eq-option" data-tag="Gasdetektor">Gasdetektor</button>
+                                <button type="button" class="eq-option" data-tag="Brandsläckare">Brandsläckare</button>
+                                <button type="button" class="eq-option selected" data-tag="Hjärtstartare">Hjärtstartare</button>
+                            </div>
+
+                            <div class="eq-category">Transport &amp; tillbehör</div>
+                            <div class="flex flex-wrap gap-1.5 mb-1">
+                                <button type="button" class="eq-option selected" data-tag="Cykelställ">Cykelställ</button>
+                                <button type="button" class="eq-option" data-tag="Elcykelställ">Elcykelställ</button>
+                                <button type="button" class="eq-option" data-tag="Dragkrok">Dragkrok</button>
+                                <button type="button" class="eq-option" data-tag="Takbox">Takbox</button>
+                                <button type="button" class="eq-option" data-tag="Motorcykeltransport">Motorcykeltransport</button>
+                                <button type="button" class="eq-option" data-tag="Terrängdäck">Terrängdäck</button>
+                            </div>
+
+                            <div class="eq-category">Vatten &amp; avlopp</div>
+                            <div class="flex flex-wrap gap-1.5">
+                                <button type="button" class="eq-option" data-tag="Extra vattentank">Extra vattentank</button>
+                                <button type="button" class="eq-option" data-tag="Extra avloppstank">Extra avloppstank</button>
+                                <button type="button" class="eq-option" data-tag="Utomhusdusch">Utomhusdusch</button>
+                                <button type="button" class="eq-option" data-tag="Diskmaskin">Diskmaskin</button>
+                                <button type="button" class="eq-option" data-tag="Tvättmaskin">Tvättmaskin</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -650,6 +733,58 @@
             showPage(btn.getAttribute('data-page'));
         }
     });
+
+    // --- Utrustnings-picker ---
+    (function() {
+        var picker = document.getElementById('equipment-picker');
+        var addBtn = document.getElementById('equipment-add-btn');
+        var tagsContainer = document.getElementById('equipment-tags');
+
+        // Läs initialt valda (de med .selected i pickern)
+        function renderSelectedTags() {
+            tagsContainer.innerHTML = '';
+            document.querySelectorAll('.eq-option.selected').forEach(function(opt) {
+                var tag = opt.getAttribute('data-tag');
+                var span = document.createElement('span');
+                span.className = 'px-4 py-2 bg-[#e4efe8] text-[var(--forest)] rounded-full font-semibold text-sm flex items-center gap-2';
+                span.style.cssText = 'background:#e4efe8;color:var(--forest);padding:0.5rem 1rem;border-radius:9999px;font-weight:600;font-size:0.875rem;display:inline-flex;align-items:center;gap:0.5rem;';
+                span.innerHTML = tag + ' <button type="button" style="font-size:1rem;line-height:1;" data-remove="' + tag + '" title="Ta bort">&times;</button>';
+                tagsContainer.appendChild(span);
+            });
+        }
+
+        // Öppna/stäng picker
+        addBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            picker.classList.toggle('open');
+        });
+
+        // Stäng vid klick utanför
+        document.addEventListener('click', function(e) {
+            if (!picker.contains(e.target) && e.target !== addBtn) {
+                picker.classList.remove('open');
+            }
+        });
+
+        // Toggle tagg via picker
+        picker.addEventListener('click', function(e) {
+            var opt = e.target.closest('.eq-option');
+            if (!opt) return;
+            opt.classList.toggle('selected');
+            renderSelectedTags();
+        });
+
+        // Ta bort tagg via ×-knapp i tagglistan
+        tagsContainer.addEventListener('click', function(e) {
+            var removeTag = e.target.getAttribute('data-remove');
+            if (!removeTag) return;
+            var opt = picker.querySelector('.eq-option[data-tag="' + removeTag + '"]');
+            if (opt) opt.classList.remove('selected');
+            renderSelectedTags();
+        });
+
+        renderSelectedTags();
+    })();
 </script>
 
 </body>
