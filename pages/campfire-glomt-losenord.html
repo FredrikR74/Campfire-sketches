@@ -3,105 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campfire – Återställ lösenord</title>
+    <title>Campfire – Glömt lösenord</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../campfire-base.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem 1rem;
+            background:
+                linear-gradient(135deg, rgba(30,58,58,0.96) 0%, rgba(74,122,107,0.90) 50%, rgba(97,138,124,0.85) 100%),
+                linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);
+        }
+    </style>
 </head>
-<body class="bg-[var(--bg-mist)]">
+<body>
 
-<div id="navbar-slot" data-variant="dark"></div>
+<div class="w-full max-w-[440px]">
 
-<!-- Hero -->
-<div class="text-white pt-24 sm:pt-28 pb-12 sm:pb-16" style="background: linear-gradient(135deg, rgba(30,58,58,0.92) 0%, rgba(74,122,107,0.85) 50%, rgba(97,138,124,0.78) 100%), linear-gradient(135deg, #1e3a3a 0%, #4a7a6b 100%);">
-    <div class="max-w-6xl mx-auto px-5">
-        <div class="flex items-center gap-3 mb-2">
-            <div class="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center">
-                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-            </div>
-            <h1 class="text-3xl sm:text-4xl font-bold">Återställ lösenord</h1>
-        </div>
-        <p class="text-white/70 text-sm sm:text-base max-w-md">Ange ett nytt lösenord för ditt Campfire-konto.</p>
+    <!-- Logo -->
+    <div class="text-center mb-7">
+        <a href="campfire-landing.html" class="inline-block">
+            <span style="font-family:'Caveat',cursive; font-size:2.2rem; font-weight:700; color:#e8dcc4; letter-spacing:0.01em;">Campfire</span>
+        </a>
+        <p style="color:rgba(255,255,255,0.60); font-size:0.8rem; margin-top:0.2rem;">Husbilscommunity för äventyrare</p>
     </div>
-</div>
 
-<!-- Innehåll -->
-<section class="max-w-6xl mx-auto px-5 py-12">
-    <div class="max-w-md mx-auto">
+    <!-- Kort -->
+    <div style="background:#fff; border-radius:1.5rem; box-shadow:0 24px 64px rgba(30,58,58,0.30); overflow:hidden;">
 
-        <!-- VY 1: Nytt lösenord-formulär -->
-        <div id="view-reset" class="bg-white rounded-3xl p-8 card-shadow">
-            <h2 class="text-xl font-bold text-[var(--slate-deep)] mb-1">Välj ett nytt lösenord</h2>
-            <p class="text-sm text-gray-500 mb-6">Lösenordet måste vara minst 8 tecken långt.</p>
+        <!-- VY 1: Begär återställningslänk -->
+        <div id="view-request" style="padding:1.75rem 1.75rem 2rem;">
+            <a href="campfire-login.html" style="display:inline-flex; align-items:center; gap:0.375rem; font-size:0.8rem; color:#6b7280; font-weight:500; text-decoration:none; margin-bottom:1.25rem;" onmouseover="this.style.color='var(--forest)'" onmouseout="this.style.color='#6b7280'">
+                <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                Tillbaka till inloggning
+            </a>
+            <h1 style="font-size:1.4rem; font-weight:800; color:var(--slate-deep); margin-bottom:0.2rem;">Glömt lösenordet?</h1>
+            <p style="font-size:0.82rem; color:#6b7280; margin-bottom:1.5rem;">Vi skickar en återställningslänk till din e-post.</p>
 
-            <form class="space-y-5" onsubmit="showDone(); return false;">
-                <div class="space-y-1.5">
-                    <label class="block text-sm font-semibold text-gray-700" for="new-pwd">Nytt lösenord</label>
-                    <div class="relative">
-                        <input id="new-pwd" type="password" placeholder="Minst 8 tecken" oninput="updateStrength(this.value)"
-                            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors text-sm pr-12">
-                        <button type="button" onclick="togglePwd('new-pwd', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+            <form onsubmit="submitRequest(event);" style="display:flex; flex-direction:column; gap:1rem;">
+                <div>
+                    <label style="display:block; font-size:0.82rem; font-weight:600; color:#374151; margin-bottom:0.375rem;">E-postadress</label>
+                    <input id="request-email" type="email" placeholder="din@epost.se" style="width:100%; padding:0.75rem 1rem; border:2px solid #e5e7eb; border-radius:0.75rem; font-family:'Outfit',sans-serif; font-size:0.875rem; outline:none; box-sizing:border-box; transition:border-color 0.15s;" onfocus="this.style.borderColor='var(--forest)'" onblur="this.style.borderColor='#e5e7eb'">
+                </div>
+                <button type="submit" style="width:100%; padding:0.85rem; background:var(--forest); color:#fff; border:none; border-radius:0.75rem; font-family:'Outfit',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; transition:background 0.15s;" onmouseover="this.style.background='var(--slate-deep)'" onmouseout="this.style.background='var(--forest)'">
+                    Skicka återställningslänk
+                </button>
+            </form>
+        </div>
+
+        <!-- VY 2: Bekräftelse – länk skickad -->
+        <div id="view-sent" style="display:none; padding:2rem 1.75rem 2.25rem; text-align:center;">
+            <div style="width:4rem; height:4rem; border-radius:999px; background:#e4efe8; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;">
+                <svg width="28" height="28" fill="none" stroke="var(--forest)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            </div>
+            <h2 style="font-size:1.25rem; font-weight:800; color:var(--slate-deep); margin-bottom:0.5rem;">Kolla din inbox!</h2>
+            <p style="font-size:0.82rem; color:#6b7280; margin-bottom:1.25rem; line-height:1.6;">
+                Vi har skickat en återställningslänk till<br>
+                <strong id="sent-email-display" style="color:#374151;"></strong>.<br>
+                Länken gäller i 30 minuter.
+            </p>
+            <div style="background:#f9fafb; border-radius:0.875rem; padding:0.875rem 1rem; text-align:left; margin-bottom:1.5rem; font-size:0.78rem; color:#6b7280; line-height:1.6;">
+                Kom du inte in? Kontrollera skräpposten, vänta ett par minuter eller kontakta support.
+            </div>
+            <a href="campfire-login.html" style="display:block; width:100%; padding:0.8rem; background:none; border:2px solid #e5e7eb; border-radius:0.75rem; font-family:'Outfit',sans-serif; font-weight:600; font-size:0.875rem; color:#374151; text-align:center; text-decoration:none; box-sizing:border-box; transition:background 0.15s;" onmouseover="this.style.background='#f9fafb'" onmouseout="this.style.background='none'">
+                ← Tillbaka till inloggning
+            </a>
+        </div>
+
+        <!-- VY 3: Ange nytt lösenord (landning från e-postlänk) -->
+        <div id="view-reset" style="display:none; padding:1.75rem 1.75rem 2rem;">
+            <h1 style="font-size:1.4rem; font-weight:800; color:var(--slate-deep); margin-bottom:0.2rem;">Välj ett nytt lösenord</h1>
+            <p style="font-size:0.82rem; color:#6b7280; margin-bottom:1.5rem;">Lösenordet måste vara minst 8 tecken långt.</p>
+
+            <form onsubmit="showDone(); return false;" style="display:flex; flex-direction:column; gap:1rem;">
+                <div>
+                    <label style="display:block; font-size:0.82rem; font-weight:600; color:#374151; margin-bottom:0.375rem;">Nytt lösenord</label>
+                    <div style="position:relative;">
+                        <input id="new-pwd" type="password" placeholder="Minst 8 tecken" oninput="updateStrength(this.value)" style="width:100%; padding:0.75rem 3rem 0.75rem 1rem; border:2px solid #e5e7eb; border-radius:0.75rem; font-family:'Outfit',sans-serif; font-size:0.875rem; outline:none; box-sizing:border-box; transition:border-color 0.15s;" onfocus="this.style.borderColor='var(--forest)'" onblur="this.style.borderColor='#e5e7eb'">
+                        <button type="button" onclick="togglePwd('new-pwd',this)" style="position:absolute; right:0.875rem; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#9ca3af; padding:0; display:flex; line-height:0;">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                         </button>
                     </div>
                     <!-- Styrkeindikator -->
-                    <div id="strength-wrap" class="pt-0.5" style="display:none;">
-                        <div class="flex gap-1 mb-1">
-                            <div class="flex-1 h-1 rounded-full bg-gray-200 transition-all" id="s1"></div>
-                            <div class="flex-1 h-1 rounded-full bg-gray-200 transition-all" id="s2"></div>
-                            <div class="flex-1 h-1 rounded-full bg-gray-200 transition-all" id="s3"></div>
-                            <div class="flex-1 h-1 rounded-full bg-gray-200 transition-all" id="s4"></div>
+                    <div id="strength-wrap" style="display:none; margin-top:0.5rem;">
+                        <div style="display:flex; gap:0.25rem; margin-bottom:0.25rem;">
+                            <div id="s1" style="flex:1; height:3px; border-radius:2px; background:#e5e7eb; transition:background 0.2s;"></div>
+                            <div id="s2" style="flex:1; height:3px; border-radius:2px; background:#e5e7eb; transition:background 0.2s;"></div>
+                            <div id="s3" style="flex:1; height:3px; border-radius:2px; background:#e5e7eb; transition:background 0.2s;"></div>
+                            <div id="s4" style="flex:1; height:3px; border-radius:2px; background:#e5e7eb; transition:background 0.2s;"></div>
                         </div>
-                        <p id="strength-label" class="text-xs text-gray-500"></p>
+                        <p id="strength-label" style="font-size:0.72rem; color:#6b7280;"></p>
                     </div>
                 </div>
-
-                <div class="space-y-1.5">
-                    <label class="block text-sm font-semibold text-gray-700" for="confirm-pwd">Bekräfta lösenord</label>
-                    <div class="relative">
-                        <input id="confirm-pwd" type="password" placeholder="••••••••"
-                            class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors text-sm pr-12">
-                        <button type="button" onclick="togglePwd('confirm-pwd', this)" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                <div>
+                    <label style="display:block; font-size:0.82rem; font-weight:600; color:#374151; margin-bottom:0.375rem;">Bekräfta lösenord</label>
+                    <div style="position:relative;">
+                        <input id="confirm-pwd" type="password" placeholder="••••••••" style="width:100%; padding:0.75rem 3rem 0.75rem 1rem; border:2px solid #e5e7eb; border-radius:0.75rem; font-family:'Outfit',sans-serif; font-size:0.875rem; outline:none; box-sizing:border-box; transition:border-color 0.15s;" onfocus="this.style.borderColor='var(--forest)'" onblur="this.style.borderColor='#e5e7eb'">
+                        <button type="button" onclick="togglePwd('confirm-pwd',this)" style="position:absolute; right:0.875rem; top:50%; transform:translateY(-50%); background:none; border:none; cursor:pointer; color:#9ca3af; padding:0; display:flex; line-height:0;">
+                            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                         </button>
                     </div>
                 </div>
-
-                <button type="submit" class="w-full bg-[var(--forest)] text-white py-3.5 rounded-xl font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm mt-2">
+                <button type="submit" style="width:100%; padding:0.85rem; background:var(--forest); color:#fff; border:none; border-radius:0.75rem; font-family:'Outfit',sans-serif; font-weight:700; font-size:0.9rem; cursor:pointer; transition:background 0.15s;" onmouseover="this.style.background='var(--slate-deep)'" onmouseout="this.style.background='var(--forest)'">
                     Spara nytt lösenord
                 </button>
             </form>
         </div>
 
-        <!-- VY 2: Klar -->
-        <div id="view-done" style="display:none;" class="bg-white rounded-3xl p-8 card-shadow text-center space-y-5">
-            <div class="w-16 h-16 rounded-full bg-[#e4efe8] flex items-center justify-center mx-auto">
-                <svg class="w-8 h-8 text-[var(--forest)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <!-- VY 4: Klar -->
+        <div id="view-done" style="display:none; padding:2rem 1.75rem 2.25rem; text-align:center;">
+            <div style="width:4rem; height:4rem; border-radius:999px; background:#e4efe8; display:flex; align-items:center; justify-content:center; margin:0 auto 1.25rem;">
+                <svg width="28" height="28" fill="none" stroke="var(--forest)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             </div>
-            <div>
-                <h2 class="text-xl font-bold text-[var(--slate-deep)]">Lösenordet är uppdaterat!</h2>
-                <p class="text-sm text-gray-500 mt-1.5">Du kan nu logga in med ditt nya lösenord.</p>
-            </div>
-            <button onclick="openAuthModal('login')" class="w-full bg-[var(--forest)] text-white py-3.5 rounded-xl font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">
+            <h2 style="font-size:1.25rem; font-weight:800; color:var(--slate-deep); margin-bottom:0.5rem;">Lösenordet är uppdaterat!</h2>
+            <p style="font-size:0.82rem; color:#6b7280; margin-bottom:1.5rem; line-height:1.5;">Du kan nu logga in med ditt nya lösenord.</p>
+            <a href="campfire-login.html" style="display:block; width:100%; padding:0.85rem; background:var(--forest); color:#fff; border:none; border-radius:0.75rem; font-family:'Outfit',sans-serif; font-weight:700; font-size:0.9rem; text-align:center; text-decoration:none; box-sizing:border-box; transition:background 0.15s;" onmouseover="this.style.background='var(--slate-deep)'" onmouseout="this.style.background='var(--forest)'">
                 Logga in
-            </button>
+            </a>
         </div>
 
     </div>
-</section>
 
-<div id="footer-slot"></div>
-<script src="../components/load-components.js"></script>
+    <!-- Tillbaka-länk -->
+    <div style="text-align:center; margin-top:1.5rem;">
+        <a href="campfire-landing.html" style="font-size:0.8rem; color:rgba(255,255,255,0.55); text-decoration:none; font-weight:500;" onmouseover="this.style.color='rgba(255,255,255,0.85)'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">← Tillbaka till startsidan</a>
+    </div>
+
+</div>
+
 <script>
+// Visa rätt vy beroende på om sidan nåtts via e-postlänk (simuleras med ?reset=1)
+(function() {
+    var params = new URLSearchParams(window.location.search);
+    if (params.get('reset') === '1') {
+        showView('reset');
+    } else {
+        showView('request');
+    }
+})();
+
+function showView(name) {
+    ['request','sent','reset','done'].forEach(function(v) {
+        var el = document.getElementById('view-' + v);
+        if (el) el.style.display = (v === name) ? 'block' : 'none';
+    });
+}
+
+function submitRequest(e) {
+    e.preventDefault();
+    var email = document.getElementById('request-email').value || 'din e-post';
+    document.getElementById('sent-email-display').textContent = email;
+    showView('sent');
+}
+
+function showDone() {
+    showView('done');
+}
+
 function togglePwd(id, btn) {
     var input = document.getElementById(id);
     var show = input.type === 'password';
     input.type = show ? 'text' : 'password';
     btn.innerHTML = show
-        ? '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>'
-        : '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>';
+        ? '<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/></svg>'
+        : '<svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>';
 }
 
 function updateStrength(val) {
@@ -117,14 +188,9 @@ function updateStrength(val) {
     if (/[^A-Za-z0-9]/.test(val)) score++;
     var colors = ['#ef4444','#f97316','#eab308','#4a7a6b'];
     var labels = ['Svagt','Godkänt','Bra','Starkt'];
-    bars.forEach(function(b, i) { b.style.backgroundColor = i < score ? colors[score-1] : '#e5e7eb'; });
+    bars.forEach(function(b, i) { b.style.background = i < score ? colors[score-1] : '#e5e7eb'; });
     label.textContent = labels[score-1] || '';
     label.style.color = colors[score-1] || '#6b7280';
-}
-
-function showDone() {
-    document.getElementById('view-reset').style.display = 'none';
-    document.getElementById('view-done').style.display = 'block';
 }
 </script>
 </body>
