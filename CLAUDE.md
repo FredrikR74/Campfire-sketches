@@ -25,7 +25,8 @@ components/
   footer.html                  # Gemensam footer
   load-components.js           # JS-loader för navbar + footer
 pages/
-  campfire-landing.html        # Landningssida
+  campfire-landing-full.html   # Landningssida (full version)
+  campfire-landing-mvp.html    # Landningssida (MVP-version)
   campfire-checklistor.html    # Checklistor & formulär
   campfire-loggbok.html        # Loggbok: listvy med sök, filter och paginering
   campfire-editera-loggbok.html        # Loggbok: skapa/ändra stopp med karta, väder och kostnader
