@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Campfire – Databasöversikt</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="campfire-base.css" />
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'base',
+      themeVariables: {
+        primaryColor: '#e4efe8',
+        primaryTextColor: '#1e3a3a',
+        primaryBorderColor: '#4a7a6b',
+        lineColor: '#5a5a5a',
+        tertiaryColor: '#f8f8f6'
+      }
+    });
+  </script>
+</head>
+<body class="bg-[var(--bg-mist)] text-[var(--slate-deep)]">
+  <header class="deep-gradient text-white px-6 py-10">
+    <div class="max-w-6xl mx-auto">
+      <p class="handwritten text-4xl text-[var(--sand-light)]">Campfire</p>
+      <h1 class="text-3xl sm:text-4xl font-bold">Databasöversikt (förslag)</h1>
+      <p class="text-white/75 mt-2 max-w-3xl">Sammanställd utifrån befintliga skisser för profil, loggbok och träffar.</p>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-6 py-8 space-y-6">
+    <section class="bg-white rounded-3xl card-shadow p-6 overflow-auto">
+      <div class="mermaid min-w-[1200px]">
+classDiagram
+direction LR
+
+class AspNetUsers {
+  +Id: uuid
+  +UserName: string
+  +NormalizedUserName: string
+  +Email: string
+  +NormalizedEmail: string
+  +EmailConfirmed: bool
+  +PasswordHash: string
+  +SecurityStamp: string
+  +ConcurrencyStamp: string
+  +PhoneNumber: string
+  +PhoneNumberConfirmed: bool
+  +TwoFactorEnabled: bool
+  +LockoutEnd: datetimeoffset
+  +LockoutEnabled: bool
+  +AccessFailedCount: int
+}
+
+class AspNetRoles {
+  +Id: uuid
+  +Name: string
+  +NormalizedName: string
+  +ConcurrencyStamp: string
+}
+
+class AspNetUserRoles {
+  +UserId: uuid
+  +RoleId: uuid
+}
+
+class Profile {
+  +Id: uuid
+  +UserId: uuid
+  +AvatarUrl: string
+  +InvitedByProfileId: uuid
+  +DisplayName_t: string
+  +Bio_t: string
+  +HomeRegion_t: string
+}
+
+class Vehicle {
+  +Id: uuid
+  +ProfileId: uuid
+  +Nickname: string
+  +BrandModel: string
+  +Year: int
+  +VehicleTypeId: uuid
+  +PowertrainId: uuid
+  +LengthCm: int
+  +PhotoUrl: string
+}
+
+class Pet {
+  +Id: uuid
+  +ProfileId: uuid
+  +Name: string
+  +Species: string
+  +Breed: string
+  +BirthDate: date
+  +PhotoUrl: string
+  +Description_t: string
+  +Personality_t: string
+}
+
+class LogbookEntry {
+  +Id: uuid
+  +ProfileId: uuid
+  +Title: string
+  +Description: string
+  +CountryCode: string
+  +Latitude: decimal
+  +Longitude: decimal
+  +VisitedAt: date
+  +DistanceKm: int
+  +Rating: int
+}
+
+class Meetup {
+  +Id: uuid
+  +HostProfileId: uuid
+  +LocationName: string
+  +StartsAt: datetime
+  +EndsAt: datetime
+  +Capacity: int
+  +Name_t: string
+  +Description_t: string
+}
+
+class MeetupAgendaItem {
+  +Id: uuid
+  +MeetupId: uuid
+  +StartsAt: datetime
+  +EndsAt: datetime
+  +SortOrder: int
+  +Title_t: string
+  +Description_t: string
+}
+
+class Translation {
+  +Id: uuid
+  +EntityType: string
+  +EntityId: uuid
+  +FieldName: string
+  +Culture: string
+  +Value: string
+}
+
+class OptionGroup {
+  +Id: uuid
+  +Slug: string
+  +AllowMultiple: bool
+  +Name_t: string
+}
+
+class Option {
+  +Id: uuid
+  +OptionGroupId: uuid
+  +SortOrder: int
+  +ColorCode: string
+  +AllowValue: bool
+  +ValueUnit: string
+  +IsActive: bool
+  +Name_t: string
+}
+
+class OptionAssignment {
+  +OptionId: uuid
+  +EntityType: string
+  +EntityId: uuid
+  +Value: string
+}
+
+AspNetUsers "1" --> "1" Profile : owns
+Profile "1" --> "0..1" Vehicle : has
+Profile "1" --> "0..*" Pet : has
+Profile "1" --> "0..*" LogbookEntry : writes
+Profile "1" --> "0..*" Meetup : hosts
+Meetup "1" --> "0..*" MeetupAgendaItem : hasAgenda
+Profile "0..1" --> "0..*" Profile : invitedBy
+
+AspNetUsers "1" --> "0..*" AspNetUserRoles : hasRoles
+AspNetRoles "1" --> "0..*" AspNetUserRoles : isAssignedTo
+
+OptionGroup "1" --> "0..*" Option : groups
+Option "1" --> "0..*" OptionAssignment : isAssignedIn
+Option "1" --> "0..*" Vehicle : vehicleType
+Option "1" --> "0..*" Vehicle : powertrain
+
+LogbookEntry "1" ..> "0..*" OptionAssignment : EntityId
+Meetup "1" ..> "0..*" OptionAssignment : EntityId
+Profile "1" ..> "0..*" OptionAssignment : EntityId
+
+note for AspNetUsers "ASP.NET Core Identity standard table\nfor authenticated users."
+note for AspNetRoles "Application roles, e.g. User and Admin."
+note for Translation "Fält märkta med _t-suffix i övriga entiteter\nlagras INTE i primärtabellen.\nDe hämtas via Translation-tabellen:\nEntityType + EntityId + FieldName + Culture."
+      </div>
+    </section>
+
+    <section class="bg-white rounded-3xl card-shadow p-6">
+      <h2 class="text-xl font-bold mb-3">Modelleringsprinciper i förslaget</h2>
+      <ul class="list-disc pl-5 space-y-2 text-sm text-gray-700">
+        <li><strong>Alla översättningsbara texter</strong> sparas i <code>Translation</code> via <code>EntityType + EntityId + FieldName + Culture</code>.</li>
+        <li><strong>Fält märkta med <code>_t</code>-suffix</strong> i diagrammet (t.ex. <code>Name_t</code>, <code>Description_t</code>) är <em>virtuella</em> – de visas på entiteten i diagrammet för läsbarhetens skull, men lagras <strong>inte</strong> i primärtabellen. Värdet hämtas alltid från <code>Translation</code>-tabellen.</li>
+        <li><strong>Alla valbara alternativ</strong> – taggar, multi-select-val och single-select dropdowns – hanteras enhetligt via <code>OptionGroup</code>, <code>Option</code> och <code>OptionAssignment</code>. <code>OptionGroup.AllowMultiple</code> styr om flera val är möjliga: <code>true</code> = multi-select/taggar (värden lagras via <code>OptionAssignment</code>), <code>false</code> = single-select dropdown (lagra helst FK direkt på entitetsraden, t.ex. <code>Vehicle.VehicleTypeId</code>). Om ni vill köra allt via <code>OptionAssignment</code> även för single-select behövs unik constraint per <code>(EntityType, EntityId, OptionGroupId)</code> så att endast ett aktivt val kan finnas per grupp.</li>
+        <li><strong>Kompletterande värde för option</strong>: <code>Option.AllowValue</code> anger om ett valt alternativ får ett extra värde i <code>OptionAssignment.Value</code>. <code>Option.ValueUnit</code> beskriver enheten (t.ex. <code>W</code> för solceller), så att man kan lagra både att ett alternativ är valt och vilket värde som hör till.</li>
+        <li><strong><code>OptionAssignment.EntityType</code></strong> krävs för polymorf koppling i en delad assignment-tabell; annars kan samma <code>EntityId</code> (uuid) krocka mellan olika tabeller.</li>
+        <li><strong>Primärentiteter</strong> lagrar inga översättningsbara textfält; dessa finns enbart i <code>Translation</code>.</li>
+                <li><strong>User-auth</strong> följer ASP.NET Core Identity-tabellerna <code>AspNetUsers</code>, <code>AspNetRoles</code> och <code>AspNetUserRoles</code> (Blazor Individual Auth) med roller som <code>User</code> och <code>Admin</code>.</li>
+        <li><strong>Profile</strong> har separata relationer för <code>Vehicle</code>, <code>Pet</code> samt <code>InvitedByProfileId</code>.</li>
+              </ul>
+    </section>
+
+    <section class="bg-white rounded-3xl card-shadow p-6 space-y-4">
+      <h2 class="text-xl font-bold">Pragmatisk separation: domän vs databas</h2>
+      <p class="text-sm text-gray-700 max-w-4xl">
+        Implementation: gör SQL-modellen konsekvent genom att låta språkfält ligga i <code>Translation</code>
+        och returnera färdiga domänobjekt från repository-lagret. Domänen använder bara
+        vanliga fält som <code>Name</code>/<code>Description</code>, medan repository hanterar
+        <code>EntityType/FieldName/Culture</code> internt.
+      </p>
+      <div class="bg-amber-50 border border-amber-200 rounded-2xl p-4 text-sm text-amber-900 flex gap-3">
+        <span class="text-lg leading-none mt-0.5">ℹ️</span>
+        <div>
+          <p class="font-semibold mb-1">Om <code>_t</code>-suffix i diagrammet ovan</p>
+          <p>Fält som slutar på <code>_t</code> (t.ex. <code>Name_t</code>, <code>Title_t</code>) är <strong>inte</strong> kolumner i primärtabellen. De visas på respektive entitet i diagrammet enbart för att göra det tydligt vilka fält som är översättningsbara – men de lagras i sin helhet i <code>Translation</code>-tabellen och hämtas via <code>EntityType + EntityId + FieldName + Culture</code>.</p>
+        </div>
+      </div>
+
+      <div class="overflow-auto">
+        <table class="min-w-full text-sm border-separate border-spacing-0">
+          <thead>
+            <tr>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)] rounded-tl-xl">Domän (appkod)</th>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)]">Databas (SQL)</th>
+              <th class="text-left font-semibold px-3 py-2 bg-[var(--bg-mist)] rounded-tr-xl">Kommentar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Meetup.Description</code></td>
+              <td class="px-3 py-2 border-b border-gray-100"><code>Translation(EntityType=Meetup, FieldName=Description)</code></td>
+              <td class="px-3 py-2 border-b border-gray-100">Inget språkfält finns i primärtabellen; allt språk styrs via Translation-kontrakt.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2"><code>Vehicle.BrandModel</code></td>
+              <td class="px-3 py-2"><code>Vehicle.BrandModel (direkt kolumn)</code></td>
+              <td class="px-3 py-2">Icke-översättningsbara fält kan lagras direkt i primärtabellen.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <pre class="bg-[var(--bg-mist)] border border-gray-200 rounded-2xl p-4 text-xs sm:text-sm overflow-auto"><code>// Exempel på domänobjekt (ingen SQL-detalj)
+Meetup {
+  Id,
+  Name,
+  Description,
+  StartsAt
+}
+
+// Exempel på repository-signatur
+GetMeetup(meetupId, culture) -&gt; Meetup</code></pre>
+    </section>
+  </main>
+</body>
+</html>
