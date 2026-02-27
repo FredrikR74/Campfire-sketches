@@ -74,9 +74,19 @@ class Profile {
   +UserId: uuid
   +AvatarUrl: string
   +InvitedByProfileId: uuid
-  +DisplayName_t: string
-  +Bio_t: string
-  +HomeRegion_t: string
+  +FirstName: string
+  +LastName: string
+  +DisplayName: string
+  +Bio: text
+  +HomeRegion: string
+  +RvOwnerSince: int
+  +SocialFacebook: string
+  +SocialInstagram: string
+  +SocialYoutube: string
+  +SocialTikTok: string
+  +NotifyNearbyMeetups: bool
+  +NotifyNewFeatures: bool
+  +NotifyNewsletter: bool
 }
 
 class Vehicle {
@@ -86,8 +96,10 @@ class Vehicle {
   +BrandModel: string
   +Year: int
   +VehicleTypeId: uuid
-  +PowertrainId: uuid
+  +ChassisMotor: string
   +LengthCm: int
+  +SleepingPlaces: int
+  +TotalWeightKg: int
   +PhotoUrl: string
 }
 
@@ -95,12 +107,11 @@ class Pet {
   +Id: uuid
   +ProfileId: uuid
   +Name: string
-  +Species: string
+  +SpeciesId: uuid
   +Breed: string
   +BirthDate: date
   +PhotoUrl: string
-  +Description_t: string
-  +Personality_t: string
+  +Description: text
 }
 
 class LogbookEntry {
@@ -185,15 +196,17 @@ AspNetRoles "1" --> "0..*" AspNetUserRoles : isAssignedTo
 OptionGroup "1" --> "0..*" Option : groups
 Option "1" --> "0..*" OptionAssignment : isAssignedIn
 Option "1" --> "0..*" Vehicle : vehicleType
-Option "1" --> "0..*" Vehicle : powertrain
+Option "1" --> "0..*" Pet : species
 
 LogbookEntry "1" ..> "0..*" OptionAssignment : EntityId
 Meetup "1" ..> "0..*" OptionAssignment : EntityId
 Profile "1" ..> "0..*" OptionAssignment : EntityId
+Vehicle "1" ..> "0..*" OptionAssignment : EntityId
+Pet "1" ..> "0..*" OptionAssignment : EntityId
 
 note for AspNetUsers "ASP.NET Core Identity standard table\nfor authenticated users."
 note for AspNetRoles "Application roles, e.g. User and Admin."
-note for Translation "Fält märkta med _t-suffix i övriga entiteter\nlagras INTE i primärtabellen.\nDe hämtas via Translation-tabellen:\nEntityType + EntityId + FieldName + Culture."
+note for Translation "Fält märkta med _t-suffix i övriga entiteter\nlagras INTE i primärtabellen.\nDe hämtas via Translation-tabellen:\nEntityType + EntityId + FieldName + Culture.\n\nPersonlig data (Profile.Bio, Profile.DisplayName etc.)\nlagras direkt – det är användarens egna text\noch ska inte översättas."
       </div>
     </section>
 
@@ -207,7 +220,9 @@ note for Translation "Fält märkta med _t-suffix i övriga entiteter\nlagras IN
         <li><strong><code>OptionAssignment.EntityType</code></strong> krävs för polymorf koppling i en delad assignment-tabell; annars kan samma <code>EntityId</code> (uuid) krocka mellan olika tabeller.</li>
         <li><strong>Primärentiteter</strong> lagrar inga översättningsbara textfält; dessa finns enbart i <code>Translation</code>.</li>
                 <li><strong>User-auth</strong> följer ASP.NET Core Identity-tabellerna <code>AspNetUsers</code>, <code>AspNetRoles</code> och <code>AspNetUserRoles</code> (Blazor Individual Auth) med roller som <code>User</code> och <code>Admin</code>.</li>
-        <li><strong>Profile</strong> har separata relationer för <code>Vehicle</code>, <code>Pet</code> samt <code>InvitedByProfileId</code>.</li>
+        <li><strong>Profile</strong> har separata relationer för <code>Vehicle</code>, <code>Pet</code> samt <code>InvitedByProfileId</code>. Personlig data (namn, bio, hemort, sociala länkar, notifikationsinställningar) lagras direkt på <code>Profile</code> utan <code>Translation</code> – det är användarens egna text som inte ska översättas. Alla profilfält är frivilliga.</li>
+        <li><strong>Vehicle</strong> stödjer smeknamn (<code>Nickname</code>), fordonstyp via FK (<code>VehicleTypeId</code>) och fritextfältet <code>ChassisMotor</code>. Utrustning (solceller, markis m.m.) hanteras via <code>OptionAssignment</code> (OptionGroup-slug: <code>vehicle-equipment</code>); fält med <code>AllowValue: true</code> (t.ex. solcellseffekt i W, batteristorlek i Ah) sparar sitt extra värde i <code>OptionAssignment.Value</code>.</li>
+        <li><strong>Pet</strong> använder <code>SpeciesId</code> som FK till <code>Option</code> (OptionGroup-slug: <code>pet-species</code>) för art-dropdown. Personlighetstags hanteras via <code>OptionAssignment</code> (OptionGroup-slug: <code>pet-personality</code>).</li>
               </ul>
     </section>
 
