@@ -55,7 +55,7 @@
                 <div class="flex-shrink-0">
                     <a href="campfire-editera-loggbok.html" class="inline-flex items-center gap-2 bg-white text-[var(--slate-deep)] px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--sand-light)] transition-all shadow-lg text-sm">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
-                        Ny loggpost
+                        Lägg till logg
                     </a>
                 </div>
             </div>
@@ -80,17 +80,8 @@
                 <input id="filter-date-to" type="date" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
             </div>
 
-            <div class="lg:col-span-2 space-y-1.5">
-                <label for="filter-country" class="block text-sm font-semibold text-gray-700">Land</label>
-                <select id="filter-country" class="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[var(--forest)] focus:outline-none transition-colors">
-                    <option>Sverige</option>
-                    <option>Norge</option>
-                    <option>Danmark</option>
-                    <option>Finland</option>
-                </select>
-            </div>
 
-            <div class="lg:col-span-2 flex flex-col gap-2 lg:justify-end">
+<div class="lg:col-span-2 flex flex-col gap-2 lg:justify-end">
                 <button type="button" class="w-full sm:w-auto whitespace-nowrap bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all shadow-lg text-sm">Sök loggar</button>
             </div>
         </form>
@@ -102,7 +93,7 @@
                 <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Loggar</h2>
                 <p class="text-sm text-gray-500 font-medium mt-0.5">Visar 6 loggar (statisk skiss)</p>
             </div>
-            <a href="campfire-editera-loggbok.html" class="bg-[var(--forest)] text-white px-5 py-1.5 rounded-full font-semibold text-sm self-start sm:self-auto shrink-0 hover:bg-[var(--slate-deep)] transition-all">+ Ny loggpost</a>
+            <a href="campfire-editera-loggbok.html" class="bg-[var(--forest)] text-white px-5 py-1.5 rounded-full font-semibold text-sm self-start sm:self-auto shrink-0 hover:bg-[var(--slate-deep)] transition-all">+ Lägg till logg</a>
         </div>
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -119,7 +110,6 @@
                 <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">-4° · Snö</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">88 km</span>
-                    <span class="badge bg-[#f3f4f6] text-gray-600">Sverige</span>
                 </div>
             </a>
 
@@ -136,7 +126,6 @@
                 <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">-9° · Snöfall</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">133 km</span>
-                    <span class="badge bg-[#f3f4f6] text-gray-600">Norge</span>
                 </div>
             </a>
 
@@ -153,7 +142,6 @@
                 <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">9° · Mulet</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">56 km</span>
-                    <span class="badge bg-[#f3f4f6] text-gray-600">Sverige</span>
                 </div>
             </a>
 
@@ -170,7 +158,6 @@
                 <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">11° · Sol</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">74 km</span>
-                    <span class="badge bg-[#f3f4f6] text-gray-600">Sverige</span>
                 </div>
             </a>
 
@@ -187,7 +174,6 @@
                 <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">17° · Lätt vind</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">121 km</span>
-                    <span class="badge bg-[#f3f4f6] text-gray-600">Sverige</span>
                 </div>
             </a>
 
@@ -204,7 +190,21 @@
                 <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
                     <span class="badge bg-[#e4efe8] text-[var(--forest)]">16° · Regnskur</span>
                     <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">67 km</span>
-                    <span class="badge bg-[#f3f4f6] text-gray-600">Danmark</span>
+                </div>
+            </a>
+            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow block">
+                <div class="h-12 bg-gray-100 flex items-center justify-center gap-2 text-gray-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    <span class="text-xs font-medium">Ingen bild</span>
+                </div>
+                <div class="p-5 space-y-2.5">
+                    <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide">03 juni 2024</p>
+                    <h3 class="text-lg font-bold text-[var(--slate-deep)]">Mariestad, Sverige</h3>
+                    <p class="text-sm text-gray-600 leading-relaxed">Övernattning vid Vänern med fri utsikt. Tyst läge utan grannar.</p>
+                </div>
+                <div class="flex flex-wrap gap-1.5 pt-1 px-5 pb-5">
+                    <span class="badge bg-[#e4efe8] text-[var(--forest)]">19° · Sol</span>
+                    <span class="badge bg-[var(--sand-light)] text-[var(--terracotta)]">95 km</span>
                 </div>
             </a>
         </div>
