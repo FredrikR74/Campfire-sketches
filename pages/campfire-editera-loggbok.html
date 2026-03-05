@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campfire – Redigera loggbok</title>
+    <title>Campfire – Lägg till logg</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,7 +80,7 @@
             <a href="campfire-loggbok.html" class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             </a>
-            <h1 class="text-2xl font-bold text-white">Redigera logg</h1>
+            <h1 class="text-2xl font-bold text-white">Lägg till logg</h1>
         </div>
     </div>
 </div>
@@ -161,10 +161,6 @@
                         <span class="text-sm font-semibold text-gray-700">Mätarställning (km)</span>
                         <input type="number" min="0" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="48320">
                     </label>
-                    <label class="space-y-2 block">
-                        <span class="text-sm font-semibold text-gray-700">Temperatur (°C)</span>
-                        <input type="number" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="17">
-                    </label>
                 </div>
 
                 <hr class="border-gray-100">
@@ -227,6 +223,10 @@
                         <span class="text-sm font-semibold text-gray-700">Fritext (valfritt)</span>
                         <input type="text" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="T.ex. dimma på morgonen">
                     </label>
+                    <label class="space-y-2 block max-w-xs">
+                        <span class="text-sm font-semibold text-gray-700">Temperatur (°C)</span>
+                        <input type="number" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="17">
+                    </label>
                 </div>
 
                 <hr class="border-gray-100">
@@ -259,11 +259,11 @@
                         </div>
                     </div>
                     <label class="space-y-2 block">
-                        <span class="text-sm font-semibold text-gray-700">Pris utan el (SEK)</span>
+                        <span class="text-sm font-semibold text-gray-700">Totalt pris för alla nätter (SEK)</span>
                         <input type="number" min="0" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="180">
                     </label>
                     <label class="space-y-2 block">
-                        <span class="text-sm font-semibold text-gray-700">Pris med el (SEK)</span>
+                        <span class="text-sm font-semibold text-gray-700">Varav el (SEK)</span>
                         <input type="number" min="0" class="cf-input w-full rounded-xl border-2 border-gray-200 px-4 py-2.5" placeholder="230">
                     </label>
                 </div>
@@ -299,7 +299,7 @@
                     <p class="text-sm font-semibold text-gray-700">Övrigt</p>
                     <label class="flex items-center justify-between p-4 border-2 border-gray-200 rounded-xl hover:border-[var(--forest)] transition-colors cursor-pointer">
                         <div>
-                            <div class="font-semibold text-gray-800 text-sm">Kom hit igen</div>
+                            <div class="font-semibold text-gray-800 text-sm">Vill besöka igen</div>
                             <div class="text-xs text-gray-500">Vi kan tänka oss att åka hit igen</div>
                         </div>
                         <input type="checkbox" class="w-6 h-6 accent-[var(--forest)]">
