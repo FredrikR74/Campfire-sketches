@@ -44,6 +44,7 @@ pages/
   campfire-glomt-losenord.html # Auth: Glömt lösenord – begär länk → bekräftelse → nytt lösenord → klar (fristående sida, ingen navbar/footer)
   campfire-bjud-in.html        # Bjud in vänner: formulär med e-postinbjudningar, delningsbar länk och statistik
   campfire-kommande.html       # Kommande funktioner: roadmap med skisser och kvartalsmål
+  banners.html                 # Annonsbanners: alla 5 format (leaderboard, editorial, partner, dubbel, premium mörk+ljus)
 ```
 
 ## Tech
