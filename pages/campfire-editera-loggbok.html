@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Campfire – Lägg till logg</title>
+    <title>Campfire – Lägg till stopp på resan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,7 +80,7 @@
             <a href="campfire-loggbok.html" class="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
             </a>
-            <h1 class="text-2xl font-bold text-white">Lägg till logg</h1>
+            <h1 class="text-2xl font-bold text-white">Lägg till stopp på resan</h1>
         </div>
     </div>
 </div>
@@ -142,11 +142,11 @@
                             <input id="place-stallplats" type="radio" name="place-type" class="sr-only">
                             <label for="place-stallplats" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Ställplats</label>
 
-                            <input id="place-fricamping" type="radio" name="place-type" class="sr-only">
-                            <label for="place-fricamping" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Fricamping</label>
-
                             <input id="place-parkering" type="radio" name="place-type" class="sr-only">
-                            <label for="place-parkering" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Parkering</label>
+                            <label for="place-parkering" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Betald parkering</label>
+
+                            <input id="place-fricamping" type="radio" name="place-type" class="sr-only">
+                            <label for="place-fricamping" class="px-4 py-2 rounded-full border-2 border-gray-200 text-sm font-medium cursor-pointer transition-all">Friparkering</label>
                         </div>
                     </div>
                     <div class="space-y-3">
@@ -312,7 +312,6 @@
                     <label class="flex items-center justify-between p-4 border-2 border-gray-200 rounded-xl hover:border-[var(--forest)] transition-colors cursor-pointer">
                         <div>
                             <div class="font-semibold text-gray-800 text-sm">Vill besöka igen</div>
-                            <div class="text-xs text-gray-500">Vi kan tänka oss att åka hit igen</div>
                         </div>
                         <input type="checkbox" class="w-6 h-6 accent-[var(--forest)]">
                     </label>
@@ -321,8 +320,8 @@
 
             <!-- Knappar -->
             <div class="flex flex-wrap items-center gap-3 pt-2 pb-4">
-                <button type="submit" class="bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all text-sm">Spara logg</button>
-                <button type="button" class="px-4 py-2 text-red-500 hover:bg-red-50 rounded-lg transition-all text-sm font-medium">Radera logg</button>
+                <button type="submit" class="bg-[var(--forest)] text-white px-6 py-2.5 rounded-full font-semibold hover:bg-[var(--slate-deep)] transition-all text-sm">Spara</button>
+                <button type="button" class="px-4 py-2 text-red-500 hover:bg-red-50 rounded-lg transition-all text-sm font-medium">Radera</button>
             </div>
 
         </form>
