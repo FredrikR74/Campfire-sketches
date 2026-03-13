@@ -14,7 +14,6 @@
             position: relative;
             width: 10rem;
             min-width: 10rem;
-            max-height: 9rem;
             overflow: hidden;
             flex-shrink: 0;
         }
@@ -38,6 +37,16 @@
             top: 0.75rem;
             left: 0.75rem;
             z-index: 1;
+        }
+
+        @media (max-width: 639px) {
+            .log-entry-image {
+                width: auto;
+                min-width: unset;
+                height: 11rem;
+                margin: 0.75rem 0.75rem 0;
+                border-radius: 1rem;
+            }
         }
 
         .rating-stars { color: #cbd5e1; }
@@ -110,7 +119,7 @@
         <div class="flex flex-col gap-4">
 
             <!-- Mora – 4 stjärnor -->
-            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex">
+            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex flex-col sm:flex-row">
                 <div class="log-entry-image">
                     <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Mora">
                     <span class="badge bg-white/20 text-white">Naturcamp</span>
@@ -137,7 +146,7 @@
             </a>
 
             <!-- Trysil – 5 stjärnor, vill besöka igen -->
-            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex">
+            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex flex-col sm:flex-row">
                 <div class="log-entry-image">
                     <img src="https://images.unsplash.com/photo-1441829266145-6d4bfbd38eb4?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Trysil">
                     <span class="badge bg-white/20 text-white">Friluftsliv</span>
@@ -168,7 +177,7 @@
             </a>
 
             <!-- Visby – 3 stjärnor, vill besöka igen -->
-            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex">
+            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex flex-col sm:flex-row">
                 <div class="log-entry-image">
                     <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="Miniatyr för loggen från Visby">
                     <span class="badge bg-white/20 text-white">Matstopp</span>
@@ -199,7 +208,7 @@
             </a>
 
             <!-- Kivik – 5 stjärnor, vill besöka igen -->
-            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex">
+            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex flex-col sm:flex-row">
                 <div class="log-entry-image">
                     <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Kivik">
                     <span class="badge bg-white/20 text-white">Naturcamp</span>
@@ -230,7 +239,7 @@
             </a>
 
             <!-- Fjällbacka – 3 stjärnor -->
-            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex">
+            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex flex-col sm:flex-row">
                 <div class="log-entry-image">
                     <img src="https://images.unsplash.com/photo-1441829266145-6d4bfbd38eb4?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Fjällbacka">
                     <span class="badge bg-white/20 text-white">Ställplats</span>
@@ -257,7 +266,7 @@
             </a>
 
             <!-- Hirtshals – 2 stjärnor -->
-            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex">
+            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex flex-col sm:flex-row">
                 <div class="log-entry-image">
                     <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80" alt="Miniatyr för loggen från Hirtshals">
                     <span class="badge bg-white/20 text-white">Service</span>
@@ -284,7 +293,7 @@
             </a>
 
             <!-- Mariestad – 4 stjärnor, vill besöka igen, ingen bild -->
-            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex">
+            <a href="campfire-editera-loggbok.html" class="card-hover bg-white rounded-3xl overflow-hidden card-shadow flex flex-col sm:flex-row">
                 <div class="log-entry-image" style="background: linear-gradient(135deg, var(--slate-deep) 0%, var(--forest) 100%);">
                     <div class="absolute inset-0 flex items-center justify-center text-white/30">
                         <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
