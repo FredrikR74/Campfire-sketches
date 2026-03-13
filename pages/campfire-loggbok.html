@@ -12,8 +12,9 @@
     <style>
         .log-entry-image {
             position: relative;
-            width: 10rem;
-            min-width: 10rem;
+            width: 9rem;
+            min-width: 9rem;
+            height: 9rem;
             overflow: hidden;
             flex-shrink: 0;
         }
@@ -41,11 +42,16 @@
 
         @media (max-width: 639px) {
             .log-entry-image {
-                width: auto;
+                width: 100%;
                 min-width: unset;
-                height: 11rem;
-                margin: 0.75rem 0.75rem 0;
-                border-radius: 1rem;
+                height: auto;
+                min-height: 8rem;
+            }
+
+            .log-entry-image img {
+                width: 100%;
+                height: auto;
+                display: block;
             }
         }
 
