@@ -75,15 +75,11 @@
     </div>
 </header>
 
-<!-- Träff-banner (full bredd) -->
-<div class="w-full bg-[var(--slate-deep)]">
-    <img src="https://ik.imagekit.io/fwe6vcra3/Images/Campfirehero.png?updatedAt=1772446109785" alt="Banner för träffen" class="w-full h-auto block">
-</div>
-
-<main class="max-w-3xl mx-auto px-6 pt-8 pb-12">
+<main class="max-w-5xl mx-auto px-6 pt-8 pb-12">
+    <div class="flex flex-col sm:flex-row gap-6 items-start">
 
     <!-- Om träffen -->
-    <article class="bg-white rounded-3xl p-6 card-shadow space-y-5">
+    <article class="flex-1 min-w-0 bg-white rounded-3xl p-6 card-shadow space-y-5">
         <h2 class="text-2xl font-bold text-[var(--slate-deep)]">Om träffen</h2>
         <p class="text-sm text-gray-600 leading-relaxed">En social helg för husbilsentusiaster med fokus på naturupplevelser, erfarenhetsutbyte och gemensamma aktiviteter. Träffen passar både nybörjare och vana resenärer. Vi samlas vid den vackra Vänerkusten och spenderar helgen tillsammans med workshops, utflykter och en klassisk grillkväll.</p>
 
@@ -168,6 +164,12 @@
         </div>
     </article>
 
+    <!-- Bild (höger på sm+, under på mobil) -->
+    <div class="w-full sm:w-80 flex-shrink-0">
+        <img src="https://ik.imagekit.io/fwe6vcra3/Images/Campfirehero.png?updatedAt=1772446109785" alt="Banner för träffen" class="w-full h-auto rounded-3xl">
+    </div>
+
+    </div>
 </main>
 
 <div id="footer-slot"></div>
